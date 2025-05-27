@@ -1,10 +1,14 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import "./App.css";
+// import "./App.css";
+
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 function App() {
   // const [count, setCount] = useState(0);
+
   navigator.geolocation.getCurrentPosition(async (position) => {
     const { latitude, longitude } = position.coords;
     console.log(
@@ -26,31 +30,46 @@ function App() {
       "🚀 ~ navigator.geolocation.getCurrentPosition ~ province:",
       province
     );
+    //ここはスキーマに合わせる（今はテスト）
   });
 
+  const testData = [
+    {
+      name: "ume",
+      userId: 1,
+      province: "愛知県",
+      latitude: 35.123915154195345,
+      longitude: 137.06593279307734,
+    },
+  ];
+  const center = [testData[0].latitude, testData[0].longitude];
+
   return (
-    <>
-      {/* <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
-    </>
+    <div>
+      <header>地図</header>
+      <MapContainer
+        center={center}
+        zoom={5}
+        style={{ height: "600px", width: "100%" }}
+      >
+        {/* Map タイル */}
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="© OpenStreetMap contributors"
+        />
+
+        {testData.map((obj) => (
+          <Marker key={obj.userId} position={[obj.latitude, obj.longitude]}>
+            <Popup>
+              <strong>{obj.name}</strong>
+              <br />
+              {/* {obj.region}
+            <br />({obj.latitude.toFixed(4)}, {obj.longitude.toFixed(4)}) */}
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
   );
 }
 
