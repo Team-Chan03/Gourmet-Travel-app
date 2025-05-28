@@ -9,6 +9,8 @@
     "migrate-latest": "knex migrate:latest",
     "migrate-make": "knex migrate:make",
     "migrate-rollback": "knex migrate:rollback --all",
+    "db:seed": "knex seed:run",
+    "db:seed-make": "knex seed:make",
     "test": "mocha --require test/setup.js"
   },
   "keywords": [],
