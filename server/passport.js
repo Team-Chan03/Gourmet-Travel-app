@@ -11,7 +11,15 @@ passport.use(
       passReqToCallback: true,
     },
     (accessToken, refreshToken, profile, done) => {
-      return done(err, profile);
+      return done(null, profile);
     }
   )
 );
+
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});

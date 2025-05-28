@@ -67,6 +67,18 @@ function LoginForm() {
             ログイン
           </Button>
         </form>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2, mb: 2 }}
+          onClick={() => {
+            window.location.href = "http://localhost:4000/google";
+          }}
+        >
+          Googleでログイン
+        </Button>
         <Typography align="center">
           <MuiLink component={Link} to="/register">
             ユーザ登録はこちら

@@ -9,6 +9,8 @@ const cookieSession = require("cookie-session");
 require("./passport");
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
 app.use(
   cookieSession({
@@ -16,20 +18,8 @@ app.use(
     keys: ["key1", "key2"],
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.get("/", (req, res) => {
-  res.json({ message: "You are not logged in" });
-});
-
-app.get("/failed", (req, res) => {
-  res.send("Failed");
-});
-app.get("/success", (req, res) => {
-  res.send(`Welcome ${req.user.email}`);
-});
 
 app.get(
   "/google",
@@ -44,12 +34,9 @@ app.get(
     failureRedirect: "/failed",
   }),
   function (req, res) {
-    res.redirect("/success");
+    res.redirect("http://localhost:5173/");
   }
 );
-
-app.use(cors());
-app.use(express.json());
 
 // dist 配信-----
 app.use(express.static(path.join(__dirname, "./public")));

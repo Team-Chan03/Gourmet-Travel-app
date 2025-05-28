@@ -12,7 +12,7 @@ import App from "./App.jsx";
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>
-      {/* <Route path="/" element={<Navigate to="/login" />} /> */}
+      <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<RegisterForm />} />
       <Route path="/records" element={<App />} />
