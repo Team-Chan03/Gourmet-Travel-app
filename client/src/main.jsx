@@ -1,36 +1,19 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.jsx';
-import { BrowserRouter, Route, Navigate, Routes } from 'react-router';
 import LoginForm from './components/LoginForm.jsx';
 import RegisterForm from './components/RegisterForm.jsx';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import Mypage from './components/Mypage.jsx';
-const theme = createTheme({
-  palette: {
-    mode: 'light', // or "dark"
-    primary: { main: '#1976d2' },
-    secondary: { main: '#f50057' },
-  },
-  shape: {
-    borderRadius: 8,
-  },
-});
+import { BrowserRouter, Route, Navigate, Routes } from 'react-router';
+
+// import './index.css'
+import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        {/* <Route path="/api/history" element={<Navigate to="/login" />} /> */}
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/app" element={<App />} />
-        <Route path="/mypage" element={<Mypage />} />
-      </Routes>
-    </BrowserRouter>
-  </ThemeProvider>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/register" element={<RegisterForm />} />
+      <Route path="/form" element={<App />} />
+    </Routes>
+  </BrowserRouter>
 );
