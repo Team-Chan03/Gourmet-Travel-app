@@ -4,6 +4,7 @@ const path = require("path");
 const db = require("./db");
 const example = require("./routers/example");
 const authRouter = require("./routers/authRouter");
+const stampRouter = require("./routers/stampRouter");
 
 const app = express();
 
@@ -19,5 +20,7 @@ app.use(express.static(path.join(__dirname, "./public")));
 // app.use("/api/form", example);
 
 app.use("/api/auth", authRouter);
+
+app.use("/api/stamp", stampRouter);
 
 module.exports = app;
