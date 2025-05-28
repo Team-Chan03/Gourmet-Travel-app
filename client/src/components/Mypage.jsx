@@ -5,14 +5,14 @@ function Mypage() {
   const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
 
   function goToMyForm() {
-    navigate('/mapage/form');
+    navigate('/mypage/records');
   }
 
   function goToStanp() {
-    navigate('/mapage/stamp');
+    navigate('/mypage/stamp');
   }
   function goToMap() {
-    navigate('/mapage/map');
+    navigate('/mypage/map');
   }
 
   return (
