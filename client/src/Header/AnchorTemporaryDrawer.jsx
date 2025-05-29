@@ -10,11 +10,17 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import { useNavigate } from "react-router-dom";
 // import { ToggleButton, FormatAlignLeftIcon } from "@mui/material";
 
 // import Login from "../Login/Login";
 
 export default function AnchorTemporaryDrawer() {
+  const navigate = useNavigate();
+  const handleNavigate = (path) => {
+    navigate(path);
+    setState({ ...state, right: false });
+  };
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -40,14 +46,20 @@ export default function AnchorTemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+      {/* ページ遷移はpathを追加するだけでいいです */}
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
+        {[
+          { text: "マイページ", path: "/mypage" },
+          { text: "Starred" },
+          { text: "Send email" },
+          { text: "Drafts" },
+        ].map((obj, index) => (
+          <ListItem key={obj.text} disablePadding>
+            <ListItemButton onClick={() => handleNavigate(obj.path)}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={obj.text} />
             </ListItemButton>
           </ListItem>
         ))}
