@@ -1,156 +1,157 @@
-import React, { useEffect, memo } from 'react';
-import * as d3 from 'd3';
-import geoJson from './japan.json';
+import React, { useEffect, memo } from "react";
+import * as d3 from "d3";
+import geoJson from "./japan.json";
 
 const getTarget = ({ prefName, list }) => {
   let pref;
   switch (prefName) {
-    case 'Kagoshima':
-      pref = '鹿児島県';
+    case "Kagoshima":
+      pref = "鹿児島県";
       break;
-    case 'Oita':
-      pref = '大分県';
+    case "Oita":
+      pref = "大分県";
       break;
-    case 'Fukuoka':
-      pref = '福岡県';
+    case "Fukuoka":
+      pref = "福岡県";
       break;
-    case 'Saga':
-      pref = '佐賀県';
+    case "Saga":
+      pref = "佐賀県";
       break;
-    case 'Nagasaki':
-      pref = '長崎県';
+    case "Nagasaki":
+      pref = "長崎県";
       break;
-    case 'Kumamoto':
-      pref = '熊本県';
+    case "Kumamoto":
+      pref = "熊本県";
       break;
-    case 'Miyazaki':
-      pref = '宮崎県';
+    case "Miyazaki":
+      pref = "宮崎県";
       break;
-    case 'Tokushima':
-      pref = '徳島県';
+    case "Tokushima":
+      pref = "徳島県";
       break;
-    case 'Kagawa':
-      pref = '香川県';
+    case "Kagawa":
+      pref = "香川県";
       break;
-    case 'Ehime':
-      pref = '愛媛県';
+    case "Ehime":
+      pref = "愛媛県";
       break;
-    case 'Kochi':
-      pref = '高知県';
+    case "Kochi":
+      pref = "高知県";
       break;
-    case 'Shimane':
-      pref = '島根県';
+    case "Shimane":
+      pref = "島根県";
       break;
-    case 'Yamaguchi':
-      pref = '山口県';
+    case "Yamaguchi":
+      pref = "山口県";
       break;
-    case 'Tottori':
-      pref = '鳥取県';
+    case "Tottori":
+      pref = "鳥取県";
       break;
-    case 'Hyogo':
-      pref = '兵庫県';
+    case "Hyogo":
+      pref = "兵庫県";
       break;
-    case 'Kyoto':
-      pref = '京都府';
+    case "Kyoto":
+      pref = "京都府";
       break;
-    case 'Fukui':
-      pref = '福井県';
+    case "Fukui":
+      pref = "福井県";
       break;
-    case 'Ishikawa':
-      pref = '石川県';
+    case "Ishikawa":
+      pref = "石川県";
       break;
-    case 'Toyama':
-      pref = '富山県';
+    case "Toyama":
+      pref = "富山県";
       break;
-    case 'Niigata':
-      pref = '新潟県';
+    case "Niigata":
+      pref = "新潟県";
       break;
-    case 'Yamagata':
-      pref = '山形県';
+    case "Yamagata":
+      pref = "山形県";
       break;
-    case 'Akita':
-      pref = '秋田県';
+    case "Akita":
+      pref = "秋田県";
       break;
-    case 'Aomori':
-      pref = '青森県';
+    case "Aomori":
+      pref = "青森県";
       break;
-    case 'Iwate':
-      pref = '岩手県';
+    case "Iwate":
+      pref = "岩手県";
       break;
-    case 'Miyagi':
-      pref = '宮城県';
+    case "Miyagi":
+      pref = "宮城県";
       break;
-    case 'Fukushima':
-      pref = '福島県';
+    case "Fukushima":
+      pref = "福島県";
       break;
-    case 'Ibaraki':
-      pref = '茨城県';
+    case "Ibaraki":
+      pref = "茨城県";
       break;
-    case 'Chiba':
-      pref = '千葉県';
+    case "Chiba":
+      pref = "千葉県";
       break;
-    case 'Tokyo':
-      pref = '東京都';
+    case "Tokyo":
+      pref = "東京都";
       break;
-    case 'Kanagawa':
-      pref = '神奈川県';
+    case "Kanagawa":
+      pref = "神奈川県";
       break;
-    case 'Shizuoka':
-      pref = '静岡県';
+    case "Shizuoka":
+      pref = "静岡県";
       break;
-    case 'Aichi':
-      pref = '愛知県';
+    case "Aichi":
+      pref = "愛知県";
       break;
-    case 'Mie':
-      pref = '三重県';
+    case "Mie":
+      pref = "三重県";
       break;
-    case 'Wakayama':
-      pref = '和歌山県';
+    case "Wakayama":
+      pref = "和歌山県";
       break;
-    case 'Osaka':
-      pref = '大阪府';
+    case "Osaka":
+      pref = "大阪府";
       break;
-    case 'Okayama':
-      pref = '岡山県';
+    case "Okayama":
+      pref = "岡山県";
       break;
-    case 'Hiroshima':
-      pref = '広島県';
+    case "Hiroshima":
+      pref = "広島県";
       break;
-    case 'Hokkaido':
-      pref = '北海道';
+    case "Hokkaido":
+      pref = "北海道";
       break;
-    case 'Okinawa':
-      pref = '沖縄県';
+    case "Okinawa":
+      pref = "沖縄県";
       break;
-    case 'Gunma':
-      pref = '群馬県';
+    case "Gunma":
+      pref = "群馬県";
       break;
-    case 'Nagano':
-      pref = '長野県';
+    case "Nagano":
+      pref = "長野県";
       break;
-    case 'Tochigi':
-      pref = '栃木県';
+    case "Tochigi":
+      pref = "栃木県";
       break;
-    case 'Gifu':
-      pref = '岐阜県';
+    case "Gifu":
+      pref = "岐阜県";
       break;
-    case 'Shiga':
-      pref = '滋賀県';
+    case "Shiga":
+      pref = "滋賀県";
       break;
-    case 'Saitama':
-      pref = '埼玉県';
+    case "Saitama":
+      pref = "埼玉県";
       break;
-    case 'Yamanashi':
-      pref = '山梨県';
+    case "Yamanashi":
+      pref = "山梨県";
       break;
-    case 'Nara':
-      pref = '奈良県';
+    case "Nara":
+      pref = "奈良県";
       break;
   }
 
   let target = null;
   list.map((e) => {
-    if (e.name === pref) target = e;
+    if (e.region === pref) target = e;
+    // if (e.name === pref) target = e;
   });
   return target;
 };
@@ -173,8 +174,8 @@ const JapanMap = ({ list }) => {
     const height = 500; // 描画サイズ: 高さ
     const centerPos = [137.0, 38.2]; // 地図のセンター位置
     const scale = 1000; // 地図のスケール
-    const color = '#2566CC'; // 地図の色
-    const colorActive = '#ebfd2a'; // ホバーした時の色
+    const color = "#2566CC"; // 地図の色
+    const colorActive = "#ebfd2a"; // ホバーした時の色
 
     // 地図設定
     const projection = d3
@@ -208,8 +209,8 @@ const JapanMap = ({ list }) => {
         // カーソルの設定
         const t = getTarget({ list, prefName: item.properties.name });
 
-        if (!t || t.count === 0) return 'not-allowed';
-        return 'pointer';
+        if (!t || t.count === 0) return "not-allowed";
+        return "pointer";
       })
       .attr(`fill-opacity`, (item) => {
         // 透明度の設定
@@ -309,7 +310,7 @@ const JapanMap = ({ list }) => {
     })();
     return () => {
       const target = document.getElementById(`map-container`);
-      if (target) target.innerHTML = '';
+      if (target) target.innerHTML = "";
     };
   }, [mounted]);
 

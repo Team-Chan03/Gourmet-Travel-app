@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const crypto = require("crypto");
+require("./../passport");
+const passport = require("passport");
 
 function hashPassword(password, salt) {
   return crypto
@@ -80,5 +82,25 @@ router.get("/logout", async (req, res) => {
     res.status(500).json({ error: "ログアウトエラー" });
   }
 });
+
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["email", "profile"],
+  })
+);
+
+const frontUrl = process.env.FRONT_URL || "/";
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: frontUrl,
+  }),
+  (req, res) => {
+    res.cookie("sessionId", req.sessionId, { httpOnly: true });
+    res.redirect(`${frontUrl}records`);
+    // res.redirect("http://localhost:5173/records");
+  }
+);
 
 module.exports = router;
