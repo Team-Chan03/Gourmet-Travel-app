@@ -5,6 +5,7 @@ const db = require('./db');
 const example = require('./routers/example');
 const authRouter = require('./routers/authRouter');
 const stampRouter = require('./routers/stampRouter');
+const mapRouter = require('./routers/mapRouter');
 const multer = require('multer');
 const { log } = require('console');
 const upload = multer(); // メモリストレージ
