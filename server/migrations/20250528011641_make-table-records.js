@@ -12,6 +12,7 @@ exports.up = async function (knex) {
     table.increments("id").primary();
     table.string("image_url");
     table.string("comment");
+    table.integer("rating").notNullable();
     table.timestamp("created_at").notNullable();
   });
 };
