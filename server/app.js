@@ -52,7 +52,27 @@ const authMiddeware = async (req, res, next) => {
 
 // dist 配信-----
 app.use(express.static(path.join(__dirname, "./public")));
-
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+app.get("/register", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+app.get("/records", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+app.get("/mypage", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+app.get("/mypage/records", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+app.get("/mypage/map", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+app.get("/mypage/stamp", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 // -------------
 
 app.get("/api/app", authMiddeware, async (req, res) => {
