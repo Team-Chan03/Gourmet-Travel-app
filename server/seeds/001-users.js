@@ -13,11 +13,32 @@ exports.seed = async function (knex) {
       salt: "random",
     },
     {
-      username: "matsu",
-      email: "takuya_matsumot_ai@mail.toyota.co.jp",
+      username: "ume1",
+      email: "hideaki_umezawa@mail.toyota.co.jp",
+      created_at: new Date(),
+      password: "password1",
+      salt: "random1",
+    },
+    {
+      username: "ume2",
+      email: "hideaki_umezawa@mail.toyota.co.jp",
       created_at: new Date(),
       password: "password2",
       salt: "random2",
+    },
+    {
+      username: "ume3",
+      email: "hideaki_umezawa@mail.toyota.co.jp",
+      created_at: new Date(),
+      password: "password3",
+      salt: "random3",
+    },
+    {
+      username: "matsu",
+      email: "takuya_matsumot_ai@mail.toyota.co.jp",
+      created_at: new Date(),
+      password: "password4",
+      salt: "random4",
     },
   ]);
 };

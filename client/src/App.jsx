@@ -1,4 +1,3 @@
-import "./RecordList.css";
 import {
   Box,
   Button,
@@ -11,96 +10,99 @@ import {
   TextareaAutosize,
   Rating,
   Typography,
+  Card,
+  CardMedia,
 } from "@mui/material";
 import { useState, useEffect, useContext, useRef } from "react";
+import axios from "axios";
+import Header from "./Header/Header";
 
-function App({ records }) {
-  const [selectType, setType] = useState("");
-  console.log(selectType);
-  const recordTypeArray = ["食事", "育児", "服装", "髪型", "デート"];
-  const TextFieldStyle = {
-    width: 300,
-    marginBottom: 16,
+function App() {
+  const [records, setRecords] = useState([]);
+  //分類フィルター機能
+  // const [selectType, setType] = useState("");
+
+  //全てのrecordsを取得する関数
+  const fetchRecord = async () => {
+    try {
+      const res = await axios.get("/api/records");
+      console.log("☺️ レーコード更新~ fetchRecord ~ res:", res);
+      setRecords(res.data);
+    } catch (err) {
+      console.log("RecordList の listGet失敗", err);
+    }
   };
 
-  {
-    records.map((r) => {
-      if (r.record_type !== selectType) return null;
-    });
-  }
+  useEffect(() => {
+    fetchRecord();
+  }, []);
+
+  //フィルター機能
+  // const TextFieldStyle = {
+  //   width: 300,
+  //   marginBottom: 16,
+  // };
 
   return (
-    <main className="record_page">
-      <Autocomplete
-        options={recordTypeArray}
-        onChange={(val, e) => setType(e)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="分類フィルター"
-            style={TextFieldStyle}
-          />
-        )}
-      />
-
-      <ul className="record_list">
-        {records
-          .filter((r) => {
-            if (
-              r.record_type === selectType ||
-              selectType === "" ||
-              selectType === null
-            )
-              return true;
-          })
-          .map((r) => (
-            <li key={r.id} className="record_item">
-              {/* オプション項目 (ユーザー任意項目予定)*/}
-              {r.record_photo_url && (
-                <img
-                  className="record_photo"
-                  src={r.record_photo_url}
-                  alt={`${r.record_type} の写真`}
+    <div>
+      <Header fetchRecord={fetchRecord} />
+      <Box
+        component="main"
+        sx={{
+          p: 2,
+          backgroundImage:
+            "url(https://www.chizu-seisaku.com/wp-content/uploads/2021/08/world-furumap-scaled.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          minHeight: "100vh",
+          backgroundAttachment: "fixed",
+        }}
+      >
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "1fr 1fr",
+              md: "1fr 1fr 1fr",
+            },
+          }}
+        >
+          {records.map((obj) => (
+            <Card key={obj.id} sx={{ maxWidth: 345 }}>
+              {obj.image_url && (
+                <CardMedia
+                  component="img"
+                  height="180"
+                  image={obj.image_url}
+                  alt="投稿写真"
                 />
               )}
-              {/* 共通項目(必須項目の為条件分岐なし) */}
               <div className="record_header">
-                {/* <time className="record_date">{r.record_date}</time> */}
-                <span className="record_type">カテゴリ：{r.record_type}</span>
-                <p className="record_content">コメント：{r.record_comment}</p>
-                <span className="record_mood">{r.record_mood}</span>
-                <span className="record_rating">
-                  {"⭐".repeat(r.record_rating)}
-                </span>
+                <p className="record_content">コメント：{obj.comment}</p>
+                <span className="record_rating">{"⭐".repeat(obj.rating)}</span>
               </div>
-              {/* タイプ別オプション */}
-              {r.record_type === "食事" && r.meal_type && (
-                <p className="record_meal_type">食事区分: {r.meal_type}</p>
-              )}
-              {r.record_type === "育児" && (
-                <div className="record_child">
-                  {r.child_activity && (
-                    <p className="child_activity">活動: {r.child_activity}</p>
-                  )}
-                  {r.child_age != null && (
-                    <p className="child_age">お子様年齢: {r.child_age}ヶ月</p>
-                  )}
-                </div>
-              )}
-              {r.record_type === "服装" && r.brand && (
-                <p className="record_brand">ブランド: {r.brand}</p>
-              )}
-              {r.record_type === "髪型" && r.salon && (
-                <p className="record_salon">美容室: {r.salon}</p>
-              )}
-              {r.record_type === "デート" && r.date_place && (
-                <p className="record_date_place">場所: {r.date_place}</p>
-              )}
-            </li>
+            </Card>
           ))}
-      </ul>
-    </main>
+        </Box>
+      </Box>
+    </div>
   );
 }
 
 export default App;
+
+{
+  /* <Autocomplete
+  options={recordTypeArray}
+  onChange={(val, e) => setType(e)}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="分類フィルター"
+      style={TextFieldStyle}
+    />
+  )}
+/> */
+}
