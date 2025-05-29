@@ -3,6 +3,8 @@ const cors = require("cors");
 const path = require("path");
 const db = require("./db");
 const example = require("./routers/example");
+const authRouter = require("./routers/authRouter");
+const stampRouter = require("./routers/stampRouter");
 const multer = require("multer");
 const { log } = require("console");
 const upload = multer(); // メモリストレージ
@@ -66,4 +68,9 @@ app.post("/api/records", async (req, res) => {
 
 //ルーティング　api/formに来た時example.jsに飛ぶ
 // app.use("/api/form", example);
+
+app.use("/api/auth", authRouter);
+
+app.use("/api/stamp", stampRouter);
+
 module.exports = app;
