@@ -1,77 +1,102 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-// import "./App.css";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+// import viteLogo from '/vite.svg';
+import JapanMap from './JapanMap';
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
-import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+function Map() {
+  const [mapMode, setmapMpde] = useState(true);
 
-function App() {
-  // const [count, setCount] = useState(0);
+  // const list = [];
 
-  navigator.geolocation.getCurrentPosition(async (position) => {
-    const { latitude, longitude } = position.coords;
-    console.log(
-      "🚀 ~ navigator.geolocation.getCurrentPosition ~ latitude:",
-      latitude
-    );
-    console.log(
-      "🚀 ~ navigator.geolocation.getCurrentPosition ~ longitude:",
-      longitude
-    );
+  // useEffect(async () => {
+  //   console.log('hello');
+  //   let response;
+  //   response = await axios.get('/api/map/data1');
+  //   response = await response.json();
+  //   for (const item of response) {
+  //     list.push(item);
+  //   }
+  // }, []);
 
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-    );
-    const data = await res.json();
-    console.log("🚀 ~ navigator.geolocation.getCurrentPosition ~ data:", data);
+  async function changeMapmode() {
+    //mapMode true = ピン立て　false = 色塗り
+    // let response;
+    let mode = mapMode;
+    mode = !mode;
+    // list.length = 0;
 
-    const province = data.address.province;
-    console.log(
-      "🚀 ~ navigator.geolocation.getCurrentPosition ~ province:",
-      province
-    );
-    //ここはスキーマに合わせる（今はテスト）
-  });
+    //mapData1 : ピン立て
+    // if (mode) {
+    //   response = await axios.get('/api/map/data1');
+    // } else {
+    //   response = await axios.get('/api/map/data2');
+    // }
+    // response = await response.json();
+    // console.log('💀 ~ changeMapmode ~ response:', response);
+
+    // for (const item of response) {
+    //   list.push(item);
+    // }
+
+    setmapMpde(mode);
+  }
 
   const testData = [
     {
-      name: "ume",
+      name: 'ume',
       userId: 1,
-      province: "愛知県",
+      province: '愛知県',
       latitude: 35.123915154195345,
       longitude: 137.06593279307734,
     },
   ];
+
   const center = [testData[0].latitude, testData[0].longitude];
+  const list = [
+    { name: '東京都', count: 20 },
+    { name: '大阪府', count: 15 },
+    { name: '愛知県', count: 12 },
+  ];
 
   return (
-    <div>
-      <header>地図</header>
-      <MapContainer
-        center={center}
-        zoom={5}
-        style={{ height: "1000px", width: "100%" }}
-      >
-        {/* Map タイル */}
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="© OpenStreetMap contributors"
-        />
+    <>
+      {mapMode ? (
+        <div>
+          <header>地図モード1</header>
+          <MapContainer
+            center={center}
+            zoom={5}
+            style={{ height: '1000px', width: '100%' }}
+          >
+            {/* Map タイル */}
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="© OpenStreetMap contributors"
+            />
 
-        {testData.map((obj) => (
-          <Marker key={obj.userId} position={[obj.latitude, obj.longitude]}>
-            <Popup>
-              <strong>{obj.name}</strong>
-              <br />
-              {/* {obj.region}
-            <br />({obj.latitude.toFixed(4)}, {obj.longitude.toFixed(4)}) */}
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-    </div>
+            {testData.map((obj) => (
+              <Marker key={obj.userId} position={[obj.latitude, obj.longitude]}>
+                <Popup>
+                  <strong>{obj.name}</strong>
+                  <br />
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
+
+          <button onClick={changeMapmode}>モード切り替え</button>
+        </div>
+      ) : (
+        <div>
+          {<JapanMap list={list} />}
+
+          <button onClick={changeMapmode}>モード切り替え</button>
+        </div>
+      )}
+    </>
   );
 }
 
-export default App;
+export default Map;

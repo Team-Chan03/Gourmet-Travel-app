@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate, Link } from "react-router";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router';
 
 import {
   Container,
@@ -9,19 +9,19 @@ import {
   Typography,
   Box,
   Link as MuiLink,
-} from "@mui/material";
+} from '@mui/material';
 
 function LoginForm() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
 
   const processingLogin = async () => {
     try {
-      await axios.post("/api/auth/login", { username, password });
-      navigate("/form"); //ログイン後formに遷移
+      await axios.post('/api/auth/login', { username, password });
+      navigate('/records'); //ログイン後formに遷移
     } catch (err) {
-      alert("ログイン失敗");
+      alert('ログイン失敗');
       console.error(err);
     }
   };
