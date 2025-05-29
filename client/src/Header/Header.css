@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Serif+JP");
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background-color: rgb(129, 253, 179);
+  z-index: 999;
+
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+}
+
+.header-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-size: 50px;
+  font-family: "Noto Serif JP", serif;
+}
+
+.drawer-container {
+  margin-left: auto;
+}

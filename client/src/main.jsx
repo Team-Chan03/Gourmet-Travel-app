@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Navigate, Routes } from "react-router";
 
 // import './index.css'
 import App from "./App.jsx";
+// import Header from "./Header/Header.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
