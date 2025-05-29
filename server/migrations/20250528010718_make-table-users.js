@@ -8,8 +8,8 @@ exports.up = async function (knex) {
     table.string("username").notNullable();
     table.string("email").notNullable();
     table.timestamp("created_at").notNullable();
-    table.string("password").notNullable();
-    table.string("salt").notNullable();
+    table.string("password");
+    table.string("salt");
   });
 };
 

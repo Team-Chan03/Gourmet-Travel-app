@@ -66,12 +66,14 @@ router.post("/login", async (req, res) => {
 });
 
 //ログアウト処理
-router.post("/logout", async (req, res) => {
+router.get("/logout", async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
+    console.log("🚀 ~ router.get ~ sessionId:", sessionId);
     await db("sessions").where("sessions_id", sessionId).del();
 
     res.clearCookie("sessionId");
+    // res.redirect("http://localhost:5173/");
     res.json({ message: "ログアウト成功" });
   } catch (err) {
     console.error(err);

@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 // import viteLogo from '/vite.svg';
-import JapanMap from './JapanMap';
-import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import JapanMap from "./JapanMap";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 function Map() {
   const [mapMode, setmapMpde] = useState(true);
@@ -45,9 +45,9 @@ function Map() {
 
   const testData = [
     {
-      name: 'ume',
+      name: "ume",
       userId: 1,
-      province: '愛知県',
+      province: "愛知県",
       latitude: 35.123915154195345,
       longitude: 137.06593279307734,
     },
@@ -55,9 +55,9 @@ function Map() {
 
   const center = [testData[0].latitude, testData[0].longitude];
   const list = [
-    { name: '東京都', count: 20 },
-    { name: '大阪府', count: 15 },
-    { name: '愛知県', count: 12 },
+    { name: "東京都", count: 20 },
+    { name: "大阪府", count: 15 },
+    { name: "愛知県", count: 12 },
   ];
 
   return (
@@ -67,8 +67,8 @@ function Map() {
           <header>地図モード1</header>
           <MapContainer
             center={center}
-            zoom={5}
-            style={{ height: '1000px', width: '100%' }}
+            zoom={4}
+            style={{ height: "1000px", width: "100%" }}
           >
             {/* Map タイル */}
             <TileLayer

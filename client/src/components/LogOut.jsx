@@ -6,7 +6,7 @@ function LogOut() {
   const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
   const processingLogout = async () => {
     try {
-      await axios.post("/api/auth/logout", { test: "test" });
+      await axios.get("/api/auth/logout");
 
       alert("ログアウトしました。");
       navigate("/"); //ログアウト後/に遷移

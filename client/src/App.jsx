@@ -61,22 +61,29 @@ function App() {
       >
         <Box
           sx={{
+            mt: 10,
             display: "grid",
             gridTemplateColumns: {
               xs: "1fr",
-              sm: "1fr 1fr",
-              md: "1fr 1fr 1fr",
+              sm: "repeat(2,1fr)",
+              md: "repeat(4,1fr)",
             },
+            gap: 2,
           }}
         >
           {records.map((obj) => (
-            <Card key={obj.id} sx={{ maxWidth: 345 }}>
+            <Card key={obj.id} sx={{ maxWidth: 450 }}>
               {obj.image_url && (
                 <CardMedia
                   component="img"
                   height="180"
                   image={obj.image_url}
                   alt="投稿写真"
+                  sx={{
+                    objectFit: "contain",
+                    backgroundColor: "#eee",
+                    objectFit: "cover",
+                  }}
                 />
               )}
               <div className="record_header">
