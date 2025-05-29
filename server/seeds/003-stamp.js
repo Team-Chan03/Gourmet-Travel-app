@@ -47,7 +47,7 @@ exports.seed = async function (knex) {
       longitude: 136.0639866288227,
     },
     {
-      user_id: 1,
+      user_id: 6,
       stamp_num: 1,
       region: "兵庫県",
       created_at: new Date(),
