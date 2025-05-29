@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate, Link } from 'react-router';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router";
 
 import {
   Container,
@@ -9,21 +9,33 @@ import {
   Typography,
   Box,
   Link as MuiLink,
-} from '@mui/material';
+} from "@mui/material";
 
 function LoginForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
 
   const processingLogin = async () => {
     try {
-      await axios.post('/api/auth/login', { username, password });
-      navigate('/records'); //ログイン後formに遷移
+      await axios.post("/api/auth/login", { username, password });
+      navigate("/records"); //ログイン後formに遷移
     } catch (err) {
-      alert('ログイン失敗');
+      alert("ログイン失敗");
       console.error(err);
     }
+  };
+
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const googleLogin = () => {
+    window.location.href = `${backUrl}/api/auth/google`;
+    // try {
+    //   await axios.get("/api/auth/google");
+    // } catch (err) {
+    //   alert("ログイン失敗");
+    //   console.error(err);
+    // }
   };
 
   return (
@@ -67,6 +79,19 @@ function LoginForm() {
             ログイン
           </Button>
         </form>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2, mb: 2 }}
+          // onClick={() => {
+          //   window.location.href = `${backUrl}/api/auth/google`;
+          // }}
+          onClick={googleLogin}
+        >
+          Googleでログイン
+        </Button>
         <Typography align="center">
           <MuiLink component={Link} to="/register">
             ユーザ登録はこちら

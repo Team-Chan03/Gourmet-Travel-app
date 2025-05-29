@@ -16,9 +16,13 @@ import {
 import { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import Header from "./Header/Header";
+import { useNavigate } from "react-router";
 
 function App() {
   const [records, setRecords] = useState([]);
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
+
   //分類フィルター機能
   // const [selectType, setType] = useState("");
 
@@ -32,6 +36,34 @@ function App() {
       console.log("RecordList の listGet失敗", err);
     }
   };
+
+  //認証用
+  // Appに入る
+  const loadApp = async () => {
+    try {
+      const res = await axios.get("/api/app");
+      setUsername(res.data.username); //stateで管理しないと再度レンダリングしてくれない
+      console.log("認証に成功しました");
+    } catch (err) {
+      //セッションID無ければ401を返し,catchに入る
+      if (err.response.status === 401) {
+        alert("セッションIDがありません");
+        navigate("/");
+      } else {
+        console.error("予期しないえらーが発生しました", err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    loadApp();
+
+    const interval = setInterval(() => {
+      loadApp();
+    }, 10 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     fetchRecord();
