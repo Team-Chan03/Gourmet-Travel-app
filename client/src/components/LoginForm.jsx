@@ -19,11 +19,23 @@ function LoginForm() {
   const processingLogin = async () => {
     try {
       await axios.post("/api/auth/login", { username, password });
-      navigate("/form"); //ログイン後formに遷移
+      navigate("/records"); //ログイン後formに遷移
     } catch (err) {
       alert("ログイン失敗");
       console.error(err);
     }
+  };
+
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const googleLogin = () => {
+    window.location.href = `${backUrl}/api/auth/google`;
+    // try {
+    //   await axios.get("/api/auth/google");
+    // } catch (err) {
+    //   alert("ログイン失敗");
+    //   console.error(err);
+    // }
   };
 
   return (
@@ -73,9 +85,10 @@ function LoginForm() {
           variant="contained"
           color="primary"
           sx={{ mt: 2, mb: 2 }}
-          onClick={() => {
-            window.location.href = "http://localhost:4000/google";
-          }}
+          // onClick={() => {
+          //   window.location.href = `${backUrl}/api/auth/google`;
+          // }}
+          onClick={googleLogin}
         >
           Googleでログイン
         </Button>
