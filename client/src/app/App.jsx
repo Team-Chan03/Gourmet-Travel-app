@@ -13,8 +13,6 @@ const App = ()=>{
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/records" element={<RecordsPage />} />
-          {/* <Route path="/mypage" element={<MyPage />} /> */}
-          {/* <Route path="/mypage/records" element={<Myrecords />} /> */}
           <Route path="/map" element={<MapPage />} />
           <Route path="/stamp" element={<StampPage />} />
         </Routes>
