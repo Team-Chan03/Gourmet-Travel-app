@@ -94,7 +94,7 @@ app.use("/api/map", authMiddeware, mapRouter);
 app.use("/api/stamp", authMiddeware, stampRouter);
 app.use("/api/records", authMiddeware, recordsRouter);
 app.use("/api/upload-image", authMiddeware, uploadImageRouter);
-app.use("/api/map", authMiddeware, mapRouter);
-app.use("/api/stamp", authMiddeware, stampRouter);
+// app.use("/api/map", authMiddeware, mapRouter);
+// app.use("/api/stamp", authMiddeware, stampRouter);
 
 module.exports = app;
