@@ -1,6 +1,6 @@
 import React, { useEffect, memo } from "react";
 import * as d3 from "d3";
-import geoJson from "./japan.json";
+import geoJson from "../../../utils/japan.json";
 
 const getTarget = ({ prefName, list }) => {
   let pref;

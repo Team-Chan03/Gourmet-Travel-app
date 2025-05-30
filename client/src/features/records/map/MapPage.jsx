@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 const displayList = [];
 
-function Map() {
+function MapPage() {
   const [mapMode, setmapMpde] = useState(true);
   const [iniFlag, setiniFlaga] = useState(false);
 
@@ -94,4 +94,4 @@ function Map() {
   );
 }
 
-export default Map;
+export default MapPage;

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router";
+
 import {
   Container,
   TextField,
@@ -10,33 +11,43 @@ import {
   Link as MuiLink,
 } from "@mui/material";
 
-function RegisterForm() {
+function LoginPage() {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
 
-  const processingRegister = async () => {
+  const processingLogin = async () => {
     try {
-      await axios.post("/api/auth/register", { username, email, password });
-      alert("登録に成功しました。ログインしてください。");
-      navigate("/login");
+      await axios.post("/api/auth/login", { username, password });
+      navigate("/records"); //ログイン後formに遷移
     } catch (err) {
-      alert("登録失敗");
-      console.err(err);
+      alert("ログイン失敗");
+      console.error(err);
     }
+  };
+
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const googleLogin = () => {
+    window.location.href = `${backUrl}/api/auth/google`;
+    // try {
+    //   await axios.get("/api/auth/google");
+    // } catch (err) {
+    //   alert("ログイン失敗");
+    //   console.error(err);
+    // }
   };
 
   return (
     <Container maxWidth="xs">
       <Box sx={{ mt: 8, mb: 4 }}>
         <Typography variant="h4" align="center" gutterBottom>
-          ユーザ登録
+          ログイン
         </Typography>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            processingRegister();
+            processingLogin();
           }}
         >
           <TextField
@@ -46,16 +57,6 @@ function RegisterForm() {
             margin="normal"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          <TextField
-            label="メールアドレス"
-            type="email"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <TextField
@@ -75,12 +76,25 @@ function RegisterForm() {
             color="primary"
             sx={{ mt: 2, mb: 2 }}
           >
-            登録
+            ログイン
           </Button>
         </form>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2, mb: 2 }}
+          // onClick={() => {
+          //   window.location.href = `${backUrl}/api/auth/google`;
+          // }}
+          onClick={googleLogin}
+        >
+          Googleでログイン
+        </Button>
         <Typography align="center">
-          <MuiLink component={Link} to="/login">
-            ログインはこちら
+          <MuiLink component={Link} to="/register">
+            ユーザ登録はこちら
           </MuiLink>
         </Typography>
       </Box>
@@ -88,4 +102,4 @@ function RegisterForm() {
   );
 }
 
-export default RegisterForm;
+export default LoginPage;

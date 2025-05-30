@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-function Mypage() {
+function MyPage() {
   const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
 
   function goToMyForm() {
@@ -24,4 +24,4 @@ function Mypage() {
   );
 }
 
-export default Mypage;
+export default MyPage;

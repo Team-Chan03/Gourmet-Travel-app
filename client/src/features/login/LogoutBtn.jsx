@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { Button } from "@mui/material";
 
-function LogOut() {
+function LogoutBtn() {
   const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
   const processingLogout = async () => {
     try {
@@ -27,4 +27,4 @@ function LogOut() {
   );
 }
 
-export default LogOut;
+export default LogoutBtn;

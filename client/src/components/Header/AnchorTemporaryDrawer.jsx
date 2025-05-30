@@ -73,9 +73,9 @@ export default function AnchorTemporaryDrawer() {
       <List>
         {[
           { text: "マイページ", path: "/mypage", icon: <HomeIcon /> },
-          { text: "履歴", path: "/mypage/records", icon: <ManageSearchIcon /> },
-          { text: "地図", path: "/mypage/map", icon: <FmdGoodIcon /> },
-          { text: "スタンプ", path: "/mypage/stamp", icon: <RedeemIcon /> },
+          // { text: "履歴", path: "/mypage/records", icon: <ManageSearchIcon /> },
+          { text: "地図", path: "/map", icon: <FmdGoodIcon /> },
+          { text: "スタンプ", path: "/stamp", icon: <RedeemIcon /> },
           {
             text: "ログアウト",
             path: "ログアウト",

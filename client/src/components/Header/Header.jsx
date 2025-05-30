@@ -1,15 +1,15 @@
-import { Button } from "@mui/material";
-import AnchorTemporaryDrawer from "./AnchorTemporaryDrawer";
-import "./Header.css";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import RecordFrom from "../RecordFrom";
+import { Button } from '@mui/material';
+import AnchorTemporaryDrawer from './AnchorTemporaryDrawer';
+import './Header.css';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import RecordFrom from './RecordFrom';
 
 function Header({ fetchRecord }) {
   const [formOpen, setFormOpen] = useState(false);
 
   const handleToggleForm = () => {
-    console.log("🚀 ~ handleToggleForm発火したよ:", handleToggleForm);
+    console.log('🚀 ~ handleToggleForm発火したよ:', handleToggleForm);
 
     setFormOpen((val) => !val);
   };
