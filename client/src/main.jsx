@@ -1,27 +1,28 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import LoginForm from './components/LoginForm.jsx';
-import RegisterForm from './components/RegisterForm.jsx';
-import Mypage from './components/Mypage.jsx';
-import Map from './components/Map.jsx';
-import Stamp from './components/Stamp.jsx';
+import LoginForm from './features/login/LoginPage.jsx';
+import RegisterForm from './features/login/RegisterPage.jsx';
 import { BrowserRouter, Route, Navigate, Routes } from 'react-router';
-
-// import './index.css'
-import App from './App.jsx';
-// import Header from "./Header/Header.jsx";
+import App from './app/App.jsx';
+import MyPage from './features/records/mypage/Mypage.jsx';
+import StampPage from './features/records/stamp/StampPage.jsx';
+import MapPage from './features/records/map/MapPage.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
-      <Route path="/login" element={<LoginForm />} />
-      <Route path="/register" element={<RegisterForm />} />
-      <Route path="/records" element={<App />} />
-      <Route path="/mypage" element={<Mypage />} />
-      {/* <Route path="/mypage/records" element={<Myrecords />} /> */}
-      <Route path="/mypage/map" element={<Map />} />
-      <Route path="/mypage/stamp" element={<Stamp />} />
-    </Routes>
-  </BrowserRouter>
+  <StrictMode>
+    <App />
+  </StrictMode>
 );
+
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route path="/" element={<Navigate to="/login" />} />
+    //     <Route path="/login" element={<LoginForm />} />
+    //     <Route path="/register" element={<RegisterForm />} />
+    //     <Route path="/records" element={<App />} />
+    //     <Route path="/mypage" element={<MyPage />} />
+    //     {/* <Route path="/mypage/records" element={<Myrecords />} /> */}
+    //     <Route path="/mypage/map" element={<MapPage />} />
+    //     <Route path="/mypage/stamp" element={<StampPage />} />
+    //   </Routes>
+    // </BrowserRouter>

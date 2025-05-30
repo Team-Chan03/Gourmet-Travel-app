@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-function Stamp() {
+function StampPage() {
   const [prefecture, setPrefecture] = useState([]);
   const [prefectureUnique, setPrefectureUnique] = useState([]); //重複なしデータ
   const [selectRegion, setSelectRegion] = useState("");
@@ -109,4 +109,4 @@ function Stamp() {
   );
 }
 
-export default Stamp;
+export default StampPage;
