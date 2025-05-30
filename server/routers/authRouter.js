@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const crypto = require("crypto");
-require("./../passport");
+require("./../passport"); //passport.jsの設定の読み込み
 const passport = require("passport");
 
 function hashPassword(password, salt) {
@@ -81,20 +81,25 @@ router.post("/logout", async (req, res) => {
   }
 });
 
+//①認証開始
 router.get(
   "/google",
   passport.authenticate("google", {
-    scope: ["email", "profile"],
+    //googleは使用するStrategy名。passport.jsで定義。googleはディフォルト
+    scope: ["email", "profile"], //Googleに要求するユーザの情報範囲指定
   })
 );
 
 const frontUrl = process.env.FRONT_URL || "/";
+//②認証成功後、指定したcallbackurlでリクエストが戻ってくる
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: frontUrl,
+    //この部分でStrategyで定義したverify関数が実行（passport.js)。verify関数：要求したprofileとかの処理
+    failureRedirect: frontUrl, //認証失敗後、ここにリダイレクト
   }),
   (req, res) => {
+    //verify関数がOKならこのリクエストが実行される。
     res.cookie("sessionId", req.sessionId, { httpOnly: true });
     res.redirect(`${frontUrl}records`);
     // res.redirect("http://localhost:5173/records");

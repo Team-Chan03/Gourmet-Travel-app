@@ -16,18 +16,22 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser()); // express でcookieを取得
 
+//express-sessionでセッション管理設定。
+//クライアントからリクエスト来たらcookieのconnect.sidを読み取る。
+//サーバーがreq.sessionに何か書き込む→connect.sid生成→クッキーに乗せてクライアントに送る
+//自前のセッションID使うなら不要？？？
 const session = require("express-session");
-
 app.use(
   session({
     secret: "keyboard cat",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: false, //ログインでセッションに書き込むまでクッキーに保存しない
     cookie: { secure: false, httpOnly: true },
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
+
+app.use(passport.initialize()); //passport初期化expressに設定。必須、これないと動かない。
+app.use(passport.session()); //passportがreq.sessionにアクセスできるようにする。自前のセッションID使うなら不要？？？
 
 //認証用ミドルウェア
 const authMiddeware = async (req, res, next) => {
