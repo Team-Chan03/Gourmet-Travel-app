@@ -3,42 +3,55 @@
  * @returns { Promise<void> }
  */
 exports.seed = async function (knex) {
-  await knex("users").del();
-  await knex("users").insert([
+  await knex('users').del();
+
+  const crypto = require('crypto');
+
+  function hashPassword(password, salt) {
+    return crypto
+      .createHash('sha256')
+      .update(salt + password)
+      .digest('hex');
+  }
+
+  const testSalt = crypto.randomBytes(6).toString('hex');
+  const testHashedPassword = hashPassword('pass', testSalt);
+
+  await knex('users').insert([
     {
-      username: "ume",
-      email: "hideaki_umezawa@mail.toyota.co.jp",
+      username: 'ume',
+      email: 'hideaki_umezawa@mail.toyota.co.jp',
       created_at: new Date(),
-      password: "password",
-      salt: "random",
+      password: testHashedPassword,
+      salt: testSalt,
     },
     {
-      username: "ume1",
-      email: "hideaki_umezawa@mail.toyota.co.jp",
+      username: 'ume1',
+      email: 'hideaki_umezawa@mail.toyota.co.jp',
       created_at: new Date(),
-      password: "password1",
-      salt: "random1",
+      password: testHashedPassword,
+      salt: testSalt,
     },
     {
-      username: "ume2",
-      email: "hideaki_umezawa@mail.toyota.co.jp",
+      username: 'ume2',
+      email: 'hideaki_umezawa@mail.toyota.co.jp',
       created_at: new Date(),
-      password: "password2",
-      salt: "random2",
+      password: testHashedPassword,
+      salt: testSalt,
     },
     {
-      username: "ume3",
-      email: "hideaki_umezawa@mail.toyota.co.jp",
+      username: 'ume3',
+      email: 'hideaki_umezawa@mail.toyota.co.jp',
       created_at: new Date(),
-      password: "password3",
-      salt: "random3",
+      password: testHashedPassword,
+      salt: testSalt,
     },
     {
-      username: "matsu",
-      email: "takuya_matsumot_ai@mail.toyota.co.jp",
+      username: 'matsu',
+      email: 'takuya_matsumot_ai@mail.toyota.co.jp',
       created_at: new Date(),
-      password: "password4",
-      salt: "random4",
+      password: testHashedPassword,
+      salt: testSalt,
     },
   ]);
 };
