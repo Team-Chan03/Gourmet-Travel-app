@@ -15,8 +15,8 @@ const App = ()=>{
           <Route path="/records" element={<RecordsPage />} />
           {/* <Route path="/mypage" element={<MyPage />} /> */}
           {/* <Route path="/mypage/records" element={<Myrecords />} /> */}
-          <Route path="/mypage/map" element={<MapPage />} />
-          <Route path="/mypage/stamp" element={<StampPage />} />
+          <Route path="/map" element={<MapPage />} />
+          <Route path="/stamp" element={<StampPage />} />
         </Routes>
       </BrowserRouter>
     );
