@@ -62,6 +62,7 @@ function Map() {
             地図モード1<button onClick={changeMapmode}>モード切り替え</button>
           </header>
           <MapContainer
+            //地図のセンターは東京駅にしています
             center={[35.681382, 139.76608399999998]}
             zoom={5}
             style={{ height: "1000px", width: "100%" }}

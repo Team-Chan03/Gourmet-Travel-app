@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
   //緯度経度ここで取得してテーブルにインサートする
   console.log("このデータを今後インサートしていく予定", req.body);
   const { latitude, longitude, user_id, rating, created_at } = req.body;
-
+  //緯度経度を元に県を算出
   const resMap = await fetch(
     js`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
   );
