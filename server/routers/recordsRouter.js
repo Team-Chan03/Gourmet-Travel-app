@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
   const { latitude, longitude, user_id, rating, created_at } = req.body;
 
   const resMap = await fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+    js`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
   );
 
   const data = await resMap.json();

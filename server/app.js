@@ -90,12 +90,11 @@ app.get("/api/app", authMiddeware, async (req, res) => {
 // app.use("/api/form", example);
 
 app.use("/api/auth", authRouter);
-app.use("/api/map", mapRouter);
-app.use("/api/stamp", stampRouter);
-app.use("/api/records", recordsRouter);
-app.use("/api/upload-image", uploadImageRouter);
-app.use("/api/auth", authRouter);
-app.use("/api/map", mapRouter);
+app.use("/api/map", authMiddeware, mapRouter);
+app.use("/api/stamp", authMiddeware, stampRouter);
+app.use("/api/records", authMiddeware, recordsRouter);
+app.use("/api/upload-image", authMiddeware, uploadImageRouter);
+app.use("/api/map", authMiddeware, mapRouter);
 app.use("/api/stamp", authMiddeware, stampRouter);
 
 module.exports = app;
