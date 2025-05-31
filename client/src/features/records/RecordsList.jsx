@@ -60,7 +60,6 @@ const RecordsList = () => {
 
   return (
     <div>
-    <Header fetchRecord={fetchRecord} />
     <Box
       component="main"
       sx={{

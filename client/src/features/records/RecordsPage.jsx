@@ -4,7 +4,7 @@ import RecordsList from './RecordsList';
 
 function RecordsPage() {
   return (
-    <Container>
+    <Container maxWidth="false">
       <Header />
       <RecordsList />
     </Container>

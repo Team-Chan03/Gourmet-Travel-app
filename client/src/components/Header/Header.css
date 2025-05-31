@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Noto+Serif+JP");
 
 .header {
-  position: fixed;
-  top: 0;
+  /* position: fixed; */
+  /* top: 0;
   left: 0;
-  right: 0;
+  right: 0; */
   height: 90px;
   background: url("https://as1.ftcdn.net/v2/jpg/01/77/83/74/1000_F_177837428_am217HXxwWtwYGl5GBWsNEpV7ST5qhLG.jpg");
-  z-index: 999;
+  /* z-index: 999; */
 
   padding: 0 20px;
 
@@ -16,11 +16,11 @@
 }
 
 .header-title {
-  position: absolute;
+  /* position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
+  left: 50%; */
+  /* transform: translate(-50%, -50%); */
+  /* margin: 0; */
   font-size: 50px;
   font-family: "Noto Serif JP", serif;
 }

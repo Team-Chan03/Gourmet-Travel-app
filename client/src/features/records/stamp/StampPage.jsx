@@ -6,7 +6,7 @@ import Stamp from "./Stamp";
 function StampPage() {
   
   return (
-   <Container>
+   <Container  maxWidth="false">
     <Header/>
     <Stamp/>
    </Container>

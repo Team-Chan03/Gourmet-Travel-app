@@ -8,13 +8,11 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 const MapContent = () => {
   const [mapMode, setmapMpde] = useState(true);
-  const [iniFlag, setiniFlag] = useState(false);
   const [displayList, setDisplayList] = useState([]);
 
   async function getIniData() {
     let response = await axios.get('/api/map/data1');
     setDisplayList(response.data);
-    setiniFlag(true);
   }
 
   useEffect(() => {
@@ -26,31 +24,18 @@ const MapContent = () => {
     let response;
     let mode = mapMode;
     mode = !mode;
-    displayList.length = 0;
 
     //mapData1 : ピン立て
     if (mode) {
       response = await axios.get('/api/map/data1');
-      for (const item of response.data) {
-        displayList.push(item);
-      }
+      setDisplayList(response.data)
     } else {
       response = await axios.get('/api/map/data2');
-      for (const item of response.data) {
-        displayList.push(item);
-      }
+      setDisplayList(response.data)
     }
-    console.log('💀 ~ changeMapmode ~ displayList:', displayList);
-
+    
     setmapMpde(mode);
   }
-
-  // const center = [testData[0].latitude, testData[0].longitude];
-  const list = [
-    { region: '東京都', count: 20 },
-    { region: '大阪府', count: 15 },
-    { region: '愛知県', count: 12 },
-  ];
 
   return (
     <>
@@ -71,6 +56,7 @@ const MapContent = () => {
             />
 
             {displayList.map((obj) => (
+              
               <Marker key={obj.id} position={[obj.latitude, obj.longitude]}>
                 {/* <Popup>
                   <strong>{obj.name}</strong>
