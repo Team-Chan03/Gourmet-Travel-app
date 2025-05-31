@@ -35,7 +35,7 @@ app.use(passport.session());
 const authMiddeware = async (req, res, next) => {
   const sessionId = req.cookies.sessionId;
   console.log("🚀 ~ authMiddeware ~ sessionId:", sessionId);
-  if (!sessionId) {
+  if (!sessionId) {   //wentz:DBに保存してあるセッションIDと照合しなくていいのか。
     return res
       .status(401)
       .json({ error: "認証に失敗しました。セッションが無いか期限切れです。" });
@@ -89,6 +89,7 @@ app.get("/api/app", authMiddeware, async (req, res) => {
 //ルーティング　api/formに来た時example.jsに飛ぶ
 // app.use("/api/form", example);
 
+//wentz:/auth以外は、aythMiddreware入れたい。
 app.use("/api/auth", authRouter);
 app.use("/api/map", mapRouter);
 app.use("/api/stamp", stampRouter);
