@@ -9,7 +9,7 @@ router.get("/data1", async (req, res) => {
   
   try {
     const infomations = await db
-      .select("id", "latitude", "longitude ", "image_url", "comment")
+      .select("id", "latitude", "longitude ", "image_url", "comment","dishname")
       .where({user_id:userId})
       .table("records");
 
@@ -25,7 +25,7 @@ router.get("/data2", async (req, res) => {
   try {
     const maxcheck = {};
     const returnArray = [];
-    const infomations = await db.select("id", "region", "latitude", "longitude ", "image_url", "comment").table("records");
+    const infomations = await db.select("id", "region", "latitude", "longitude ", "image_url", "comment", "dishname").table("records");
 
     for (const obj of infomations) {
       maxcheck[obj.region] = obj.stamp_num;

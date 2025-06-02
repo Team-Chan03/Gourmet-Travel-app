@@ -5,7 +5,7 @@ import axios from 'axios';
 import JapanMap from './JapanMap';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { ImageList, ImageListItem } from '@mui/material';
+import { Box, ImageList, ImageListItem } from '@mui/material';
 
 const MapContent = () => {
   const [mapMode, setmapMode] = useState(true);
@@ -78,15 +78,18 @@ const MapContent = () => {
               return (
                 <Marker key={obj.id} position={[obj.latitude, obj.longitude]}>
                   <Popup>
+                    <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center' }}>
+
                     <img
                       className="mapImage"
                       src={obj.image_url}
                       alt="食べ物"
                       loading="lazy"
                       style={mapImage}
-                    />
+                      />
                     <br />
-                    <strong>{obj.comment}</strong>
+                    <strong>料理名：{obj.dishname}</strong>
+                      </Box>
                   </Popup>
                 </Marker>
               );
