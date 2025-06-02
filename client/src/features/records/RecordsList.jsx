@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Box, Card, CardMedia } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
-import { context } from '../../features/records/RecordsPage';
+import { context } from '../../app/App';
 
 const RecordsList = () => {
   const [records, setRecords] = useState([]);
