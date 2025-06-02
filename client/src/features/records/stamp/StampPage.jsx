@@ -13,12 +13,31 @@ function StampPage() {
 
   async function getUserData() {
     try {
-      await axios.get('/api/records');
+      const fetchData = await axios.get('/api/records/user');
+      setUserPostData(fetchData);
     } catch (err) {
       alert('データ取得失敗');
       console.error(err);
     }
   }
+
+  // useEffect(() => {
+  //   getUserData()
+  // },[])
+
+  // router.get('/user', async (req, res) => {
+  //   const { userId } = req.cookies;
+  //   try {
+  //     const list = await db('records')
+  //       .select('*')
+  //       .where('user_id', Number(userId))
+  //       .orderBy('created_at', 'desc');
+  //     res.status(200).json(list);
+  //   } catch (err) {
+  //     console.error('🔥 /api/records/:user error:', err.message);
+  //     res.status(500).json({ error: err.message });
+  //   }
+  // });
 
   return (
     <Container maxWidth="false">
