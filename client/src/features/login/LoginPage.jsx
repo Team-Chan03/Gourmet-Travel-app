@@ -4,7 +4,7 @@ import Header from '../../components/Header/Header';
 
 function LoginPage() {
   return (
-    <Container>
+    <Container  maxWidth="false">
       <Header />
       <LoginForm />
     </Container>

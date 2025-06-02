@@ -17,8 +17,12 @@ function Header({ fetchRecord }) {
   return (
     <div>
       <header className="header">
-        <h2 className="header-title">🌍全世界投稿一覧🌍</h2>
-        <Button onClick={handleToggleForm}>投稿フォーム</Button>
+        <div >
+          <Button onClick={handleToggleForm}>投稿フォーム</Button>
+        </div>
+        <div>
+          <h2 className="header-title">🌍全世界投稿一覧🌍</h2>
+        </div>
         <div className="drawer-container">
           <AnchorTemporaryDrawer />
         </div>

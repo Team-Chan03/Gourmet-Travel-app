@@ -4,7 +4,7 @@ import MapContent from './MapContent';
 
 function MapPage() {
   return (
-    <Container>
+    <Container  maxWidth="false">
       <Header />
       <MapContent />
     </Container>
