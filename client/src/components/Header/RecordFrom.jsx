@@ -33,7 +33,7 @@ function RecordFrom({ open, onClose, fetchRecord }) {
       });
       console.log("🔥 photoUrl があるのでここまで来たよ");
       try {
-        const req = await axios.post("/api/records", {
+        const req = await axios.post("/api/records/submit", {
           user_id: 1,
           image_url: photoUrl,
           comment,
