@@ -2,8 +2,9 @@ import { useState, useEffect, useContext, useRef } from "react";
 // prettier-ignore
 import {Modal,Box,Button,TextField,MenuItem,FormControl,InputLabel,Select,Autocomplete,TextareaAutosize,Rating,Typography} from "@mui/material";
 import axios from "axios";
+import { fetchRecord } from "../commonFunc/fetchFn";
 
-function RecordFrom({ open, onClose, fetchRecord }) {
+function RecordForm({ open, onClose  ,setRecords}) {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
   const [photoUrl, setPhotoUrl] = useState("");
@@ -16,6 +17,8 @@ function RecordFrom({ open, onClose, fetchRecord }) {
       formData.append("image", file); //key image   val file   として格納　　postでimageしか見ない
       const res = await axios.post("/api/upload-image", formData);
       setPhotoUrl(res.data.url);
+      console.log('imgBBへupload完了');
+      
     } catch (err) {
       console.error("画像アップロード失敗", err);
       alert("画像アップロードに失敗しました");
@@ -25,13 +28,13 @@ function RecordFrom({ open, onClose, fetchRecord }) {
   //各入力項目の状態を　payload　にオブジェクトとして格納しpostする関数　payload内の変数はカラムに合わしてあげる必要有り！
   const handleSubmit = async () => {
     if (photoUrl) {
+      console.log("🔥 photoUrl があるのでここまで来たよ");
       const { latitude, longitude } = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
           (position) => resolve(position.coords),
           (error) => reject(error)
         );
       });
-      console.log("🔥 photoUrl があるのでここまで来たよ");
       try {
         const req = await axios.post("/api/records/submit", {
           user_id: 1,
@@ -48,6 +51,8 @@ function RecordFrom({ open, onClose, fetchRecord }) {
       }
 
       await fetchRecord();
+      // setRecords(res.data);
+
 
       setComment("");
       setRating(1);
@@ -123,4 +128,4 @@ function RecordFrom({ open, onClose, fetchRecord }) {
   );
 }
 
-export default RecordFrom;
+export default RecordForm;
