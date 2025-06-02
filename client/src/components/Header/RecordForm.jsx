@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import {Modal,Box,Button,TextField,Rating,Typography} from "@mui/material";
 import axios from 'axios';
 import { fetchRecord } from '../commonFunc/fetchFn';
-import { context } from '../../features/records/RecordsPage';
+import { context } from '../../app/App';
 
 function RecordForm({ open, onClose, setRecords }) {
   const [dishname, setDishname] = useState('');
