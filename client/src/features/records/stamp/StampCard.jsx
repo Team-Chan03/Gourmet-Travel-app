@@ -163,7 +163,7 @@ const StampCard = () => {
       created_at: new Date(),
     },
   ]);
-  //選択された県で絞り込まれたState
+  //選択された県で絞り込まれたState/
 
   return countryUniqeData ? (
     <>
