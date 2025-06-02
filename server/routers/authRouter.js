@@ -60,6 +60,8 @@ router.post("/login", async (req, res) => {
       created_at: new Date(),
     });
     res.cookie("sessionId", sessionId, { httpOnly: true });
+    res.cookie("userId", user.user_id, { httpOnly: true });
+    res.cookie("userName", username, { httpOnly: true });
     res.json({ message: "ログイン成功" });
   } catch (err) {
     console.error(err);
