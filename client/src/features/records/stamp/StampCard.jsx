@@ -1,178 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card,
   Container,
   Typography,
   ImageList,
   ImageListItem,
-  ImageListItemBar,
 } from '@mui/material';
 
-const StampCard = () => {
-  const [countryUniqeData, setCountryUniqeData] = useState([
-    {
-      user_id: 1,
-      region: '愛知県',
-      latitude: 35.123906092471046,
-      longitude: 137.0659766288227,
-      image_url: 'https://i.ibb.co/k2bVrZLP/6b13d77d4703.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 2,
-      region: '愛知県',
-      created_at: new Date(),
-      latitude: 35.123906092471046,
-      longitude: 137.0659766288227,
-      image_url: 'https://i.ibb.co/h1FZb2CR/4a4affc1de4d.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 3,
-      region: '愛知県',
-      latitude: 35.123906092471046,
-      longitude: 137.0659766288227,
-      image_url: 'https://i.ibb.co/SX10ZT6F/61d518c5312a.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 4,
-      latitude: 35.123906092471046,
-      longitude: 137.0659766288227,
-      image_url:
-        'https://imgbp.hotp.jp/magazine/media/item_images/images/157/545/260/original/ad3c2473-1e46-45b1-9d14-84637a776a42.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
+const StampCard = (props) => {
+  const { userPostData, selectCountry } = props.states;
+  const [selectData, setSelectData] = useState();
 
-    {
-      user_id: 4,
-      region: '兵庫県',
-      latitude: 34.858006092471046,
-      longitude: 134.545466288227,
-      image_url:
-        'https://as1.ftcdn.net/v2/jpg/05/02/69/00/1000_F_502690033_qmZLw884d9z00wbABWqE6R7sSTlwBC4p.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 5,
-      region: '兵庫県',
-      latitude: 34.858006092471046,
-      longitude: 134.545466288227,
-      image_url:
-        'https://as1.ftcdn.net/v2/jpg/05/02/69/00/1000_F_502690033_qmZLw884d9z00wbABWqE6R7sSTlwBC4p.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 3,
-      region: '兵庫県',
-      latitude: 34.858006092471046,
-      longitude: 134.545466288227,
-      image_url:
-        'https://as1.ftcdn.net/v2/jpg/05/02/69/00/1000_F_502690033_qmZLw884d9z00wbABWqE6R7sSTlwBC4p.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 5,
-      region: '兵庫県',
-      latitude: 34.858006092471046,
-      longitude: 134.545466288227,
-      image_url:
-        'https://as1.ftcdn.net/v2/jpg/05/02/69/00/1000_F_502690033_qmZLw884d9z00wbABWqE6R7sSTlwBC4p.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 1,
-      region: '兵庫県',
-      latitude: 34.858006092471046,
-      longitude: 134.545466288227,
-      image_url:
-        'https://as1.ftcdn.net/v2/jpg/05/02/69/00/1000_F_502690033_qmZLw884d9z00wbABWqE6R7sSTlwBC4p.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 5,
-      region: '兵庫県',
-      latitude: 34.858006092471046,
-      longitude: 134.545466288227,
-      image_url:
-        'https://as1.ftcdn.net/v2/jpg/05/02/69/00/1000_F_502690033_qmZLw884d9z00wbABWqE6R7sSTlwBC4p.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 3,
-      region: '兵庫県',
-      latitude: 34.858006092471046,
-      longitude: 134.545466288227,
-      image_url:
-        'https://as1.ftcdn.net/v2/jpg/05/02/69/00/1000_F_502690033_qmZLw884d9z00wbABWqE6R7sSTlwBC4p.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 5,
-      region: '兵庫県',
-      latitude: 34.858006092471046,
-      longitude: 134.545466288227,
-      image_url:
-        'https://as1.ftcdn.net/v2/jpg/05/02/69/00/1000_F_502690033_qmZLw884d9z00wbABWqE6R7sSTlwBC4p.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 4,
-      region: '兵庫県',
-      latitude: 34.858006092471046,
-      longitude: 134.545466288227,
-      image_url:
-        'https://as1.ftcdn.net/v2/jpg/05/02/69/00/1000_F_502690033_qmZLw884d9z00wbABWqE6R7sSTlwBC4p.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-    {
-      user_id: 5,
-      region: '兵庫県',
-      latitude: 34.858006092471046,
-      longitude: 134.545466288227,
-      image_url:
-        'https://as1.ftcdn.net/v2/jpg/05/02/69/00/1000_F_502690033_qmZLw884d9z00wbABWqE6R7sSTlwBC4p.jpg',
-      comment: 'うまうま！！',
-      rating: Math.floor(Math.random() * 5 + 1),
-      created_at: new Date(),
-    },
-  ]);
-  //選択された県で絞り込まれたState/
-
-  return countryUniqeData ? (
+  useEffect(() => {
+    if (userPostData) {
+      setSelectData(userPostData.filter((e) => e.region === selectCountry));
+    }
+  }, [selectCountry]);
+  //sx={{ bgcolor: 'rgba(172, 107, 37, 0.3)' }}
+  return selectData ? (
     <>
       <Card sx={{ width: 1 }}>
         <Container>
           <Typography>Stamp Card</Typography>
+          <Typography>{`${selectCountry}: ${selectData.length} stamps`}</Typography>
         </Container>
-        <ImageList cols={5}>
-          {countryUniqeData.map((e, i) => (
+        <ImageList cols={4}>
+          {selectData.map((e, i) => (
             <ImageListItem key={i} sx={{ m: 3 }}>
               <img
                 src={e.image_url}
@@ -180,8 +33,33 @@ const StampCard = () => {
                 loading="lazy"
                 style={{
                   borderRadius: 90,
-                  height: 200,
-                  width: 200,
+                  height: 100,
+                  width: 100,
+                }}
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </Card>
+    </>
+  ) : userPostData ? (
+    <>
+      <Card sx={{ width: 1 }}>
+        <Container>
+          <Typography>Stamp Card</Typography>
+          <Typography>{`all stamps: ${userPostData.length} stamps`}</Typography>
+        </Container>
+        <ImageList cols={4}>
+          {userPostData.map((e, i) => (
+            <ImageListItem key={i} sx={{ m: 3 }}>
+              <img
+                src={e.image_url}
+                alt={e.comment}
+                loading="lazy"
+                style={{
+                  borderRadius: 90,
+                  height: 100,
+                  width: 100,
                 }}
               />
             </ImageListItem>
