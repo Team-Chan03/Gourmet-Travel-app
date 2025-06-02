@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import {
-  Grid,
   Card,
   Container,
   Typography,
   ImageList,
   ImageListItem,
+  ImageListItemBar,
 } from '@mui/material';
 
 const StampCard = () => {
@@ -167,20 +167,22 @@ const StampCard = () => {
 
   return countryUniqeData ? (
     <>
-      <Card>
+      <Card sx={{ width: 1 }}>
         <Container>
           <Typography>Stamp Card</Typography>
         </Container>
-        <ImageList cols={3} rowHeight={164}>
+        <ImageList cols={5}>
           {countryUniqeData.map((e, i) => (
             <ImageListItem key={i} sx={{ m: 3 }}>
               <img
                 src={e.image_url}
                 alt={e.comment}
                 loading="lazy"
-                height={100}
-                width={100}
-                style={{ borderRadius: 90 }}
+                style={{
+                  borderRadius: 90,
+                  height: 200,
+                  width: 200,
+                }}
               />
             </ImageListItem>
           ))}
