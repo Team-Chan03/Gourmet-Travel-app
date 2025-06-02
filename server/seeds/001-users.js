@@ -3,6 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.seed = async function (knex) {
+  await knex('sessions').del();
   await knex('users').del();
 
   const crypto = require('crypto');
@@ -19,28 +20,28 @@ exports.seed = async function (knex) {
 
   await knex('users').insert([
     {
+      username: 'yuta',
+      email: 'hideaki_umezawa@mail.toyota.co.jp',
+      created_at: new Date(),
+      password: testHashedPassword,
+      salt: testSalt,
+    },
+    {
+      username: 'wentz',
+      email: 'hideaki_umezawa@mail.toyota.co.jp',
+      created_at: new Date(),
+      password: testHashedPassword,
+      salt: testSalt,
+    },
+    {
+      username: 'kito',
+      email: 'hideaki_umezawa@mail.toyota.co.jp',
+      created_at: new Date(),
+      password: testHashedPassword,
+      salt: testSalt,
+    },
+    {
       username: 'ume',
-      email: 'hideaki_umezawa@mail.toyota.co.jp',
-      created_at: new Date(),
-      password: testHashedPassword,
-      salt: testSalt,
-    },
-    {
-      username: 'ume1',
-      email: 'hideaki_umezawa@mail.toyota.co.jp',
-      created_at: new Date(),
-      password: testHashedPassword,
-      salt: testSalt,
-    },
-    {
-      username: 'ume2',
-      email: 'hideaki_umezawa@mail.toyota.co.jp',
-      created_at: new Date(),
-      password: testHashedPassword,
-      salt: testSalt,
-    },
-    {
-      username: 'ume3',
       email: 'hideaki_umezawa@mail.toyota.co.jp',
       created_at: new Date(),
       password: testHashedPassword,
