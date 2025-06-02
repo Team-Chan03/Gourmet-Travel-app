@@ -31,7 +31,15 @@ router.get('/:user_id', async (req, res) => {
 router.post('/submit', async (req, res) => {
   //緯度経度ここで取得してテーブルにインサートする
   console.log('このデータを今後インサートしていく予定', req.body);
-  const { latitude, longitude, user_id, rating, created_at } = req.body;
+  const {
+    image_url,
+    latitude,
+    longitude,
+    user_id,
+    rating,
+    created_at,
+    comment,
+  } = req.body;
 
   const resMap = await fetch(
     `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
@@ -46,19 +54,19 @@ router.post('/submit', async (req, res) => {
     latitude, longitude, user_id, stamp_num, created_at, province;
   }:`,
     {
-      img_url,
+      image_url,
       latitude,
       longitude,
       user_id,
       rating,
       created_at,
       region,
-      comment,  
+      comment,
     }
   );
 
   const submitObj = {
-    img_url,
+    image_url,
     latitude,
     longitude,
     user_id,
