@@ -4,10 +4,14 @@ const db = require("../db");
 
 //ピン立て用のデータ取得
 router.get("/data1", async (req, res) => {
+  const {userId} = req.cookies
+  console.log(userId);
+  
   try {
     const infomations = await db
-      .select("id", "latitude", "longitude ")
-      .table("stamp");
+      .select("id", "latitude", "longitude ", "image_url", "comment")
+      .where({user_id:userId})
+      .table("records");
 
     res.status(200).send(infomations);
   } catch (err) {
@@ -21,7 +25,7 @@ router.get("/data2", async (req, res) => {
   try {
     const maxcheck = {};
     const returnArray = [];
-    const infomations = await db.select("region", "stamp_num ").table("stamp");
+    const infomations = await db.select("id", "region", "latitude", "longitude ", "image_url", "comment").table("records");
 
     for (const obj of infomations) {
       maxcheck[obj.region] = obj.stamp_num;

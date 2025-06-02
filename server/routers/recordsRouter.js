@@ -75,6 +75,8 @@ router.post('/submit', async (req, res) => {
     region,
     comment,
   };
+  console.log(user_id);
+  
 
   try {
     const list = await db('records').insert(submitObj);
