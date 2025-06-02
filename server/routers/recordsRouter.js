@@ -1,23 +1,36 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const db = require("../db");
+const db = require('../db');
 // import axios from "axios";
 
-
 //wentz:自分の投稿以外も取ってくるAPI
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const list = await db("records").select("*").orderBy("created_at", "desc");
+    const list = await db('records').select('*').orderBy('created_at', 'desc');
     res.status(200).json(list);
   } catch (err) {
-    console.error("🔥 /api/records error:", err.message);
+    console.error('🔥 /api/records error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
 
-router.post("/", async (req, res) => {
+//ユウタ:自分の投稿以外も取ってくるAPI
+router.get('/:user_id', async (req, res) => {
+  try {
+    const list = await db('records')
+      .select('*')
+      .where('user_id', req.params.user_id)
+      .orderBy('created_at', 'desc');
+    res.status(200).json(list);
+  } catch (err) {
+    console.error('🔥 /api/records/:user error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post('/', async (req, res) => {
   //緯度経度ここで取得してテーブルにインサートする
-  console.log("このデータを今後インサートしていく予定", req.body);
+  console.log('このデータを今後インサートしていく予定', req.body);
   const { latitude, longitude, user_id, rating, created_at } = req.body;
 
   const resMap = await fetch(
@@ -46,4 +59,3 @@ router.post("/", async (req, res) => {
 });
 
 module.exports = router;
-
