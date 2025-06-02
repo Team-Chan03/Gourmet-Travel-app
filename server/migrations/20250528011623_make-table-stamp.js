@@ -15,6 +15,7 @@ exports.up = async function (knex) {
     table.decimal('longitude', 32, 15);
     table.string('image_url');
     table.string('comment');
+    table.string('dishname');
     table.integer('rating').notNullable();
     table.timestamp('created_at').notNullable();
   });
@@ -25,5 +26,5 @@ exports.up = async function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = async function (knex) {
-  await knex.schema.dropTable('stamp');
+  await knex.schema.dropTable('records');
 };

@@ -1,12 +1,17 @@
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useContext, useState } from 'react';
 // prettier-ignore
-import {Modal,Box,Button,TextField,MenuItem,FormControl,InputLabel,Select,Autocomplete,TextareaAutosize,Rating,Typography} from "@mui/material";
+import {Modal,Box,Button,TextField,Rating,Typography} from "@mui/material";
 import axios from 'axios';
+import { fetchRecord } from '../commonFunc/fetchFn';
+import { context } from '../../app/App';
 
-function RecordFrom({ open, onClose, fetchRecord }) {
+function RecordForm({ open, onClose, setRecords }) {
+  const [dishname, setDishname] = useState('');
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(5);
   const [photoUrl, setPhotoUrl] = useState('');
+
+  const { rendering } = useContext(context);
 
   /**画像をURLにする関数*/
   const handleFileChange = async (e) => {
@@ -16,6 +21,7 @@ function RecordFrom({ open, onClose, fetchRecord }) {
       formData.append('image', file); //key image   val file   として格納　　postでimageしか見ない
       const res = await axios.post('/api/upload-image', formData);
       setPhotoUrl(res.data.url);
+      console.log('imgBBへupload完了');
     } catch (err) {
       console.error('画像アップロード失敗', err);
       alert('画像アップロードに失敗しました');
@@ -25,6 +31,7 @@ function RecordFrom({ open, onClose, fetchRecord }) {
   //各入力項目の状態を　payload　にオブジェクトとして格納しpostする関数　payload内の変数はカラムに合わしてあげる必要有り！
   const handleSubmit = async () => {
     if (photoUrl) {
+      console.log('🔥 photoUrl があるのでここまで来たよ');
       const { latitude, longitude } = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
           (position) => resolve(position.coords),
@@ -42,6 +49,7 @@ function RecordFrom({ open, onClose, fetchRecord }) {
           user_id: userIdFromCookie,
           image_url: photoUrl,
           comment,
+          dishname,
           rating,
           latitude,
           longitude,
@@ -58,6 +66,7 @@ function RecordFrom({ open, onClose, fetchRecord }) {
       setRating(1);
       setPhotoUrl('');
       onClose();
+      rendering();
     }
   };
   return (
@@ -101,6 +110,15 @@ function RecordFrom({ open, onClose, fetchRecord }) {
         )}
 
         <TextField
+          label="料理名"
+          multiline
+          minRows={1}
+          value={dishname}
+          onChange={(e) => setDishname(e.target.value)}
+          fullWidth
+        />
+
+        <TextField
           label="コメント"
           multiline
           minRows={3}
@@ -128,4 +146,4 @@ function RecordFrom({ open, onClose, fetchRecord }) {
   );
 }
 
-export default RecordFrom;
+export default RecordForm;

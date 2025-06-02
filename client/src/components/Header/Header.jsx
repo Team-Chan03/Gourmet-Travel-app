@@ -1,11 +1,11 @@
 import { Button } from '@mui/material';
 import AnchorTemporaryDrawer from './AnchorTemporaryDrawer';
 import './Header.css';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import RecordFrom from './RecordFrom';
+import RecordForm from './RecordForm';
 
-function Header({ fetchRecord }) {
+function Header({ }) {
+
   const [formOpen, setFormOpen] = useState(false);
 
   const handleToggleForm = () => {
@@ -21,17 +21,16 @@ function Header({ fetchRecord }) {
           <Button onClick={handleToggleForm}>投稿フォーム</Button>
         </div>
         <div>
-          <h2 className="header-title">🌍全世界投稿一覧🌍</h2>
+          <h2 className="header-title">🍽️Gourmet Travel🌎</h2>
         </div>
         <div className="drawer-container">
           <AnchorTemporaryDrawer />
         </div>
       </header>
 
-      <RecordFrom
+      <RecordForm
         open={formOpen}
         onClose={handleToggleForm}
-        fetchRecord={fetchRecord}
       />
     </div>
   );

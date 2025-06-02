@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
-// import axios from "axios";
 
 //wentz:自分の投稿以外も取ってくるAPI
 router.get('/', async (req, res) => {
@@ -14,12 +13,12 @@ router.get('/', async (req, res) => {
   }
 });
 
-//ユウタ:自分の投稿だけを取ってくるAPI
-router.get('/:user_id', async (req, res) => {
+router.get('/user', async (req, res) => {
+  const { userId } = req.cookies;
   try {
     const list = await db('records')
       .select('*')
-      .where('user_id', req.params.user_id)
+      .where('user_id', Number(userId))
       .orderBy('created_at', 'desc');
     res.status(200).json(list);
   } catch (err) {
@@ -30,7 +29,7 @@ router.get('/:user_id', async (req, res) => {
 
 router.post('/submit', async (req, res) => {
   //緯度経度ここで取得してテーブルにインサートする
-  console.log('このデータを今後インサートしていく予定', req.body);
+  // console.log('このデータを今後インサートしていく予定', req.body);
   const {
     image_url,
     latitude,
@@ -39,6 +38,7 @@ router.post('/submit', async (req, res) => {
     rating,
     created_at,
     comment,
+    dishname,
   } = req.body;
 
   const resMap = await fetch(
@@ -49,22 +49,6 @@ router.post('/submit', async (req, res) => {
   //wentz:provinceに県名が入る
   const region = data.address.province;
 
-  console.log(
-    `🚀 ~ router.post ~   {
-    latitude, longitude, user_id, stamp_num, created_at, province;
-  }:`,
-    {
-      image_url,
-      latitude,
-      longitude,
-      user_id,
-      rating,
-      created_at,
-      region,
-      comment,
-    }
-  );
-
   const submitObj = {
     image_url,
     latitude,
@@ -74,6 +58,7 @@ router.post('/submit', async (req, res) => {
     created_at,
     region,
     comment,
+    dishname,
   };
   console.log(user_id);
   
