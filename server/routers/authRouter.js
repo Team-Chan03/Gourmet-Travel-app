@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
     });
     res.cookie("sessionId", sessionId, { httpOnly: true });
     res.cookie("userId", user.user_id);
-    res.cookie("userName", username, { httpOnly: true });
+    res.cookie("userName", username);
     res.json({ message: "ログイン成功" });
   } catch (err) {
     console.error(err);
@@ -78,6 +78,8 @@ router.get('/logout', async (req, res) => {
     await db('sessions').where('sessions_id', sessionId).del();
 
     res.clearCookie('sessionId');
+    res.clearCookie('userId');
+    res.clearCookie('userName');
     // res.redirect("http://localhost:5173/");
     res.json({ message: 'ログアウト成功' });
   } catch (err) {

@@ -2,16 +2,15 @@ import { useContext, useState } from 'react';
 // prettier-ignore
 import {Modal,Box,Button,TextField,Rating,Typography} from "@mui/material";
 import axios from 'axios';
-import { fetchRecord } from '../commonFunc/fetchFn';
 import { context } from '../../app/App';
 
-function RecordForm({ open, onClose, setRecords }) {
+function RecordForm({ open, onClose }) {
   const [dishname, setDishname] = useState('');
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(5);
   const [photoUrl, setPhotoUrl] = useState('');
 
-  const { rendering } = useContext(context);
+  const { rendering, isLoading, setIsLoading } = useContext(context);
 
   /**画像をURLにする関数*/
   const handleFileChange = async (e) => {
@@ -31,19 +30,22 @@ function RecordForm({ open, onClose, setRecords }) {
   //各入力項目の状態を　payload　にオブジェクトとして格納しpostする関数　payload内の変数はカラムに合わしてあげる必要有り！
   const handleSubmit = async () => {
     if (photoUrl) {
-      console.log('🔥 photoUrl があるのでここまで来たよ');
+      setIsLoading(true);
       const { latitude, longitude } = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
           (position) => resolve(position.coords),
           (error) => reject(error)
         );
       });
-      console.log('🔥 photoUrl があるのでここまで来たよ');
+      // console.log('🔥 photoUrl があるのでここまで来たよ');
       const userIdFromCookie = document.cookie
         .split('; ')
         .find((row) => row.startsWith('userId='))
         ?.split('=')[1];
-
+        setComment('');
+        setRating(1);
+        setPhotoUrl('');
+        onClose();
       try {
         const req = await axios.post('/api/records/submit', {
           user_id: userIdFromCookie,
@@ -59,13 +61,11 @@ function RecordForm({ open, onClose, setRecords }) {
       } catch (err) {
         console.error('❌ POST エラー', err);
       }
-
+      
       // await fetchRecord();
+      
 
-      setComment('');
-      setRating(1);
-      setPhotoUrl('');
-      onClose();
+      setIsLoading(false)
       rendering();
     }
   };
@@ -87,30 +87,30 @@ function RecordForm({ open, onClose, setRecords }) {
           gap: 2,
         }}
       >
-        <Typography variant="h6" component="h2">
+        <Typography variant='h6' component='h2'>
           新規投稿
         </Typography>
 
-        <Button variant="outlined" component="label">
+        <Button variant='outlined' component='label'>
           画像を選択
           <input
-            type="file"
-            accept="image/*"
+            type='file'
+            accept='image/*'
             hidden
             onChange={handleFileChange}
           />
         </Button>
         {photoUrl && (
           <Box
-            component="img"
+            component='img'
             src={photoUrl}
-            alt="選択画像"
+            alt='選択画像'
             sx={{ width: '100%', borderRadius: 1 }}
           />
         )}
 
         <TextField
-          label="料理名"
+          label='料理名'
           multiline
           minRows={1}
           value={dishname}
@@ -119,7 +119,7 @@ function RecordForm({ open, onClose, setRecords }) {
         />
 
         <TextField
-          label="コメント"
+          label='コメント'
           multiline
           minRows={3}
           value={comment}
@@ -137,7 +137,7 @@ function RecordForm({ open, onClose, setRecords }) {
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
           <Button onClick={onClose}>キャンセル</Button>
-          <Button variant="contained" onClick={handleSubmit}>
+          <Button variant='contained' onClick={handleSubmit} disabled={!photoUrl}>
             投稿
           </Button>
         </Box>
