@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
-// import axios from "axios";
 
 //wentz:自分の投稿以外も取ってくるAPI
 router.get('/', async (req, res) => {
@@ -14,21 +13,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-//ユウタ:自分の投稿だけを取ってくるAPI
-// router.get('/:user_id', async (req, res) => {
-//   try {
-//     const list = await db('records')
-//       .select('*')
-//       .where('user_id', req.params.user_id)
-//       .orderBy('created_at', 'desc');
-//     res.status(200).json(list);
-//   } catch (err) {
-//     console.error('🔥 /api/records/:user error:', err.message);
-//     res.status(500).json({ error: err.message });
-//   }
-// });
-
-//きとーちゃん　cookieでユーザーを絞り込む
 router.get('/user', async (req, res) => {
   const { userId } = req.cookies;
   try {
@@ -54,6 +38,7 @@ router.post('/submit', async (req, res) => {
     rating,
     created_at,
     comment,
+    dishname,
   } = req.body;
 
   const resMap = await fetch(
@@ -64,22 +49,6 @@ router.post('/submit', async (req, res) => {
   //wentz:provinceに県名が入る
   const region = data.address.province;
 
-  // console.log(
-  //   `🚀 ~ router.post ~   {
-  //   latitude, longitude, user_id, stamp_num, created_at, province;
-  // }:`,
-  //   {
-  //     image_url,
-  //     latitude,
-  //     longitude,
-  //     user_id,
-  //     rating,
-  //     created_at,
-  //     region,
-  //     comment,
-  //   }
-  // );
-
   const submitObj = {
     image_url,
     latitude,
@@ -89,6 +58,7 @@ router.post('/submit', async (req, res) => {
     created_at,
     region,
     comment,
+    dishname,
   };
 
   try {
