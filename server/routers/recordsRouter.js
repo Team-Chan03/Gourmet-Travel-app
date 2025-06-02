@@ -14,10 +14,26 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+//ユウタ:自分の投稿以外も取ってくるAPI
+router.get('/:user_id', async (req, res) => {
+  try {
+    const list = await db('records')
+      .select('*')
+      .where('user_id', req.params.user_id)
+      .orderBy('created_at', 'desc');
+    res.status(200).json(list);
+  } catch (err) {
+    console.error('🔥 /api/records/:user error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.post('/', async (req, res) => {
   //緯度経度ここで取得してテーブルにインサートする
   console.log('このデータを今後インサートしていく予定', req.body);
-  const { latitude, longitude, user_id, rating, created_at, comment, image_url } = req.body;
+  const { latitude, longitude, user_id, rating, created_at } = req.body;
+
 
   const resMap = await fetch(
     `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
