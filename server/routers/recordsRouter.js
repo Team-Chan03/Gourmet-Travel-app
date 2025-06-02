@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-//ユウタ:自分の投稿以外も取ってくるAPI
+//ユウタ:自分の投稿だけを取ってくるAPI
 router.get('/:user_id', async (req, res) => {
   try {
     const list = await db('records')
@@ -28,7 +28,7 @@ router.get('/:user_id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/submit', async (req, res) => {
   //緯度経度ここで取得してテーブルにインサートする
   console.log('このデータを今後インサートしていく予定', req.body);
   const { latitude, longitude, user_id, rating, created_at } = req.body;
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 
   const data = await resMap.json();
   //wentz:provinceに県名が入る
-  const province = data.address.province;
+  const region = data.address.province;
 
   console.log(
     `🚀 ~ router.post ~   {
@@ -51,11 +51,26 @@ router.post('/', async (req, res) => {
       user_id,
       rating,
       created_at,
-      province,
+      region,
     }
   );
 
-  res.json(req.body);
+  const submitObj = {
+    latitude,
+    longitude,
+    user_id,
+    rating,
+    created_at,
+    region,
+  };
+
+  try {
+    const list = await db('records').insert(submitObj);
+    res.status(200).json(submitObj);
+  } catch (err) {
+    console.error('🔥 /api/records/submit', err.message);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 module.exports = router;
