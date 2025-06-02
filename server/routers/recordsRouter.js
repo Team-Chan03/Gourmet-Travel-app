@@ -30,7 +30,7 @@ router.get('/:user_id', async (req, res) => {
 
 router.post('/submit', async (req, res) => {
   //緯度経度ここで取得してテーブルにインサートする
-  console.log('このデータを今後インサートしていく予定', req.body);
+  // console.log('このデータを今後インサートしていく予定', req.body);
   const {
     image_url,
     latitude,
@@ -49,21 +49,21 @@ router.post('/submit', async (req, res) => {
   //wentz:provinceに県名が入る
   const region = data.address.province;
 
-  console.log(
-    `🚀 ~ router.post ~   {
-    latitude, longitude, user_id, stamp_num, created_at, province;
-  }:`,
-    {
-      image_url,
-      latitude,
-      longitude,
-      user_id,
-      rating,
-      created_at,
-      region,
-      comment,
-    }
-  );
+  // console.log(
+  //   `🚀 ~ router.post ~   {
+  //   latitude, longitude, user_id, stamp_num, created_at, province;
+  // }:`,
+  //   {
+  //     image_url,
+  //     latitude,
+  //     longitude,
+  //     user_id,
+  //     rating,
+  //     created_at,
+  //     region,
+  //     comment,
+  //   }
+  // );
 
   const submitObj = {
     image_url,

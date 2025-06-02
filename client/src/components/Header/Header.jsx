@@ -1,11 +1,10 @@
 import { Button } from '@mui/material';
 import AnchorTemporaryDrawer from './AnchorTemporaryDrawer';
 import './Header.css';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import RecordFrom from './RecordFrom';
+import RecordForm from './RecordForm';
 
-function Header({ fetchRecord }) {
+function Header({ }) {
   const [formOpen, setFormOpen] = useState(false);
 
   const handleToggleForm = () => {
@@ -28,10 +27,9 @@ function Header({ fetchRecord }) {
         </div>
       </header>
 
-      <RecordFrom
+      <RecordForm
         open={formOpen}
         onClose={handleToggleForm}
-        fetchRecord={fetchRecord}
       />
     </div>
   );
