@@ -46,22 +46,26 @@ router.post('/submit', async (req, res) => {
     latitude, longitude, user_id, stamp_num, created_at, province;
   }:`,
     {
+      img_url,
       latitude,
       longitude,
       user_id,
       rating,
       created_at,
       region,
+      comment,  
     }
   );
 
   const submitObj = {
+    img_url,
     latitude,
     longitude,
     user_id,
     rating,
     created_at,
     region,
+    comment,
   };
 
   try {
