@@ -5,8 +5,14 @@ import RegisterPage from '../features/login/RegisterPage.jsx';
 import StampPage from '../features/records/stamp/StampPage.jsx';
 import MapPage from '../features/records/map/MapPage.jsx';
 import React, { useState, createContext } from 'react';
+import axios from 'axios';
 
 export const context = createContext();
+
+async function postToX() {
+  await axios.post('/api/test')
+  .then(res => console.log(res));
+}
 
 const App = () => {
   const [postRendering, setPostRendering] = useState(false);
@@ -28,6 +34,7 @@ const App = () => {
           <Route path='/map' element={<MapPage />} />
           <Route path='/stamp' element={<StampPage />} />
         </Routes>
+        <button onClick={postToX}>テストボタン</button>
       </BrowserRouter>
     </context.Provider>
   );
