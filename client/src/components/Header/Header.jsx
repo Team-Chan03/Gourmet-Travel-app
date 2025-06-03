@@ -1,37 +1,38 @@
 import { Button } from '@mui/material';
-import AnchorTemporaryDrawer from './AnchorTemporaryDrawer';
+import Menubar from './MenuBar';
 import './Header.css';
 import { useState } from 'react';
 import RecordForm from './RecordForm';
 
-function Header({ }) {
-
+function Header({}) {
   const [formOpen, setFormOpen] = useState(false);
 
   const handleToggleForm = () => {
-    console.log('🚀 ~ handleToggleForm発火したよ:', handleToggleForm);
-
     setFormOpen((val) => !val);
   };
 
   return (
     <div>
-      <header className="header">
-        <div >
+      <header className='header'>
+        {/* <div>
           <Button onClick={handleToggleForm}>投稿フォーム</Button>
-        </div>
+        </div> */}
         <div>
-          <h2 className="header-title">🍽️Gourmet Travel🌎</h2>
+          <h2 className='header-title'>🍽️Gourmet Travel🌎</h2>
         </div>
-        <div className="drawer-container">
-          <AnchorTemporaryDrawer />
+        <div className='drawer-container'>
+          Hello,{' '}
+          {
+            document.cookie
+              .split('; ')
+              .find((row) => row.startsWith('userName='))
+              ?.split('=')[1]
+          }
+          <Menubar />
         </div>
       </header>
 
-      <RecordForm
-        open={formOpen}
-        onClose={handleToggleForm}
-      />
+      <RecordForm open={formOpen} onClose={handleToggleForm} />
     </div>
   );
 }

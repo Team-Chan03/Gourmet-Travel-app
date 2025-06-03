@@ -2,158 +2,17 @@ import React, { useEffect, memo } from "react";
 import * as d3 from "d3";
 import geoJson from "./../../../utils/japan.json";
 
-const getTarget = ({ prefName, list }) => {
-  let pref;
-  switch (prefName) {
-    case "Kagoshima":
-      pref = "鹿児島県";
-      break;
-    case "Oita":
-      pref = "大分県";
-      break;
-    case "Fukuoka":
-      pref = "福岡県";
-      break;
-    case "Saga":
-      pref = "佐賀県";
-      break;
-    case "Nagasaki":
-      pref = "長崎県";
-      break;
-    case "Kumamoto":
-      pref = "熊本県";
-      break;
-    case "Miyazaki":
-      pref = "宮崎県";
-      break;
-    case "Tokushima":
-      pref = "徳島県";
-      break;
-    case "Kagawa":
-      pref = "香川県";
-      break;
-    case "Ehime":
-      pref = "愛媛県";
-      break;
-    case "Kochi":
-      pref = "高知県";
-      break;
-    case "Shimane":
-      pref = "島根県";
-      break;
-    case "Yamaguchi":
-      pref = "山口県";
-      break;
-    case "Tottori":
-      pref = "鳥取県";
-      break;
-    case "Hyogo":
-      pref = "兵庫県";
-      break;
-    case "Kyoto":
-      pref = "京都府";
-      break;
-    case "Fukui":
-      pref = "福井県";
-      break;
-    case "Ishikawa":
-      pref = "石川県";
-      break;
-    case "Toyama":
-      pref = "富山県";
-      break;
-    case "Niigata":
-      pref = "新潟県";
-      break;
-    case "Yamagata":
-      pref = "山形県";
-      break;
-    case "Akita":
-      pref = "秋田県";
-      break;
-    case "Aomori":
-      pref = "青森県";
-      break;
-    case "Iwate":
-      pref = "岩手県";
-      break;
-    case "Miyagi":
-      pref = "宮城県";
-      break;
-    case "Fukushima":
-      pref = "福島県";
-      break;
-    case "Ibaraki":
-      pref = "茨城県";
-      break;
-    case "Chiba":
-      pref = "千葉県";
-      break;
-    case "Tokyo":
-      pref = "東京都";
-      break;
-    case "Kanagawa":
-      pref = "神奈川県";
-      break;
-    case "Shizuoka":
-      pref = "静岡県";
-      break;
-    case "Aichi":
-      pref = "愛知県";
-      break;
-    case "Mie":
-      pref = "三重県";
-      break;
-    case "Wakayama":
-      pref = "和歌山県";
-      break;
-    case "Osaka":
-      pref = "大阪府";
-      break;
-    case "Okayama":
-      pref = "岡山県";
-      break;
-    case "Hiroshima":
-      pref = "広島県";
-      break;
-    case "Hokkaido":
-      pref = "北海道";
-      break;
-    case "Okinawa":
-      pref = "沖縄県";
-      break;
-    case "Gunma":
-      pref = "群馬県";
-      break;
-    case "Nagano":
-      pref = "長野県";
-      break;
-    case "Tochigi":
-      pref = "栃木県";
-      break;
-    case "Gifu":
-      pref = "岐阜県";
-      break;
-    case "Shiga":
-      pref = "滋賀県";
-      break;
-    case "Saitama":
-      pref = "埼玉県";
-      break;
-    case "Yamanashi":
-      pref = "山梨県";
-      break;
-    case "Nara":
-      pref = "奈良県";
-      break;
-  }
-
-  let target = null;
+const getTarget = ({ list, prefName }) => {
+  let pref = prefName;
+  let count = 0;
   list.map((e) => {
-    if (e.region === pref) target = e;
-    // if (e.name === pref) target = e;
-  });
-  return target;
+    if (e.region === pref){
+       count ++;
+      }
+  })
+  if(count>0)console.log("count",pref, count);
+  
+  return count;
 };
 
 export function useMounted() {
@@ -173,7 +32,7 @@ const JapanMap = ({ list }) => {
     const width = 500; // 描画サイズ: 幅
     const height = 500; // 描画サイズ: 高さ
     const centerPos = [137.0, 38.2]; // 地図のセンター位置
-    const scale = 1000; // 地図のスケール
+    const scale = 1300; // 地図のスケール
     const color = "#2566CC"; // 地図の色
     const colorActive = "#ebfd2a"; // ホバーした時の色
 
@@ -203,20 +62,30 @@ const JapanMap = ({ list }) => {
       .append(`path`)
       .attr(`d`, path)
       .attr(`stroke`, `#666`)
-      .attr(`stroke-width`, 0.25)
-      .attr(`fill`, color)
+      .attr(`stroke-width`, 0.50)
+      .attr(`fill`, (item) => {
+        // 透明度の設定
+        let color ;
+        const t = getTarget({ list, prefName: item.properties.name_ja });
+        if (t >= 5) {
+          color = '#ff9f38'
+        } else if(t >= 10){
+          color = '#c0c0c0'
+        }else if (t >= 20){
+          color = '#e6b422'
+        }else if (t < 5 && t > 0){
+          color = '#2566CC'
+        }
+        else {
+          color = '#ffffff'
+        }
+        ;
+        return color;})
       .attr(`cursor`, (item) => {
         // カーソルの設定
-        const t = getTarget({ list, prefName: item.properties.name });
-
-        if (!t || t.count === 0) return "not-allowed";
+        const t = getTarget({ list, prefName: item.properties.name_ja });
+        if (!t || t.count === 0) return ;
         return "pointer";
-      })
-      .attr(`fill-opacity`, (item) => {
-        // 透明度の設定
-        const t = getTarget({ list, prefName: item.properties.name });
-        if (!t || t.count === 0) return 0;
-        return t.count * 0.05;
       })
 
       /**

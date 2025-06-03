@@ -60,6 +60,8 @@ router.post('/submit', async (req, res) => {
     comment,
     dishname,
   };
+  console.log(user_id);
+  
 
   try {
     const list = await db('records').insert(submitObj);
