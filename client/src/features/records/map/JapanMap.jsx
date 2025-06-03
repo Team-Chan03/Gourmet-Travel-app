@@ -16,6 +16,7 @@ const getTarget = ({ list, prefName }) => {
 };
 
 export function useMounted() {
+  
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -67,12 +68,12 @@ const JapanMap = ({ list }) => {
         // 透明度の設定
         let color ;
         const t = getTarget({ list, prefName: item.properties.name_ja });
-        if (t >= 5) {
-          color = '#ff9f38'
+        if (t >= 20) {
+          color = '#e6b422'
         } else if(t >= 10){
           color = '#c0c0c0'
-        }else if (t >= 20){
-          color = '#e6b422'
+        }else if (t >= 5){
+          color = '#ff9f38'
         }else if (t < 5 && t > 0){
           color = '#2566CC'
         }

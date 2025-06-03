@@ -1,57 +1,65 @@
-import React from 'react';
-import { Box, Card, CardMedia, Button } from '@mui/material';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import Header from '../../components/Header/Header';
-import { useNavigate } from 'react-router';
+import React from 'react'
+import {
+    Box,
+    Card,
+    CardMedia,
+    Button,
+  } from '@mui/material';
+  import { useState, useEffect,useContext } from 'react';
+  import axios from 'axios';
+  import Header from '../../components/Header/Header';
+  import { useNavigate } from 'react-router';
+  import { context } from '../../app/App';
+
 
 const RecordsList = () => {
-  const [records, setRecords] = useState([]);
-  const [username, setUsername] = useState('');
-  const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
-
-  //全てのrecordsを取得する関数
-  const fetchRecord = async () => {
-    try {
-      const res = await axios.get('/api/records');
-      console.log('☺️ レーコード更新~ fetchRecord ~ res:', res);
-      setRecords(res.data);
-    } catch (err) {
-      console.log('RecordList の listGet失敗', err);
-    }
-  };
-
-  //認証用
-  // Appに入る
-  const loadApp = async () => {
-    try {
-      const res = await axios.get('/api/app');
-      setUsername(res.data.username); //stateで管理しないと再度レンダリングしてくれない
-      console.log('認証に成功しました');
-    } catch (err) {
-      //セッションID無ければ401を返し,catchに入る
-      if (err.response.status === 401) {
-        alert('セッションIDがありません');
-        navigate('/');
-      } else {
-        console.error('予期しないえらーが発生しました', err);
+    const {postRendering} = useContext(context);
+    const [records, setRecords] = useState([]);
+    const [username, setUsername] = useState('');
+    const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
+  
+    //全てのrecordsを取得する関数
+    const fetchRecord = async () => {
+      try {
+        const res = await axios.get('/api/records');
+        console.log('☺️ レーコード更新~ fetchRecord ~ res:', res);
+        setRecords(res.data);
+      } catch (err) {
+        console.log('RecordList の listGet失敗', err);
       }
-    }
-  };
-
-  useEffect(() => {
-    loadApp();
-
-    const interval = setInterval(() => {
+    };
+  
+    //認証用
+    // Appに入る
+    const loadApp = async () => {
+      try {
+        const res = await axios.get('/api/app');
+        setUsername(res.data.username); //stateで管理しないと再度レンダリングしてくれない
+        console.log('認証に成功しました');
+      } catch (err) {
+        //セッションID無ければ401を返し,catchに入る
+        if (err.response.status === 401) {
+          alert('セッションIDがありません');
+          navigate('/');
+        } else {
+          console.error('予期しないえらーが発生しました', err);
+        }
+      }
+    };
+  
+    useEffect(() => {
       loadApp();
-    }, 10 * 60 * 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    fetchRecord();
-  }, []);
+  
+      const interval = setInterval(() => {
+        loadApp();
+      }, 10 * 60 * 1000);
+  
+      return () => clearInterval(interval);
+    }, []);
+  
+    useEffect(() => {
+      fetchRecord();
+    }, [postRendering]);
 
   async function postToX(text, url) {
       await axios.post('/api/test', {text, url})

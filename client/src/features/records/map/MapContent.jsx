@@ -65,6 +65,7 @@ const MapContent = () => {
           <MapContainer
             center={centerPosition}
             zoom={8}
+            zoomControl={false}
             style={{ height: '1000px', width: '100%' }}
           >
             {/* Map タイル */}
