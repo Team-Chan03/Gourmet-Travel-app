@@ -11,7 +11,7 @@ export const context = createContext();
 
 async function postToX() {
   await axios.post('/api/post', {text: 'テスト投稿', path: '/Users/user/BTC8/scheduler/front/public/scheduler.png'})
-  .then(res => console.log(res));
+  .then(res => console.log(res.data));
 }
 
 const App = () => {
