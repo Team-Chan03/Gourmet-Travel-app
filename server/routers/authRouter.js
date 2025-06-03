@@ -102,10 +102,15 @@ router.get(
     failureRedirect: frontUrl,
   }),
   (req, res) => {
+    console.log(req);
     res.cookie('sessionId', req.sessionId, { httpOnly: true });
+    res.cookie('userId', req.user.user_id);
+    res.cookie('userName', req.user.email.slice(0, -10));
     res.redirect(`${frontUrl}records`);
     // res.redirect("http://localhost:5173/records");
   }
 );
 
 module.exports = router;
+
+

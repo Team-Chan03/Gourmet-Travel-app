@@ -3,6 +3,7 @@ import {
     Box,
     Card,
     CardMedia,
+    Button,
   } from '@mui/material';
   import { useState, useEffect,useContext } from 'react';
   import axios from 'axios';
@@ -60,58 +61,69 @@ const RecordsList = () => {
       fetchRecord();
     }, [postRendering]);
 
+  async function postToX(text, url) {
+      await axios.post('/api/test', {text, url})
+  .then(res => console.log(res));
+  }
+
   return (
     <div>
-    <Box
-      component="main"
-      sx={{
-        p: 2,
-        backgroundImage:
-          'url(https://www.chizu-seisaku.com/wp-content/uploads/2021/08/world-furumap-scaled.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        minHeight: '100vh',
-        backgroundAttachment: 'fixed',
-      }}
-    >
       <Box
+        component="main"
         sx={{
-          mt: 10,
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: '1fr',
-            sm: 'repeat(2,1fr)',
-            md: 'repeat(4,1fr)',
-          },
-          gap: 2,
+          p: 2,
+          backgroundImage:
+            'url(https://www.chizu-seisaku.com/wp-content/uploads/2021/08/world-furumap-scaled.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '100vh',
+          backgroundAttachment: 'fixed',
         }}
       >
-        {records.map((obj) => (
-          <Card key={obj.id} sx={{ maxWidth: 450 }}>
-            {obj.image_url && (
-              <CardMedia
-                component="img"
-                height="180"
-                image={obj.image_url}
-                alt="投稿写真"
-                sx={{
-                  objectFit: 'contain',
-                  backgroundColor: '#eee',
-                  // objectFit: 'cover',
-                }}
-              />
-            )}
-            <div className="record_header">
-              <p className="record_content">コメント：{obj.comment}</p>
-              <span className="record_rating">{'⭐'.repeat(obj.rating)}</span>
-            </div>
-          </Card>
-        ))}
+        <Box
+          sx={{
+            mt: 10,
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: 'repeat(2,1fr)',
+              md: 'repeat(4,1fr)',
+            },
+            gap: 2,
+          }}
+        >
+          {records.map((obj) => (
+            <Card key={obj.id} sx={{ maxWidth: 450 }}>
+              {obj.image_url && (
+                <CardMedia
+                  component="img"
+                  height="180"
+                  image={obj.image_url}
+                  alt="投稿写真"
+                  sx={{
+                    objectFit: 'contain',
+                    backgroundColor: '#eee',
+                    // objectFit: 'cover',
+                  }}
+                />
+              )}
+              <div className="record_header">
+                <p className="record_content">コメント：{obj.comment}</p>
+                <span className="record_rating">{'⭐'.repeat(obj.rating)}</span>
+                <p>
+                <Button onClick={()=>{postToX(obj.comment, obj.image_url)}}>
+                    post to{'　'}
+                    <img style={{ height: '15px' }} src="/logo-black.png" />
+                </Button>
+                </p>
+              </div>
+            </Card>
+          ))}
+        </Box>
       </Box>
-    </Box>
-  </div>
-  )
-}
+    </div>
+  );
+};
 
-export default RecordsList
+export default RecordsList;
