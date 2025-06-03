@@ -72,7 +72,7 @@ function RecordForm({ open, onClose }) {
   };
 
   async function postToX(text, path) {
-      await axios.post('/api/test', {text, path})
+      await axios.post('/api/post', {text, path})
   .then(res => console.log(res));
   }
 

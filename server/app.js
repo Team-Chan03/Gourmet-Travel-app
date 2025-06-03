@@ -7,7 +7,7 @@ const stampRouter = require("./routers/stampRouter");
 const mapRouter = require("./routers/mapRouter");
 const uploadImageRouter = require("./routers/uploadImageRouter");
 const recordsRouter = require("./routers/recordsRouter");
-const testRouter = require("./routers/testRouter");
+const postRouter = require("./routers/postRouter");
 const multer = require("multer");
 const { log } = require("console");
 const upload = multer(); // メモリストレージ
@@ -99,6 +99,6 @@ app.use("/api/upload-image", uploadImageRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/map", mapRouter);
 app.use("/api/stamp", authMiddeware, stampRouter);
-app.use("/api/test", testRouter);
+app.use("/api/post", postRouter);
 
 module.exports = app;
