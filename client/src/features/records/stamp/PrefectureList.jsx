@@ -27,7 +27,7 @@ const RatingList = (props) => {
     setSelectDish('');
   }
 
-  function imgPopup(e) {
+  function selectDishGet(e) {
     setSelectDish(e.target.innerText);
   }
 
@@ -60,7 +60,7 @@ const RatingList = (props) => {
           </AccordionSummary>
           <AccordionDetails>
             {uniqueDishArray.map((user_e, user_i) => (
-              <Box key={user_i} sx={{ m: 3 }} onClick={imgPopup}>
+              <Box key={user_i} sx={{ m: 3 }} onClick={selectDishGet}>
                 {unique_e.region === user_e.region ? user_e.dishname : ''}
               </Box>
             ))}
