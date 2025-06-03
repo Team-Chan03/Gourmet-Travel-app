@@ -1,5 +1,5 @@
-import React from 'react'
-import { useEffect, useState } from "react";
+import React from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -7,13 +7,13 @@ import {
   Select,
   InputLabel,
   FormControl,
-} from "@mui/material";
-import axios from "axios";
+} from '@mui/material';
+import axios from 'axios';
 
 const Stamp = () => {
-    const [prefecture, setPrefecture] = useState([]);
+  const [prefecture, setPrefecture] = useState([]);
   const [prefectureUnique, setPrefectureUnique] = useState([]); //重複なしデータ
-  const [selectRegion, setSelectRegion] = useState("");
+  const [selectRegion, setSelectRegion] = useState('');
 
   const prefectureChange = (e) => {
     setSelectRegion(e.target.value);
@@ -21,7 +21,7 @@ const Stamp = () => {
 
   const fetchStampData = async () => {
     try {
-      const res = await axios.get("/api/stamp");
+      const res = await axios.get('/api/stamp');
       //   console.log("🚀 ~ fetchStampData ~ res:", res.data);
       setPrefecture(res.data);
 
@@ -40,7 +40,7 @@ const Stamp = () => {
       );
       setPrefectureUnique(unique);
     } catch (err) {
-      alert("stampデータ取得失敗");
+      alert('stampデータ取得失敗');
       console.error(err);
     }
   };
@@ -58,53 +58,53 @@ const Stamp = () => {
 
   return (
     <>
-    <Typography variant="h1" align="center">
-      スタンプ
-    </Typography>
+      <Typography variant="h1" align="center">
+        スタンプ
+      </Typography>
 
-    <FormControl fullWidth>
-      <InputLabel id="region-label">地域</InputLabel>
-      <Select
-        labelId="region-label"
-        label="地域"
-        value={selectRegion}
-        onChange={prefectureChange}
-      >
-        {prefectureUnique.map((elment, index) => {
-          return (
-            <MenuItem key={index} value={elment.region}>
-              {elment.region}
-            </MenuItem>
-          );
-        })}
-      </Select>
-    </FormControl>
+      <FormControl fullWidth>
+        <InputLabel id="region-label">地域</InputLabel>
+        <Select
+          labelId="region-label"
+          label="地域"
+          value={selectRegion}
+          onChange={prefectureChange}
+        >
+          {prefectureUnique.map((elment, index) => {
+            return (
+              <MenuItem key={index} value={elment.region}>
+                {elment.region}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
 
-    {/* スタンプ表示エリア */}
-    {selectData && (
-      <Box mt={4}>
-        <Typography variant="h6">{selectRegion}のスタンプカード</Typography>
-        <Box display={"flex"} gap={1} mt={2} flexWrap={"wrap"}>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <Box
-              key={i}
-              width={40}
-              height={40}
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              border={"1px solid gray"}
-              borderRadius={"50%"}
-              bgcolor={i < stampCount ? "bule" : "white"}
-            >
-              {i < stampCount ? "⚫︎" : ""}
-            </Box>
-          ))}
+      {/* スタンプ表示エリア */}
+      {selectData && (
+        <Box mt={4}>
+          <Typography variant="h6">{selectRegion}のスタンプカード</Typography>
+          <Box display={'flex'} gap={1} mt={2} flexWrap={'wrap'}>
+            {Array.from({ length: 8 }).map((_, i) => (
+              <Box
+                key={i}
+                width={40}
+                height={40}
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'center'}
+                border={'1px solid gray'}
+                borderRadius={'50%'}
+                bgcolor={i < stampCount ? 'bule' : 'white'}
+              >
+                {i < stampCount ? '⚫︎' : ''}
+              </Box>
+            ))}
+          </Box>
         </Box>
-      </Box>
-    )}
-  </>
-  )
-}
+      )}
+    </>
+  );
+};
 
-export default Stamp
+export default Stamp;
