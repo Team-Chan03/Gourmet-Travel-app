@@ -27,18 +27,18 @@ router.get("/data2", async (req, res) => {
     const returnArray = [];
     const infomations = await db.select("id", "region", "latitude", "longitude ", "image_url", "comment", "dishname").table("records");
 
-    for (const obj of infomations) {
-      maxcheck[obj.region] = obj.stamp_num;
-    }
+    // for (const obj of infomations) {
+    //   maxcheck[obj.region] = obj.stamp_num;
+    // }
 
-    for (const key in maxcheck) {
-      const returnObj = {};
-      console.log(key);
-      (returnObj["region"] = key), (returnObj["count"] = maxcheck[key]);
-      returnArray.push(returnObj);
-    }
+    // for (const key in maxcheck) {
+    //   const returnObj = {};
+    //   console.log(key);
+    //   (returnObj["region"] = key), (returnObj["count"] = maxcheck[key]);
+    //   returnArray.push(returnObj);
+    // }
 
-    res.status(200).send(returnArray);
+    res.status(200).send(infomations);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "取得に失敗しました" });
