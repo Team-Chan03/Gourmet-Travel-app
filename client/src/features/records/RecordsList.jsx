@@ -21,7 +21,7 @@ const RecordsList = () => {
     //全てのrecordsを取得する関数
     const fetchRecord = async () => {
       try {
-        const res = await axios.get('/api/records');
+        const res = await axios.get('/api/records/user');
         console.log('☺️ レーコード更新~ fetchRecord ~ res:', res);
         setRecords(res.data);
       } catch (err) {
