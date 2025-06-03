@@ -11,7 +11,7 @@ function RecordForm({ open, onClose }) {
   const [photoUrl, setPhotoUrl] = useState('');
   const [filePath, setFilePath] = useState('');
 
-  const { rendering, isLoading, setIsLoading } = useContext(context);
+  const { rendering, setIsLoading } = useContext(context);
 
   /**画像をURLにする関数*/
   const handleFileChange = async (e) => {
