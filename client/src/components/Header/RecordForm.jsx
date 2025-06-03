@@ -10,6 +10,7 @@ function RecordForm({ open, onClose }) {
   const [rating, setRating] = useState(5);
   const [photoUrl, setPhotoUrl] = useState('');
   const [filePath, setFilePath] = useState('');
+  const [checked, setChecked] = useState(false);
 
   const { rendering, setIsLoading } = useContext(context);
 
@@ -143,12 +144,8 @@ function RecordForm({ open, onClose }) {
         </Box>
 
         <Box sx={{gap: 1,display: 'flex', justifyContent: 'space-between'}}>
-          <Checkbox />
-          <Button
-            onClick={() => {
-              postToX(comment, filePath);
-            }}
-          >
+          <Button>
+          <Checkbox onChange={() => setChecked(!checked)}/>
             post to{''}
             <img style={{ height: '15px' }} src="/logo-black.png" />
           </Button>
