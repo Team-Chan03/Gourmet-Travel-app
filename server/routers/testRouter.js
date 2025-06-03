@@ -14,9 +14,17 @@ router.post('/', async (req, res) => {
 
     const client = twitterInstance.readWrite;
 
-    client.v2.tweet({ text: 'こんにちは、これは通常のツイートです。' });
+    const mediaId = await client.v1.uploadMedia(req.body.path);
+    console.log(mediaId);
 
-    res.status(200).json('テストの投稿です！！');
+    client.v2.tweet({
+      text: req.body.text,
+      media: { media_ids: [mediaId] },
+    });
+
+    // client.v2.tweet('テスト');
+
+    res.status(200).json(req.body.text);
   } catch (err) {
     console.error('🔥 /api/test error post to X', err.message);
     res.status(500).json({ error: err.message });

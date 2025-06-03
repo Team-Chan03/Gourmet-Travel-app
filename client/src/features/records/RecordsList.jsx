@@ -61,11 +61,6 @@ const RecordsList = () => {
       fetchRecord();
     }, [postRendering]);
 
-  async function postToX(text, url) {
-      await axios.post('/api/test', {text, url})
-  .then(res => console.log(res));
-  }
-
   return (
     <div>
       <Box
@@ -111,12 +106,6 @@ const RecordsList = () => {
               <div className="record_header">
                 <p className="record_content">コメント：{obj.comment}</p>
                 <span className="record_rating">{'⭐'.repeat(obj.rating)}</span>
-                <p>
-                <Button onClick={()=>{postToX(obj.comment, obj.image_url)}}>
-                    post to{'　'}
-                    <img style={{ height: '15px' }} src="/logo-black.png" />
-                </Button>
-                </p>
               </div>
             </Card>
           ))}

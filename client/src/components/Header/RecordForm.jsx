@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 // prettier-ignore
-import {Modal,Box,Button,TextField,Rating,Typography} from "@mui/material";
+import {Modal,Box,Button,TextField,Rating,Typography, Checkbox } from "@mui/material";
 import axios from 'axios';
 import { context } from '../../app/App';
 
@@ -9,15 +9,17 @@ function RecordForm({ open, onClose }) {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(5);
   const [photoUrl, setPhotoUrl] = useState('');
+  const [filePath, setFilePath] = useState('');
 
   const { rendering, isLoading, setIsLoading } = useContext(context);
 
   /**画像をURLにする関数*/
   const handleFileChange = async (e) => {
+    setFilePath(e.target.value);
     const file = e.currentTarget.files[0];
     try {
       const formData = new FormData(); // FormData の箱にファイルを詰め込む←ファイルをfetchする時は使わないといけないらしい
-      formData.append('image', file); //key image   val file   として格納　　postでimageしか見ない
+      formData.append('image', file); //key image   val file   として格納postでimageしか見ない
       const res = await axios.post('/api/upload-image', formData);
       setPhotoUrl(res.data.url);
       console.log('imgBBへupload完了');
@@ -27,7 +29,7 @@ function RecordForm({ open, onClose }) {
     }
   };
 
-  //各入力項目の状態を　payload　にオブジェクトとして格納しpostする関数　payload内の変数はカラムに合わしてあげる必要有り！
+  //各入力項目の状態をayloadにオブジェクトとして格納しpostする関数payload内の変数はカラムに合わしてあげる必要有り！
   const handleSubmit = async () => {
     if (photoUrl) {
       setIsLoading(true);
@@ -42,10 +44,10 @@ function RecordForm({ open, onClose }) {
         .split('; ')
         .find((row) => row.startsWith('userId='))
         ?.split('=')[1];
-        setComment('');
-        setRating(1);
-        setPhotoUrl('');
-        onClose();
+      setComment('');
+      setRating(1);
+      setPhotoUrl('');
+      onClose();
       try {
         const req = await axios.post('/api/records/submit', {
           user_id: userIdFromCookie,
@@ -61,14 +63,19 @@ function RecordForm({ open, onClose }) {
       } catch (err) {
         console.error('❌ POST エラー', err);
       }
-      
-      // await fetchRecord();
-      
 
-      setIsLoading(false)
+      // await fetchRecord();
+
+      setIsLoading(false);
       rendering();
     }
   };
+
+  async function postToX(text, path) {
+      await axios.post('/api/test', {text, path})
+  .then(res => console.log(res));
+  }
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -87,30 +94,30 @@ function RecordForm({ open, onClose }) {
           gap: 2,
         }}
       >
-        <Typography variant='h6' component='h2'>
+        <Typography variant="h6" component="h2">
           新規投稿
         </Typography>
 
-        <Button variant='outlined' component='label'>
+        <Button variant="outlined" component="label">
           画像を選択
           <input
-            type='file'
-            accept='image/*'
+            type="file"
+            accept="image/*"
             hidden
             onChange={handleFileChange}
           />
         </Button>
         {photoUrl && (
           <Box
-            component='img'
+            component="img"
             src={photoUrl}
-            alt='選択画像'
+            alt="選択画像"
             sx={{ width: '100%', borderRadius: 1 }}
           />
         )}
 
         <TextField
-          label='料理名'
+          label="料理名"
           multiline
           minRows={1}
           value={dishname}
@@ -119,7 +126,7 @@ function RecordForm({ open, onClose }) {
         />
 
         <TextField
-          label='コメント'
+          label="コメント"
           multiline
           minRows={3}
           value={comment}
@@ -135,9 +142,23 @@ function RecordForm({ open, onClose }) {
           <Typography sx={{ ml: 1 }}>{rating} / 5</Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+        <Box sx={{gap: 1,display: 'flex', justifyContent: 'space-between'}}>
+          <Checkbox />
+          <Button
+            onClick={() => {
+              postToX(comment, filePath);
+            }}
+          >
+            post to{''}
+            <img style={{ height: '15px' }} src="/logo-black.png" />
+          </Button>
+
           <Button onClick={onClose}>キャンセル</Button>
-          <Button variant='contained' onClick={handleSubmit} disabled={!photoUrl}>
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            disabled={!photoUrl}
+          >
             投稿
           </Button>
         </Box>
