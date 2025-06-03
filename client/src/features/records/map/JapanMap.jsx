@@ -27,7 +27,6 @@ export function useMounted() {
 }
 
 const JapanMap = ({ list }) => {
-  console.log(list);
   const mounted = useMounted();
 
   async function main() {

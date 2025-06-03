@@ -4,13 +4,15 @@ import {
     Card,
     CardMedia,
   } from '@mui/material';
-  import { useState, useEffect } from 'react';
+  import { useState, useEffect,useContext } from 'react';
   import axios from 'axios';
   import Header from '../../components/Header/Header';
   import { useNavigate } from 'react-router';
+  import { context } from '../../app/App';
+
 
 const RecordsList = () => {
-
+    const {postRendering} = useContext(context);
     const [records, setRecords] = useState([]);
     const [username, setUsername] = useState('');
     const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
@@ -56,7 +58,7 @@ const RecordsList = () => {
   
     useEffect(() => {
       fetchRecord();
-    }, []);
+    }, [postRendering]);
 
   return (
     <div>
