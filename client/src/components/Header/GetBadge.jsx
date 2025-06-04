@@ -38,7 +38,7 @@ function GetBadge() {
     await axios
       .post('/api/post', {
         text:
-          'メダルを獲得しました！' +
+          `${prefecture}で${medal}メダルを獲得しました！` +
           '\n' +
           'posted by https://gourmet-travel-app-29ug.onrender.com/' +
           '\n' +
@@ -92,7 +92,7 @@ function GetBadge() {
             setMedal('');
           }}
         >
-          post to{''}
+          post to{'　'}
           <img style={{ height: '15px' }} src="/logo-black.png" />
         </Button>
 
