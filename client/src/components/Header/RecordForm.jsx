@@ -13,7 +13,8 @@ function RecordForm({ open, onClose }) {
 
   const refImgPath = useRef();
 
-  const { rendering, setIsLoading } = useContext(context);
+  const { rendering, setIsLoading, medal, setMedal, message, setMessage } =
+    useContext(context);
 
   let region = '';
 
@@ -61,7 +62,7 @@ function RecordForm({ open, onClose }) {
       setPhotoUrl('');
       onClose();
       try {
-        const req = await axios.post('/api/records/submit', {
+        const res = await axios.post('/api/records/submit', {
           user_id: userIdFromCookie,
           image_url: photoUrl,
           comment,
@@ -71,7 +72,11 @@ function RecordForm({ open, onClose }) {
           longitude,
           created_at: new Date(),
         });
-        console.log('🚀 ~ handleSubmit ~ req:', req);
+
+        setMedal(res.data.medal);
+        setMessage(res.data.message);
+
+        console.log('🚀 ~ handleSubmit ~ res:', res);
       } catch (err) {
         console.error('❌ POST エラー', err);
       }
@@ -107,6 +112,7 @@ function RecordForm({ open, onClose }) {
   }
 
   console.log(checked, refImgPath);
+  console.log(medal, message);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -183,10 +189,8 @@ function RecordForm({ open, onClose }) {
         </Box>
 
         <Box sx={{ gap: 1, display: 'flex', justifyContent: 'space-between' }}>
-
           <Button>
             <Checkbox onClick={() => setChecked(!checked)} />
-
             post to{''}
             <img style={{ height: '15px' }} src="/logo-black.png" />
           </Button>

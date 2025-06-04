@@ -3,28 +3,33 @@ import Menubar from './MenuBar';
 import './Header.css';
 import { useState } from 'react';
 import RecordForm from './RecordForm';
-import appIcon from './../../assets/appIcon.png'
+import GetBadge from './GetBadge';
+import appIcon from './../../assets/appIcon.png';
 
 function Header() {
   const [formOpen, setFormOpen] = useState(false);
-
   const handleToggleForm = () => {
     setFormOpen((val) => !val);
   };
 
+  const [getGBadgeOpen, setGetBadgeOpen] = useState(false);
+  const handleToggleGetBadge = () => {
+    setGetBadgeOpen((val) => !val);
+  };
+
   return (
     <div>
-      <header className='header'>
+      <header className="header">
         {/* <div>
           <Button onClick={handleToggleForm}>投稿フォーム</Button>
         </div> */}
         <div>
           <span className="appTitle">Gourmet Travel</span>
         </div>
-        <div className='header-title'>
-          <img className="appicon" src={appIcon}/>
+        <div className="header-title">
+          <img className="appicon" src={appIcon} />
         </div>
-        <div className='drawer-container'>
+        <div className="drawer-container">
           Hello,{' '}
           {
             document.cookie
@@ -36,7 +41,16 @@ function Header() {
         </div>
       </header>
 
-      <RecordForm open={formOpen} onClose={handleToggleForm} />
+      <RecordForm
+        open={formOpen}
+        onClose={handleToggleForm}
+      />
+
+      <GetBadge
+        open={getGBadgeOpen}
+        onClose={handleToggleGetBadge }
+      />
+
     </div>
   );
 }
