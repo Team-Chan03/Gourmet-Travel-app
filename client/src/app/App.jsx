@@ -4,8 +4,7 @@ import RecordsPage from '../features/records/RecordsPage.jsx';
 import RegisterPage from '../features/login/RegisterPage.jsx';
 import StampPage from '../features/records/stamp/StampPage.jsx';
 import MapPage from '../features/records/map/MapPage.jsx';
-import React, { useState, createContext } from 'react';
-import axios from 'axios';
+import { useState, createContext } from 'react';
 
 export const context = createContext();
 

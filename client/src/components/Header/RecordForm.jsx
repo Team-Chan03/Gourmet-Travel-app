@@ -15,10 +15,11 @@ function RecordForm({ open, onClose }) {
 
   const { rendering, setIsLoading } = useContext(context);
 
+  let region = '';
+
   /**画像をURLにする関数*/
   const handleFileChange = async (e) => {
     const file = e.currentTarget.files[0];
-
     try {
       const formData = new FormData(); // FormData の箱にファイルを詰め込む←ファイルをfetchする時は使わないといけないらしい
       formData.append('image', file); //key image   val file   として格納postでimageしか見ない
@@ -41,7 +42,15 @@ function RecordForm({ open, onClose }) {
           (error) => reject(error)
         );
       });
-      // console.log('🔥 photoUrl があるのでここまで来たよ');
+
+      const resMap = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+      );
+      const data = await resMap.json();
+      region = data.address.province;
+      console.log(region);
+
+      console.log('🔥 photoUrl があるのでここまで来たよ');
       const userIdFromCookie = document.cookie
         .split('; ')
         .find((row) => row.startsWith('userId='))
@@ -81,7 +90,18 @@ function RecordForm({ open, onClose }) {
 
   async function postToX() {
     await axios
-      .post('/api/post', { comment, photoUrl })
+      .post('/api/post', {
+        text:
+          dishname +
+          '\n' +
+          comment +
+          '\n' +
+          'posted by https://gourmet-travel-app-29ug.onrender.com/' +
+          '\n' +
+          '#グルメ #旅行 #都道府県 #gourmet #travel #prefecture ' +
+          `#${region}`,
+        photoUrl,
+      })
       .then((res) => console.log(res));
   }
 
