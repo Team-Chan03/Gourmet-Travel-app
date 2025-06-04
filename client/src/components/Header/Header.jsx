@@ -3,8 +3,9 @@ import Menubar from './MenuBar';
 import './Header.css';
 import { useState } from 'react';
 import RecordForm from './RecordForm';
+import appIcon from './../../assets/appIcon.png'
 
-function Header({}) {
+function Header() {
   const [formOpen, setFormOpen] = useState(false);
 
   const handleToggleForm = () => {
@@ -18,7 +19,10 @@ function Header({}) {
           <Button onClick={handleToggleForm}>投稿フォーム</Button>
         </div> */}
         <div>
-          <h2 className='header-title'>🍽️Gourmet Travel🌎</h2>
+          <span className="appTitle">Gourmet Travel</span>
+        </div>
+        <div className='header-title'>
+          <img className="appicon" src={appIcon}/>
         </div>
         <div className='drawer-container'>
           Hello,{' '}

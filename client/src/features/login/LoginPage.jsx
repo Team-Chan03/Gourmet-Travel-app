@@ -4,7 +4,11 @@ import Header from '../../components/Header/Header';
 
 function LoginPage() {
   return (
-    <Container  maxWidth="false">
+    <Container
+      disableGutters
+      maxWidth='false'
+
+    >
       <Header />
       <LoginForm />
     </Container>

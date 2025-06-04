@@ -10,6 +10,7 @@ import {
   Box,
   Link as MuiLink,
 } from "@mui/material";
+import backgroundImage from '../../assets/2023639.jpg';
 
  const RegisterForm = () => {
 
@@ -29,6 +30,19 @@ import {
       }
     };
   return (
+        <Container
+          disableGutters
+          maxWidth='false'
+          sx={{
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: '100vh',
+            border: 1,
+            // borderColor: 'brown'
+          }}
+        >
+
     <Container maxWidth="xs">
     <Box sx={{ mt: 8, mb: 4 }}>
       <Typography variant="h4" align="center" gutterBottom>
@@ -86,6 +100,8 @@ import {
       </Typography>
     </Box>
   </Container>
+  </Container>
+
   )
 }
 
