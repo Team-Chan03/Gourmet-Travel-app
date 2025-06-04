@@ -3,9 +3,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 // import viteLogo from '/vite.svg';
 import JapanMap from './JapanMap';
+import Leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Box, ImageList, ImageListItem } from '@mui/material';
+import { Box } from '@mui/material';
 
 const MapContent = () => {
   const [mapMode, setmapMode] = useState(true);
@@ -23,7 +26,6 @@ const MapContent = () => {
     });
     setCenterPosition([latitude, longitude]);
   }
-
 
   useEffect(() => {
     getIniData();
@@ -55,9 +57,16 @@ const MapContent = () => {
     border: '3px',
   };
 
+  const DefaultIcon = Leaflet.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+    popupAnchor: [12, 0],
+  });
+  Leaflet.Marker.prototype.options.icon = DefaultIcon;
+
   return (
     <>
-      {mapMode && centerPosition.length!==0? (
+      {mapMode && centerPosition.length !== 0 ? (
         <div>
           <header>
             地図モード1<button onClick={changeMapmode}>モード切り替え</button>
@@ -79,18 +88,24 @@ const MapContent = () => {
               return (
                 <Marker key={obj.id} position={[obj.latitude, obj.longitude]}>
                   <Popup>
-                    <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center' }}>
-
-                    <img
-                      className="mapImage"
-                      src={obj.image_url}
-                      alt="食べ物"
-                      loading="lazy"
-                      style={mapImage}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <img
+                        className="mapImage"
+                        src={obj.image_url}
+                        alt="食べ物"
+                        loading="lazy"
+                        style={mapImage}
                       />
-                    <br />
-                    <strong>料理名：{obj.dishname}</strong>
-                      </Box>
+                      <br />
+                      <strong>料理名：{obj.dishname}</strong>
+                    </Box>
                   </Popup>
                 </Marker>
               );

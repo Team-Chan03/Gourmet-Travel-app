@@ -14,8 +14,8 @@
 
 ## サービス URL
 
-早速投稿してみよう！
-<span style="color:red;">あとで入力 赤文字あとで消す</span>
+早速投稿してみよう！  
+https://gourmet-travel-app-29ug.onrender.com/
 
 ## 機能一覧　　
 
