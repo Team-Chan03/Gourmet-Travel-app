@@ -1,15 +1,17 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const db = require('./db');
-const authRouter = require('./routers/authRouter');
-const stampRouter = require('./routers/stampRouter');
-const mapRouter = require('./routers/mapRouter');
-const uploadImageRouter = require('./routers/uploadImageRouter');
-const recordsRouter = require('./routers/recordsRouter');
-const testRouter = require('./routers/testRouter');
-const multer = require('multer');
-const { log } = require('console');
+
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+const db = require("./db");
+const authRouter = require("./routers/authRouter");
+const stampRouter = require("./routers/stampRouter");
+const mapRouter = require("./routers/mapRouter");
+const uploadImageRouter = require("./routers/uploadImageRouter");
+const recordsRouter = require("./routers/recordsRouter");
+const postRouter = require("./routers/postRouter");
+const multer = require("multer");
+const { log } = require("console");
+
 const upload = multer(); // メモリストレージ
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
@@ -92,14 +94,16 @@ app.get('/api/app', authMiddeware, async (req, res) => {
 // app.use("/api/form", example);
 
 //wentz:/auth以外は、aythMiddreware入れたい。
-app.use('/api/auth', authRouter);
-app.use('/api/map', mapRouter);
-app.use('/api/stamp', stampRouter);
-app.use('/api/records', recordsRouter);
-app.use('/api/upload-image', uploadImageRouter);
-app.use('/api/auth', authRouter);
-app.use('/api/map', mapRouter);
-app.use('/api/stamp', authMiddeware, stampRouter);
-app.use('/api/test', testRouter);
+
+app.use("/api/auth", authRouter);
+app.use("/api/map", mapRouter);
+app.use("/api/stamp", stampRouter);
+app.use("/api/records", recordsRouter);
+app.use("/api/upload-image", uploadImageRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/map", mapRouter);
+app.use("/api/stamp", authMiddeware, stampRouter);
+app.use("/api/post", postRouter);
+
 
 module.exports = app;

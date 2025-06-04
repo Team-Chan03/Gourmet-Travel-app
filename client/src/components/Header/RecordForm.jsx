@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 // prettier-ignore
 import {Modal,Box,Button,TextField,Rating,Typography, Checkbox } from "@mui/material";
 import axios from 'axios';
@@ -9,13 +9,16 @@ function RecordForm({ open, onClose }) {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(5);
   const [photoUrl, setPhotoUrl] = useState('');
-  const [filePath, setFilePath] = useState('');
+  const [checked, setChecked] = useState(false);
+
+  const refImgPath = useRef();
 
   const { rendering, setIsLoading } = useContext(context);
 
+  let region = '';
+
   /**画像をURLにする関数*/
   const handleFileChange = async (e) => {
-    setFilePath(e.target.value);
     const file = e.currentTarget.files[0];
     try {
       const formData = new FormData(); // FormData の箱にファイルを詰め込む←ファイルをfetchする時は使わないといけないらしい
@@ -39,7 +42,15 @@ function RecordForm({ open, onClose }) {
           (error) => reject(error)
         );
       });
-      // console.log('🔥 photoUrl があるのでここまで来たよ');
+
+      const resMap = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+      );
+      const data = await resMap.json();
+      region = data.address.province;
+      console.log(region);
+
+      console.log('🔥 photoUrl があるのでここまで来たよ');
       const userIdFromCookie = document.cookie
         .split('; ')
         .find((row) => row.startsWith('userId='))
@@ -67,16 +78,35 @@ function RecordForm({ open, onClose }) {
 
       // await fetchRecord();
 
+      console.log(`post to Xのチェックボックスが${checked}`);
+      if (checked) {
+        postToX();
+        console.log(`postToXの関数が呼び出されました`);
+      }
+
       setIsLoading(false);
       rendering();
     }
   };
 
-  async function postToX(text, path) {
+  async function postToX() {
     await axios
-      .post('/api/test', { text, path })
+      .post('/api/post', {
+        text:
+          dishname +
+          '\n' +
+          comment +
+          '\n' +
+          'posted by https://gourmet-travel-app-29ug.onrender.com/' +
+          '\n' +
+          '#グルメ #旅行 #都道府県 #gourmet #travel #prefecture ' +
+          `#${region}`,
+        photoUrl,
+      })
       .then((res) => console.log(res));
   }
+
+  console.log(checked, refImgPath);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -111,10 +141,18 @@ function RecordForm({ open, onClose }) {
         </Button>
         {photoUrl && (
           <Box
+            ref={refImgPath}
             component="img"
             src={photoUrl}
             alt="選択画像"
-            sx={{ width: '100%', borderRadius: 1 }}
+            sx={{
+              height: '30%',
+              width: '30%',
+              borderRadius: 1,
+              display: 'flex',
+              margin: 'auto',
+            }}
+            textAlign="center"
           />
         )}
 
@@ -145,12 +183,10 @@ function RecordForm({ open, onClose }) {
         </Box>
 
         <Box sx={{ gap: 1, display: 'flex', justifyContent: 'space-between' }}>
-          <Checkbox />
-          <Button
-            onClick={() => {
-              postToX(comment, filePath);
-            }}
-          >
+
+          <Button>
+            <Checkbox onClick={() => setChecked(!checked)} />
+
             post to{''}
             <img style={{ height: '15px' }} src="/logo-black.png" />
           </Button>
