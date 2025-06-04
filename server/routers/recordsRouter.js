@@ -28,6 +28,7 @@ router.get('/user', async (req, res) => {
 });
 
 router.post('/submit', async (req, res) => {
+  const { userId } = req.cookies;
   //緯度経度ここで取得してテーブルにインサートする
   // console.log('このデータを今後インサートしていく予定', req.body);
   const {
@@ -60,12 +61,36 @@ router.post('/submit', async (req, res) => {
     comment,
     dishname,
   };
-  console.log(user_id);
-  
 
   try {
-    const list = await db('records').insert(submitObj);
-    res.status(200).json(submitObj);
+    //insert
+    await db('records').insert(submitObj);
+    //データとる
+    const list = await db('records').where({
+      user_id: Number(userId),
+      region: region,
+    });
+
+    function messege(length) {
+      if ((length = 5)) {
+        return {
+          messege: `おめでとうございます！${region}のスタンプが５つ貯まりました！ブロンズバッジ獲得！`,
+          medal: 'bronze',
+        };
+      } else if ((length = 10)) {
+        return {
+          messege: `おめでとうございます！${region}のスタンプが５つ貯まりました！シルバーバッジ獲得！`,
+          medal: 'silver',
+        };
+      } else if ((length = 20)) {
+        return {
+          messege: `おめでとうございます！${region}のスタンプが５つ貯まりました！ゴールドバッジ獲得！`,
+          medal: 'gold',
+        };
+      }
+    }
+
+    res.status(200).json(messege(list.length));
   } catch (err) {
     console.error('🔥 /api/records/submit', err.message);
     res.status(500).json({ error: err.message });

@@ -55,8 +55,9 @@ function RecordForm({ open, onClose }) {
         .split('; ')
         .find((row) => row.startsWith('userId='))
         ?.split('=')[1];
+      setDishname('');
       setComment('');
-      setRating(1);
+      setRating(5);
       setPhotoUrl('');
       onClose();
       try {
@@ -182,8 +183,10 @@ function RecordForm({ open, onClose }) {
         </Box>
 
         <Box sx={{ gap: 1, display: 'flex', justifyContent: 'space-between' }}>
+
           <Button>
             <Checkbox onClick={() => setChecked(!checked)} />
+
             post to{''}
             <img style={{ height: '15px' }} src="/logo-black.png" />
           </Button>
