@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import Header from '../../../components/Header/Header';
-import RatingList from './RatingList';
+import PrefectureList from './PrefectureList';
 import StampCard from './StampCard';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
@@ -28,7 +28,7 @@ function StampPage() {
         <Header />
         <Container sx={{ display: 'flex' }} maxWidth="false">
           <Container maxWidth="false" sx={{ flex: 1 }}>
-            <RatingList
+            <PrefectureList
               states={{
                 userPostData,
                 setSelectCountry,
