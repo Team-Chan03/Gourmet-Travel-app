@@ -18,11 +18,15 @@ const MapContent = () => {
 
   async function getIniData() {
     let response = await axios.get('/api/map/data1');
-    setDisplayList(response.data);
+    const locationArr = response.data.filter((data)=>data.latitude&&data.longitude);
+    setDisplayList(locationArr);
     const { latitude, longitude } = await new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (position) => resolve(position.coords),
-        (error) => reject(error)
+        (error) => {
+          // reject(error);
+          setCenterPosition([35.689507,139.691728]);
+        }
       );
     });
     setCenterPosition([latitude, longitude]);
@@ -41,10 +45,12 @@ const MapContent = () => {
     //mapData1 : ピン立て
     if (mode) {
       response = await axios.get('/api/map/data1');
-      setDisplayList(response.data);
+      const locationArr = response.data.filter((data)=>data.latitude&&data.longitude);
+      setDisplayList(locationArr);
     } else {
       response = await axios.get('/api/map/data2');
-      setDisplayList(response.data);
+      const locationArr = response.data.filter((data)=>data.latitude&&data.longitude);
+      setDisplayList(locationArr);
     }
 
     setmapMode(mode);
@@ -96,8 +102,7 @@ const MapContent = () => {
                 attribution='© OpenStreetMap contributors'
               />
 
-              {displayList.map((obj) => {
-                console.log(obj);
+             {displayList.length!==0&& displayList.map((obj) => {
                 return (
                   <Marker key={obj.id} position={[obj.latitude, obj.longitude]}>
                     <Popup>

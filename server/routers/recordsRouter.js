@@ -42,13 +42,14 @@ router.post('/submit', async (req, res) => {
     dishname,
   } = req.body;
 
-  const resMap = await fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-  );
-
-  const data = await resMap.json();
-  //wentz:provinceに県名が入る
-  const region = data.address.province;
+  let region = '';
+  if (!!latitude && !!longitude) {
+    const resMap = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+    );
+    const data = await resMap.json();
+    region = data.address.province;
+  }
 
   const submitObj = {
     image_url,

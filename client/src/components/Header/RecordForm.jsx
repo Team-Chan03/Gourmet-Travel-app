@@ -16,7 +16,7 @@ function RecordForm({ open, onClose }) {
   const { rendering, setIsLoading, medal, setMedal, message, setMessage } =
     useContext(context);
 
-  let region = '';
+  let region = 'somewehre';
 
   /**画像をURLにする関数*/
   const handleFileChange = async (e) => {
@@ -37,21 +37,6 @@ function RecordForm({ open, onClose }) {
   const handleSubmit = async () => {
     if (photoUrl) {
       setIsLoading(true);
-      const { latitude, longitude } = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => resolve(position.coords),
-          (error) => reject(error)
-        );
-      });
-
-      const resMap = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-      );
-      const data = await resMap.json();
-      region = data.address.province;
-      console.log(region);
-
-      console.log('🔥 photoUrl があるのでここまで来たよ');
       const userIdFromCookie = document.cookie
         .split('; ')
         .find((row) => row.startsWith('userId='))
@@ -61,6 +46,39 @@ function RecordForm({ open, onClose }) {
       setRating(5);
       setPhotoUrl('');
       onClose();
+      const { latitude, longitude } = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => resolve(position.coords),
+          async (error) => {
+            console.log('位置情報なし', error);
+            try {
+              const res = await axios.post('/api/records/submit', {
+                user_id: userIdFromCookie,
+                image_url: photoUrl,
+                comment,
+                dishname,
+                rating,
+                // latitude: '',
+                // longitude: '',
+                created_at: new Date(),
+              });
+              console.log('🚀 ~ handleSubmit ~ res:', res);
+            } catch (err) {
+              console.error('❌ POST エラー', err);
+            }
+
+            setIsLoading(false);
+            rendering();
+          }
+        );
+      });
+      if (!!latitude && !!longitude) {
+        const resMap = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+        );
+        const data = await resMap.json();
+        region = data.address.province;
+      }
       try {
         const res = await axios.post('/api/records/submit', {
           user_id: userIdFromCookie,
@@ -132,15 +150,15 @@ function RecordForm({ open, onClose }) {
           gap: 2,
         }}
       >
-        <Typography variant="h6" component="h2">
+        <Typography variant='h6' component='h2'>
           新規投稿
         </Typography>
 
-        <Button variant="outlined" component="label">
+        <Button variant='outlined' component='label'>
           画像を選択
           <input
-            type="file"
-            accept="image/*"
+            type='file'
+            accept='image/*'
             hidden
             onChange={handleFileChange}
           />
@@ -148,9 +166,9 @@ function RecordForm({ open, onClose }) {
         {photoUrl && (
           <Box
             ref={refImgPath}
-            component="img"
+            component='img'
             src={photoUrl}
-            alt="選択画像"
+            alt='選択画像'
             sx={{
               height: '30%',
               width: '30%',
@@ -158,12 +176,12 @@ function RecordForm({ open, onClose }) {
               display: 'flex',
               margin: 'auto',
             }}
-            textAlign="center"
+            textAlign='center'
           />
         )}
 
         <TextField
-          label="料理名"
+          label='料理名'
           multiline
           minRows={1}
           value={dishname}
@@ -172,7 +190,7 @@ function RecordForm({ open, onClose }) {
         />
 
         <TextField
-          label="コメント"
+          label='コメント'
           multiline
           minRows={3}
           value={comment}
@@ -192,12 +210,12 @@ function RecordForm({ open, onClose }) {
           <Button>
             <Checkbox onClick={() => setChecked(!checked)} />
             post to{''}
-            <img style={{ height: '15px' }} src="/logo-black.png" />
+            <img style={{ height: '15px' }} src='/logo-black.png' />
           </Button>
 
           <Button onClick={onClose}>キャンセル</Button>
           <Button
-            variant="contained"
+            variant='contained'
             onClick={handleSubmit}
             disabled={!photoUrl}
           >
