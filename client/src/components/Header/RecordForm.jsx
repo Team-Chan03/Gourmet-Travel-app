@@ -163,7 +163,7 @@ function RecordForm({ open, onClose }) {
 
         <Box sx={{ gap: 1, display: 'flex', justifyContent: 'space-between' }}>
           <Button>
-            <Checkbox onChange={() => setChecked(!checked)} />
+            <Checkbox onClick={() => setChecked(!checked)} />
             post to{''}
             <img style={{ height: '15px' }} src="/logo-black.png" />
           </Button>
