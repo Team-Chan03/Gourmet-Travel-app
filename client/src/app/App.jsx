@@ -14,6 +14,9 @@ const App = () => {
 
   const [medal, setMedal] = useState('');
   const [message, setMessage] = useState('');
+  const [prefecture, setPrefecture] = useState('');
+
+  const [getBadgeOpen, setGetBadgeOpen] = useState(false);
 
   function rendering() {
     setPostRendering(!postRendering);
@@ -29,6 +32,10 @@ const App = () => {
         setMedal,
         message,
         setMessage,
+        getBadgeOpen, 
+        setGetBadgeOpen,
+        prefecture,
+        setPrefecture
       }}
     >
       <BrowserRouter>
