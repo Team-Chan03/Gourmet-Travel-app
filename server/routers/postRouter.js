@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
     console.log(mediaId);
 
     client.v2.tweet({
-      text: req.body.comment,
+      text: req.body.text,
       media: { media_ids: [mediaId] },
     });
 
