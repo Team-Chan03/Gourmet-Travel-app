@@ -10,8 +10,6 @@ const getTarget = ({ list, prefName }) => {
        count ++;
       }
   })
-  if(count>0)console.log("count",pref, count);
-  
   return count;
 };
 
@@ -27,14 +25,13 @@ export function useMounted() {
 }
 
 const JapanMap = ({ list }) => {
-  console.log(list);
   const mounted = useMounted();
 
   async function main() {
     const width = 500; // 描画サイズ: 幅
     const height = 500; // 描画サイズ: 高さ
     const centerPos = [137.0, 38.2]; // 地図のセンター位置
-    const scale = 1300; // 地図のスケール
+    const scale = 1000; // 地図のスケール
     // const color = "#2566CC"; // 地図の色
     // const colorActive = "#ebfd2a"; // ホバーした時の色
 
