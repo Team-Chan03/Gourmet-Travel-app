@@ -44,8 +44,9 @@ function RecordForm({ open, onClose }) {
         .split('; ')
         .find((row) => row.startsWith('userId='))
         ?.split('=')[1];
+      setDishname('');
       setComment('');
-      setRating(1);
+      setRating(5);
       setPhotoUrl('');
       onClose();
       try {
@@ -72,8 +73,9 @@ function RecordForm({ open, onClose }) {
   };
 
   async function postToX(text, path) {
-      await axios.post('/api/test', {text, path})
-  .then(res => console.log(res));
+    await axios
+      .post('/api/test', { text, path })
+      .then((res) => console.log(res));
   }
 
   return (
@@ -142,7 +144,7 @@ function RecordForm({ open, onClose }) {
           <Typography sx={{ ml: 1 }}>{rating} / 5</Typography>
         </Box>
 
-        <Box sx={{gap: 1,display: 'flex', justifyContent: 'space-between'}}>
+        <Box sx={{ gap: 1, display: 'flex', justifyContent: 'space-between' }}>
           <Checkbox />
           <Button
             onClick={() => {
