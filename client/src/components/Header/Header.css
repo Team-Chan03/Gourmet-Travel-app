@@ -1,4 +1,7 @@
-@import url("https://fonts.googleapis.com/css?family=Noto+Serif+JP");
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP');
+@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Hand+Pre:wght@400..700&display=swap');
 
 .header {
   /* position: fixed; */
@@ -6,13 +9,15 @@
   left: 0;
   right: 0; */
   height: 90px;
-  background: url("https://as1.ftcdn.net/v2/jpg/01/77/83/74/1000_F_177837428_am217HXxwWtwYGl5GBWsNEpV7ST5qhLG.jpg");
+  /* background: url("https://as1.ftcdn.net/v2/jpg/01/77/83/74/1000_F_177837428_am217HXxwWtwYGl5GBWsNEpV7ST5qhLG.jpg"); */
+  background-color: #f6c66d;
   /* z-index: 999; */
 
   padding: 0 20px;
 
   display: flex;
   align-items: center;
+  box-shadow: 3px 2px 2px 1px rgba(0, 0, 0, 0.3);
 }
 
 .header-title {
@@ -21,10 +26,21 @@
   left: 50%; */
   /* transform: translate(-50%, -50%); */
   /* margin: 0; */
-  font-size: 50px;
-  font-family: "Noto Serif JP", serif;
+  /* font-size: 50px; */
+  /* font-family: "Noto Serif JP", serif; */
 }
 
 .drawer-container {
   margin-left: auto;
+}
+
+.appicon {
+  width: 55px;
+}
+
+.appTitle {
+  font-size: 55px;
+  color: #f76507;
+  font-weight: 600;
+  font-family: "Edu VIC WA NT Hand Pre";
 }

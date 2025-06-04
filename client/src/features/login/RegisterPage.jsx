@@ -4,7 +4,7 @@ import Header from '../../components/Header/Header';
 
 function RegisterPage() {
   return (
-    <Container maxWidth="false">
+    <Container disableGutters maxWidth="false">
       <Header />
       <RegisterForm />
     </Container>

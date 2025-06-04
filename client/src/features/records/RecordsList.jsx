@@ -6,6 +6,7 @@ import {
   Button,
   CircularProgress,
   Fab,
+  Container,
 } from '@mui/material';
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
@@ -14,6 +15,7 @@ import { context } from '../../app/App';
 import AddIcon from '@mui/icons-material/Add';
 import useWindowSize from '../../hooks/useWindowSize';
 import RecordForm from '../../components/Header/RecordForm';
+import backgroundImage from '../../assets/2023639.jpg';
 
 const RecordsList = () => {
   const { postRendering, isLoading, setIsLoading } = useContext(context);
@@ -44,32 +46,6 @@ const RecordsList = () => {
       setIsRecordsFetched(true);
     }
   };
-
-  //認証用
-  // Appに入る
-  // const loadApp = async () => {
-  //   try {
-  //     const res = await axios.get('/api/app');
-  //     setUsername(res.data.username); //stateで管理しないと再度レンダリングしてくれない
-  //     console.log('認証に成功しました');
-  //   } catch (err) {
-  //     //セッションID無ければ401を返し,catchに入る
-  //     if (err.response.status === 401) {
-  //       alert('セッションIDがありません');
-  //       navigate('/');
-  //     } else {
-  //       console.error('予期しないえらーが発生しました', err);
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   loadApp();
-  //   const interval = setInterval(() => {
-  //     loadApp();
-  //   }, 10 * 60 * 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
 
   useEffect(() => {
     fetchRecord();
@@ -130,87 +106,102 @@ const RecordsList = () => {
 
   return (
     <div>
-      {isLoading && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh',
-            zIndex: 2,
-          }}
-        >
-          <CircularProgress size={80} /> ローデイング中です
-        </Box>
-      )}
-      <Box
-        component='main'
+      <Container
+        disableGutters
+        maxWidth='false'
         sx={{
-          p: 2,
-          backgroundImage:
-            'url(https://www.chizu-seisaku.com/wp-content/uploads/2021/08/world-furumap-scaled.jpg)',
+          backgroundImage: `url(${backgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
           minHeight: '100vh',
-          backgroundAttachment: 'fixed',
+          border: 1,
+          // borderColor: 'brown'
         }}
       >
+        {isLoading && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '100vh',
+              zIndex: 2,
+            }}
+          >
+            <CircularProgress size={80} /> ローデイング中です
+          </Box>
+        )}
         <Box
+          component='main'
           sx={{
-            mt: 10,
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: 'repeat(2,1fr)',
-              md: 'repeat(4,1fr)',
-            },
-            gap: 2,
+            p: 2,
+            // backgroundImage:
+            //   'url(https://www.chizu-seisaku.com/wp-content/uploads/2021/08/world-furumap-scaled.jpg)',
+            // backgroundSize: 'cover',
+            // backgroundPosition: 'center',
+            // backgroundRepeat: 'no-repeat',
+            minHeight: '100vh',
+            backgroundAttachment: 'fixed',
           }}
         >
-          {records.map((obj) => (
-            <Card key={obj.id} sx={{ maxWidth: 450 }}>
-              {obj.image_url && (
-                <CardMedia
-                  component='img'
-                  height='180'
-                  image={obj.image_url}
-                  alt='投稿写真'
-                  sx={{
-                    backgroundColor: '#eee',
-                    objectFit: 'cover',
-                  }}
-                  onLoad={() => handleImageLoad(obj.id)}
-                  onError={() => handleImageError(obj.id)}
-                />
-              )}
-              <div className='record_header'>
-                <p className='record_content'>料理名：{obj.dishname}</p>
-                <p className='record_content'>コメント：{obj.comment}</p>
-                <span className='record_rating'>{'⭐'.repeat(obj.rating)}</span>
-              </div>
-            </Card>
-          ))}
+          <Box
+            sx={{
+              mt: 10,
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: '1fr',
+                sm: 'repeat(2,1fr)',
+                md: 'repeat(4,1fr)',
+              },
+              gap: 2,
+            }}
+          >
+            {records.map((obj) => (
+              <Card key={obj.id} sx={{ maxWidth: 450 }}>
+                {obj.image_url && (
+                  <CardMedia
+                    component='img'
+                    height='180'
+                    image={obj.image_url}
+                    alt='投稿写真'
+                    sx={{
+                      backgroundColor: '#eee',
+                      objectFit: 'cover',
+                    }}
+                    onLoad={() => handleImageLoad(obj.id)}
+                    onError={() => handleImageError(obj.id)}
+                  />
+                )}
+                <div className='record_header'>
+                  <p className='record_content'>料理名：{obj.dishname}</p>
+                  <p className='record_content'>コメント：{obj.comment}</p>
+                  <span className='record_rating'>
+                    {'⭐'.repeat(obj.rating)}
+                  </span>
+                </div>
+              </Card>
+            ))}
+          </Box>
         </Box>
-      </Box>
-      <Box
-        sx={{
-          top: height - 150,
-          left: width / 2 - 70,
-          position: 'fixed',
-          zIndex: 1,
-        }}
-      >
-        <Fab
-          color='success'
-          variant='extended'
-          size=''
-          onClick={handleToggleForm}
+        <Box
+          sx={{
+            top: height - 150,
+            left: width / 2 - 70,
+            position: 'fixed',
+            zIndex: 1,
+          }}
         >
-          <AddIcon /> new post
-        </Fab>
-      </Box>
-      <RecordForm open={formOpen} onClose={handleToggleForm} />
+          <Fab
+            color='success'
+            variant='extended'
+            size=''
+            onClick={handleToggleForm}
+          >
+            <AddIcon /> new post
+          </Fab>
+        </Box>
+        <RecordForm open={formOpen} onClose={handleToggleForm} />
+      </Container>
     </div>
   );
 };
