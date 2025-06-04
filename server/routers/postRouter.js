@@ -5,24 +5,32 @@ const db = require('../db');
 
 router.post('/', async (req, res) => {
   try {
-    // const twitterInstance = new TwitterApi({
-    //   appKey: process.env.APP_KEY,
-    //   appSecret: process.env.APP_KEY_SWCRET,
-    //   accessToken: process.env.ACCES_TOKEN,
-    //   accessSecret: process.env.ACCES_TOKEN_SECRET,
-    // });
+    // const path = req.body.path.replace(/\\/g, "/").slice(2);
+    // console.log('path', path, req.body.path);
+    console.log('エンドポイント到着');
 
-    // const client = twitterInstance.readWrite;
+    const twitterInstance = new TwitterApi({
+      appKey: process.env.APP_KEY,
+      appSecret: process.env.APP_KEY_SECRET,
+      accessToken: process.env.ACCES_TOKEN,
+      accessSecret: process.env.ACCES_TOKEN_SECRET,
+    });
 
-    // const mediaId = await client.v1.uploadMedia(req.body.path);
-    // console.log(mediaId);
+    const client = twitterInstance.readWrite;
+
+    const response = await fetch(req.body.photoUrl);
+    const arrayBuffer = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    const mediaId = await client.v2.uploadMedia(buffer, {
+      media_type: 'image/png',
+    });
+    console.log(mediaId);
 
     // client.v2.tweet({
-    //   text: req.body.text,
+    //   text: req.body.comment,
     //   media: { media_ids: [mediaId] },
     // });
-
-    // // client.v2.tweet('テスト');
 
     res.status(200).json(req.body);
   } catch (err) {

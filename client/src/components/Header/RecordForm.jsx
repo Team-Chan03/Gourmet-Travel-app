@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 // prettier-ignore
 import {Modal,Box,Button,TextField,Rating,Typography, Checkbox } from "@mui/material";
 import axios from 'axios';
@@ -9,15 +9,16 @@ function RecordForm({ open, onClose }) {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(5);
   const [photoUrl, setPhotoUrl] = useState('');
-  const [filePath, setFilePath] = useState('');
   const [checked, setChecked] = useState(false);
+
+  const refImgPath = useRef();
 
   const { rendering, setIsLoading } = useContext(context);
 
   /**画像をURLにする関数*/
   const handleFileChange = async (e) => {
-    setFilePath(e.target.value);
     const file = e.currentTarget.files[0];
+
     try {
       const formData = new FormData(); // FormData の箱にファイルを詰め込む←ファイルをfetchする時は使わないといけないらしい
       formData.append('image', file); //key image   val file   として格納postでimageしか見ない
@@ -67,15 +68,24 @@ function RecordForm({ open, onClose }) {
 
       // await fetchRecord();
 
+      console.log(`post to Xのチェックボックスが${checked}`);
+      if (checked) {
+        postToX();
+        console.log(`postToXの関数が呼び出されました`);
+      }
+
       setIsLoading(false);
       rendering();
     }
   };
 
-  async function postToX(text, path) {
-      await axios.post('/api/post', {text, path})
-  .then(res => console.log(res));
+  async function postToX() {
+    await axios
+      .post('/api/post', { comment, photoUrl })
+      .then((res) => console.log(res));
   }
+
+  console.log(checked, refImgPath);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -110,10 +120,18 @@ function RecordForm({ open, onClose }) {
         </Button>
         {photoUrl && (
           <Box
+            ref={refImgPath}
             component="img"
             src={photoUrl}
             alt="選択画像"
-            sx={{ width: '100%', borderRadius: 1 }}
+            sx={{
+              height: '30%',
+              width: '30%',
+              borderRadius: 1,
+              display: 'flex',
+              margin: 'auto',
+            }}
+            textAlign="center"
           />
         )}
 
@@ -143,9 +161,9 @@ function RecordForm({ open, onClose }) {
           <Typography sx={{ ml: 1 }}>{rating} / 5</Typography>
         </Box>
 
-        <Box sx={{gap: 1,display: 'flex', justifyContent: 'space-between'}}>
+        <Box sx={{ gap: 1, display: 'flex', justifyContent: 'space-between' }}>
           <Button>
-          <Checkbox onChange={() => setChecked(!checked)}/>
+            <Checkbox onChange={() => setChecked(!checked)} />
             post to{''}
             <img style={{ height: '15px' }} src="/logo-black.png" />
           </Button>
