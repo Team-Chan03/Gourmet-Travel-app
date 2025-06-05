@@ -17,14 +17,22 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
 
+  const [formDisplay, setFormDisplay] = useState('block');
+
   const userIdFromCookie = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('userId='))
-        ?.split('=')[1];
+    .split('; ')
+    .find((row) => row.startsWith('userId='))
+    ?.split('=')[1];
 
-  console.log(userIdFromCookie);
+  if (userIdFromCookie && formDisplay === 'block') {
+    setFormDisplay('none');
 
-  if(userIdFromCookie) {
+  } else if (!userIdFromCookie && formDisplay === 'none') {
+    setFormDisplay('block');
+  }
+
+
+  if (userIdFromCookie) {
     window.open('/records', '_self');
   }
 
@@ -55,6 +63,7 @@ const LoginForm = () => {
         minHeight: '100vh',
         border: 1,
         borderColor: 'white',
+        display: formDisplay,
       }}
     >
       <Container maxWidth="xs">
@@ -114,9 +123,6 @@ const LoginForm = () => {
             variant="contained"
             color="primary"
             sx={{ mt: 2, mb: 2, bgcolor: 'orange' }}
-            // onClick={() => {
-            //   window.location.href = `${backUrl}/api/auth/google`;
-            // }}
             onClick={googleLogin}
           >
             Googleでログイン

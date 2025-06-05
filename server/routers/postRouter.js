@@ -5,8 +5,6 @@ const db = require('../db');
 
 router.post('/', async (req, res) => {
   try {
-    // const path = req.body.path.replace(/\\/g, "/").slice(2);
-    // console.log('path', path, req.body.path);
     console.log('エンドポイント到着');
 
     const twitterInstance = new TwitterApi({
