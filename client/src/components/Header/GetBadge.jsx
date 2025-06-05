@@ -14,7 +14,7 @@ function GetBadge() {
     getBadgeOpen,
     setGetBadgeOpen,
     prefecture,
-    setPrefcture,
+    setPrefecture,
   } = useContext(context);
 
   const [medalSrc, setMedalSrc] = useState('');
@@ -91,6 +91,7 @@ function GetBadge() {
             setGetBadgeOpen(false);
             setMessage('');
             setMedal('');
+            setPrefecture('');
           }}
         >
           post to{'　'}
@@ -102,7 +103,7 @@ function GetBadge() {
             setGetBadgeOpen(false);
             setMessage('');
             setMedal('');
-            setPrefcture('');
+            setPrefecture('');
           }}
         >
           閉じる
