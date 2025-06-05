@@ -13,6 +13,7 @@ function Header() {
   //   setFormOpen((val) => !val);
   // };
   const [menuDisplay, setMenuDisplay] = useState('block');
+  const [hello, setHello] =useState('Hello')
 
   const userIdFromCookie = document.cookie
         .split('; ')
@@ -23,8 +24,10 @@ function Header() {
 
   if(userIdFromCookie && menuDisplay === 'none') {
     setMenuDisplay('block');
+    setHello('Hello');
   }else if(!userIdFromCookie &&menuDisplay === 'block'){
     setMenuDisplay('none')
+    setHello('ユーザー登録またログインしてください')
   }
 
   return (
@@ -40,7 +43,7 @@ function Header() {
           <div className="drawer-container">
             <Stack direction={'row'} spacing={2}>
               <Container>
-                Hello{' '}
+                {hello}{' '}
                 {
                   document.cookie
                     .split('; ')
