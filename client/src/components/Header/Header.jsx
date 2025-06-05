@@ -4,12 +4,28 @@ import './Header.css';
 import RecordForm from './RecordForm';
 import GetBadge from './GetBadge';
 import appIcon from './../../assets/appIcon.png';
+import { useState } from 'react';
+
 
 function Header() {
   // const [formOpen, setFormOpen] = useState(false);
   // const handleToggleForm = () => {
   //   setFormOpen((val) => !val);
   // };
+  const [menuDisplay, setMenuDisplay] = useState('block');
+
+  const userIdFromCookie = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('userId='))
+        ?.split('=')[1];
+
+  console.log(userIdFromCookie);
+
+  if(userIdFromCookie && menuDisplay === 'none') {
+    setMenuDisplay('block');
+  }else if(!userIdFromCookie &&menuDisplay === 'block'){
+    setMenuDisplay('none')
+  }
 
   return (
     <>
@@ -32,7 +48,7 @@ function Header() {
                     ?.split('=')[1]
                 }
               </Container>
-              <Container>
+              <Container sx={{display: menuDisplay}}>
                 <Menubar />
               </Container>
             </Stack>
