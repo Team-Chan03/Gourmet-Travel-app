@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import Menubar from './MenuBar';
 import './Header.css';
 import RecordForm from './RecordForm';
@@ -13,11 +13,8 @@ function Header() {
 
   return (
     <>
-      <div>
+      <div style={{ position: 'sticky', top: 0, zIndex: 1 }}>
         <header className="header">
-          {/* <div>
-          <Button onClick={handleToggleForm}>投稿フォーム</Button>
-        </div> */}
           <div>
             <span className="appTitle">Gourmet Travel</span>
           </div>
@@ -25,14 +22,20 @@ function Header() {
             <img className="appicon" src={appIcon} />
           </div>
           <div className="drawer-container">
-            Hello,{' '}
-            {
-              document.cookie
-                .split('; ')
-                .find((row) => row.startsWith('userName='))
-                ?.split('=')[1]
-            }
-            <Menubar />
+            <Stack direction={'row'} spacing={2}>
+              <Container>
+                Hello{' '}
+                {
+                  document.cookie
+                    .split('; ')
+                    .find((row) => row.startsWith('userName='))
+                    ?.split('=')[1]
+                }
+              </Container>
+              <Container>
+                <Menubar />
+              </Container>
+            </Stack>
           </div>
         </header>
 

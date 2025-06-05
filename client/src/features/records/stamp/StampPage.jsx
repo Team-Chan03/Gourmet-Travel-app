@@ -26,22 +26,22 @@ function StampPage() {
 
   return (
     <>
-      <Container disableGutters maxWidth='false'>
+      <Container disableGutters maxWidth="false">
         <Header />
         <Container
           disableGutters
-          maxWidth='false'
+          maxWidth="false"
           sx={{
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             minHeight: '100vh',
             border: 1,
-            // borderColor: 'brown'
+            borderColor: 'white',
           }}
         >
-          <Container sx={{ display: 'flex' }} maxWidth='false'>
-            <Container maxWidth='false' sx={{ flex: 1 }}>
+          <Container sx={{ display: 'flex' }} maxWidth="false">
+            <Container maxWidth="false" sx={{ flex: 1 }}>
               <PrefectureList
                 states={{
                   userPostData,
@@ -50,7 +50,7 @@ function StampPage() {
                 }}
               />
             </Container>
-            <Container maxWidth='false' sx={{ flex: 3 }}>
+            <Container maxWidth="false" sx={{ flex: 3 }}>
               <StampCard states={{ userPostData, selectCountry, selectDish }} />
             </Container>
           </Container>

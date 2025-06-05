@@ -3,19 +3,23 @@ import {
   Box,
   Card,
   CardMedia,
-  Button,
   CircularProgress,
   Fab,
   Container,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
 } from '@mui/material';
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-// import { useNavigate } from 'react-router';
 import { context } from '../../app/App';
 import AddIcon from '@mui/icons-material/Add';
 import useWindowSize from '../../hooks/useWindowSize';
 import RecordForm from '../../components/Header/RecordForm';
+import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import backgroundImage from '../../assets/2023639.jpg';
+import paperairplaneImage from '../../assets/07DAABE4-7654-4506-A67D-893E0DEC5E7F.png';
+import './Records.css';
 
 const RecordsList = () => {
   const { postRendering, isLoading, setIsLoading } = useContext(context);
@@ -105,104 +109,110 @@ const RecordsList = () => {
   };
 
   return (
-    <div>
-      <Container
-        disableGutters
-        maxWidth='false'
+    <Container
+      disableGutters
+      maxWidth="false"
+      sx={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        border: 1,
+        borderColor: 'white',
+      }}
+    >
+      {isLoading && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '100vh',
+            zIndex: 2,
+          }}
+        >
+          <CircularProgress size={80} /> ローデイング中です
+        </Box>
+      )}
+      <Box
+        component="main"
         sx={{
-          backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          p: 2,
+
           minHeight: '100vh',
-          border: 1,
-          // borderColor: 'brown'
+          backgroundAttachment: 'fixed',
         }}
       >
-        {isLoading && (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              minHeight: '100vh',
-              zIndex: 2,
-            }}
-          >
-            <CircularProgress size={80} /> ローデイング中です
-          </Box>
-        )}
-        <Box
-          component='main'
+        {/* <Box
           sx={{
-            p: 2,
-            // backgroundImage:
-            //   'url(https://www.chizu-seisaku.com/wp-content/uploads/2021/08/world-furumap-scaled.jpg)',
-            // backgroundSize: 'cover',
-            // backgroundPosition: 'center',
-            // backgroundRepeat: 'no-repeat',
-            minHeight: '100vh',
-            backgroundAttachment: 'fixed',
+            mt: 10,
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: 'repeat(2,1fr)',
+              md: 'repeat(4,1fr)',
+            },
+            gap: 2,
           }}
-        >
-          <Box
-            sx={{
-              mt: 10,
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: '1fr',
-                sm: 'repeat(2,1fr)',
-                md: 'repeat(4,1fr)',
-              },
-              gap: 2,
-            }}
-          >
+        > */}
+        <Container maxWidth="xl">
+          <ImageList variant="woven" cols={3} gap={10}>
             {records.map((obj) => (
-              <Card key={obj.id} sx={{ maxWidth: 450 }}>
-                {obj.image_url && (
-                  <CardMedia
-                    component='img'
-                    height='180'
-                    image={obj.image_url}
-                    alt='投稿写真'
-                    sx={{
-                      backgroundColor: '#eee',
-                      objectFit: 'cover',
-                    }}
-                    onLoad={() => handleImageLoad(obj.id)}
-                    onError={() => handleImageError(obj.id)}
-                  />
-                )}
-                <div className='record_header'>
-                  <p className='record_content'>料理名：{obj.dishname}</p>
-                  <p className='record_content'>コメント：{obj.comment}</p>
-                  <span className='record_rating'>
-                    {'⭐'.repeat(obj.rating)}
-                  </span>
-                </div>
-              </Card>
+              <ImageListItem
+                key={obj.id}
+                className="img-hover"
+                onLoad={() => handleImageLoad(obj.id)}
+                onError={() => handleImageError(obj.id)}
+              >
+                <img
+                  src={obj.image_url}
+                  alt={obj.comment}
+                  loading="lazy"
+                  style={{ borderRadius: 20 }}
+                />
+                <ImageListItemBar
+                  title={obj.dishname}
+                  subtitle={obj.comment}
+                  sx={{
+                    background:
+                      'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, ' +
+                      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+                  }}
+                  // position="top"
+                />
+              </ImageListItem>
             ))}
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            top: height - 150,
-            left: width / 2 - 70,
-            position: 'fixed',
-            zIndex: 1,
-          }}
+          </ImageList>
+        </Container>
+        {/* </Box> */}
+      </Box>
+      <RecordForm open={formOpen} onClose={handleToggleForm} />
+      <Container
+        className="paperairplane"
+        disableGutters
+        maxWidth="false"
+        onClick={handleToggleForm}
+        sx={{
+          position: 'sticky',
+          bottom: -30,
+          backgroundImage: `url(${paperairplaneImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: 200,
+          width: 200,
+          opacity: 0.8,
+        }}
+      >
+        {/* <Fab
+          variant="extended"
+          onClick={handleToggleForm}
+          sx={{ bgcolor: 'orange', color: 'white' }}
         >
-          <Fab
-            color='success'
-            variant='extended'
-            size=''
-            onClick={handleToggleForm}
-          >
-            <AddIcon /> new post
-          </Fab>
-        </Box>
-        <RecordForm open={formOpen} onClose={handleToggleForm} />
+          <LocalPostOfficeIcon />
+          new post
+        </Fab> */}
       </Container>
-    </div>
+    </Container>
   );
 };
 

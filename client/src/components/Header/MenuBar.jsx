@@ -79,14 +79,13 @@ export default function Menubar() {
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-      role='presentation'
+      role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       {/* ページ遷移はpathを追加するだけでいいです */}
       <List>
         {[
-
           { text: '新規投稿', path: '新規投稿', icon: <AddIcon /> },
           { text: 'ホーム', path: '/records', icon: <HomeIcon /> },
           { text: '地図', path: '/map', icon: <FmdGoodIcon /> },
@@ -114,8 +113,12 @@ export default function Menubar() {
       {/* <h1>Anchor</h1> */}
       {['right'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button variant='contained' onClick={toggleDrawer(anchor, true)}>
-            <MenuIcon fontSize='large' />
+          <Button
+            variant="contained"
+            onClick={toggleDrawer(anchor, true)}
+            sx={{ bgcolor: '#f76507' }}
+          >
+            <MenuIcon fontSize="large" />
           </Button>
           <Drawer
             anchor={anchor}
@@ -124,8 +127,7 @@ export default function Menubar() {
           >
             {list(anchor)}
           </Drawer>
-      <RecordForm open={formOpen} onClose={handleToggleForm} />
-
+          <RecordForm open={formOpen} onClose={handleToggleForm} />
         </React.Fragment>
       ))}
     </div>

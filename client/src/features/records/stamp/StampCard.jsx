@@ -7,6 +7,10 @@ import {
   ImageListItem,
   Tooltip,
 } from '@mui/material';
+import './../Records.css';
+import goldImage from '../../../assets/435950.png';
+import silverImage from '../../../assets/24985480.png';
+import bronzeImage from '../../../assets/435853.png';
 
 const StampCard = (props) => {
   const [selectData, setSelectData] = useState();
@@ -18,9 +22,6 @@ const StampCard = (props) => {
     }
   }, [selectCountry]);
 
-  function a(e) {
-    console.log(e);
-  }
   return selectData ? (
     <>
       <Card sx={{ width: 1, marginTop: 3 }}>
@@ -31,6 +32,15 @@ const StampCard = (props) => {
         <ImageList
           cols={5}
           sx={{
+            backgroundImage:
+              selectData.length >= 20
+                ? `url(${goldImage})`
+                : selectData.length >= 10
+                ? `url(${silverImage})`
+                : selectData.length >= 5
+                ? `url(${bronzeImage})`
+                : '',
+
             bgcolor:
               selectData.length >= 20
                 ? 'rgba(255, 159, 56, 0.32)'
@@ -43,9 +53,10 @@ const StampCard = (props) => {
         >
           {selectData.map((e, i) => (
             <Tooltip title={e.comment} key={i}>
-              <ImageListItem sx={{ m: 3 }} onClick={a}>
+              <ImageListItem sx={{ m: 3 }}>
                 {selectDish === e.dishname || selectDish === '' ? (
                   <img
+                    className="stamp-img"
                     src={e.image_url}
                     alt={e.comment}
                     loading="lazy"
@@ -57,6 +68,7 @@ const StampCard = (props) => {
                   />
                 ) : (
                   <img
+                    className="stamp-img"
                     src={e.image_url}
                     alt={e.comment}
                     loading="lazy"
@@ -85,6 +97,7 @@ const StampCard = (props) => {
           <Tooltip title={e.comment} key={i}>
             <ImageListItem sx={{ m: 3 }}>
               <img
+                className="stamp-img"
                 src={e.image_url}
                 alt={e.comment}
                 loading="lazy"

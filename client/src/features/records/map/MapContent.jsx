@@ -17,33 +17,33 @@ const MapContent = () => {
   const [centerPosition, setCenterPosition] = useState([]);
   const [alignment, setAlignment] = useState('mode1');
 
-  const handleChange = async(event, newAlignment) => {
-    console.log(alignment,newAlignment);
-    
-    if (newAlignment === null){
-      return
+  const handleChange = async (event, newAlignment) => {
+    console.log(alignment, newAlignment);
+
+    if (newAlignment === null) {
+      return;
     }
-        //mapMode true = ピン立て　false = 色塗り
-        let response;
-        let mode = mapMode;
-        mode = !mode;
-    
-        //mapData1 : ピン立て
-        if (mode) {
-          response = await axios.get('/api/map/data1');
-          const locationArr = response.data.filter(
-            (data) => data.latitude && data.longitude
-          );
-          setDisplayList(locationArr);
-        } else {
-          response = await axios.get('/api/map/data2');
-          const locationArr = response.data.filter(
-            (data) => data.latitude && data.longitude
-          );
-          setDisplayList(locationArr);
-        }
-    
-        setmapMode(mode);
+    //mapMode true = ピン立て　false = 色塗り
+    let response;
+    let mode = mapMode;
+    mode = !mode;
+
+    //mapData1 : ピン立て
+    if (mode) {
+      response = await axios.get('/api/map/data1');
+      const locationArr = response.data.filter(
+        (data) => data.latitude && data.longitude
+      );
+      setDisplayList(locationArr);
+    } else {
+      response = await axios.get('/api/map/data2');
+      const locationArr = response.data.filter(
+        (data) => data.latitude && data.longitude
+      );
+      setDisplayList(locationArr);
+    }
+
+    setmapMode(mode);
 
     setAlignment(newAlignment);
   };
@@ -89,16 +89,14 @@ const MapContent = () => {
     <>
       <Container
         disableGutters
-        maxWidth='false'
+        maxWidth="false"
         sx={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           height: '100vh',
           border: 1,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-
-          // borderColor: 'brown'
+          borderColor: 'white',
         }}
       >
         {/* <Box sx={
@@ -113,19 +111,20 @@ const MapContent = () => {
           value={alignment}
           exclusive
           onChange={handleChange}
-          aria-label='Platform'
-          sx={
-            {position:'absolute',
-              top:"120px",
-              left:'50px',
-              zIndex:1000,
-              color:'#f76507',
-              backgroundColor:'#fff3d7'
-            }
-          }
+          aria-label="Platform"
+          sx={{
+            position: 'absolute',
+            top: '120px',
+            left: '50px',
+            zIndex: 1000,
+            color: '#f76507',
+            backgroundColor: '#fff3d7',
+          }}
         >
-          <ToggleButton variant='contained' value='mode1'>Mode1</ToggleButton>
-          <ToggleButton value='mode2'>Mode2</ToggleButton>
+          <ToggleButton variant="contained" value="mode1">
+            Mode1
+          </ToggleButton>
+          <ToggleButton value="mode2">Mode2</ToggleButton>
         </ToggleButtonGroup>
         {mapMode && centerPosition.length !== 0 ? (
           <div>
@@ -137,8 +136,8 @@ const MapContent = () => {
             >
               {/* Map タイル */}
               <TileLayer
-                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-                attribution='© OpenStreetMap contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="© OpenStreetMap contributors"
               />
 
               {displayList.length !== 0 &&
@@ -158,10 +157,10 @@ const MapContent = () => {
                           }}
                         >
                           <img
-                            className='mapImage'
+                            className="mapImage"
                             src={obj.image_url}
-                            alt='食べ物'
-                            loading='lazy'
+                            alt="食べ物"
+                            loading="lazy"
                             style={mapImage}
                           />
                           <br />
@@ -174,10 +173,7 @@ const MapContent = () => {
             </MapContainer>
           </div>
         ) : (
-          <div>
-
-            {<JapanMap list={displayList} />}
-          </div>
+          <div>{<JapanMap list={displayList} />}</div>
         )}
       </Container>
     </>
