@@ -17,6 +17,17 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate(); //フック。関数などイベント内で動的に遷移。
 
+  const userIdFromCookie = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('userId='))
+        ?.split('=')[1];
+
+  console.log(userIdFromCookie);
+
+  if(userIdFromCookie) {
+    window.open('/records', '_self');
+  }
+
   const processingLogin = async () => {
     try {
       await axios.post('/api/auth/login', { username, password });

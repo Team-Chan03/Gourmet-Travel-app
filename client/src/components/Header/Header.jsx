@@ -35,7 +35,7 @@ function Header() {
       <div style={{ position: 'sticky', top: 0, zIndex: 1 }}>
         <header className="header">
           <div>
-            <span className="appTitle">Gourmet Travel</span>
+            <span className="appTitle" onClick={() => userIdFromCookie ? window.open('/records', '_self') : ''}>Gourmet Travel</span>
           </div>
           <div className="header-title">
             <img className="appicon" src={appIcon} />
