@@ -27,10 +27,10 @@ router.post('/', async (req, res) => {
     });
     console.log(mediaId);
 
-    // client.v2.tweet({
-    //   text: req.body.text,
-    //   media: { media_ids: [mediaId] },
-    // });
+    client.v2.tweet({
+      text: req.body.text,
+      media: { media_ids: [mediaId] },
+    });
 
     res.status(200).json(req.body);
   } catch (err) {
