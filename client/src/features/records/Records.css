@@ -1,0 +1,17 @@
+.img-hover:hover {
+  transform: scale(1.03);
+  transition: 0.5s;
+}
+
+.paperairplane:hover {
+  bottom: 70px;
+  transition: 0.3s;
+  transform: scale(1.3);
+  transition: 0.5s;
+  opacity: 1;
+}
+
+.stamp-img:hover {
+  transition: 0.3s;
+  transform: scale(1.1);
+}

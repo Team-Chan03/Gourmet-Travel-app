@@ -1,9 +1,9 @@
-import { Button } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import Menubar from './MenuBar';
 import './Header.css';
 import { useState } from 'react';
 import RecordForm from './RecordForm';
-import appIcon from './../../assets/appIcon.png'
+import appIcon from './../../assets/appIcon.png';
 
 function Header() {
   const [formOpen, setFormOpen] = useState(false);
@@ -13,26 +13,29 @@ function Header() {
   };
 
   return (
-    <div>
-      <header className='header'>
-        {/* <div>
-          <Button onClick={handleToggleForm}>投稿フォーム</Button>
-        </div> */}
+    <div style={{ position: 'sticky', top: 0, zIndex: 1 }}>
+      <header className="header">
         <div>
           <span className="appTitle">Gourmet Travel</span>
         </div>
-        <div className='header-title'>
-          <img className="appicon" src={appIcon}/>
+        <div className="header-title">
+          <img className="appicon" src={appIcon} />
         </div>
-        <div className='drawer-container'>
-          Hello,{' '}
-          {
-            document.cookie
-              .split('; ')
-              .find((row) => row.startsWith('userName='))
-              ?.split('=')[1]
-          }
-          <Menubar />
+        <div className="drawer-container">
+          <Stack direction={'row'} spacing={2}>
+            <Container>
+              Hello{' '}
+              {
+                document.cookie
+                  .split('; ')
+                  .find((row) => row.startsWith('userName='))
+                  ?.split('=')[1]
+              }
+            </Container>
+            <Container>
+              <Menubar />
+            </Container>
+          </Stack>
         </div>
       </header>
 

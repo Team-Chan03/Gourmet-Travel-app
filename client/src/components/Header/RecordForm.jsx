@@ -3,6 +3,9 @@ import { useContext, useRef, useState } from 'react';
 import {Modal,Box,Button,TextField,Rating,Typography, Checkbox } from "@mui/material";
 import axios from 'axios';
 import { context } from '../../app/App';
+import backgroundImage from '../../assets/2023639.jpg';
+import { rgb } from 'd3';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 function RecordForm({ open, onClose }) {
   const [dishname, setDishname] = useState('');
@@ -130,8 +133,13 @@ function RecordForm({ open, onClose }) {
           新規投稿
         </Typography>
 
-        <Button variant="outlined" component="label">
-          画像を選択
+        <Button
+          variant="contained"
+          component="label"
+          startIcon={<CloudUploadIcon />}
+          sx={{ bgcolor: '#ff5722' }}
+        >
+          画像をアップロード
           <input
             type="file"
             accept="image/*"
@@ -183,15 +191,15 @@ function RecordForm({ open, onClose }) {
         </Box>
 
         <Box sx={{ gap: 1, display: 'flex', justifyContent: 'space-between' }}>
-
-          <Button>
+          <Button sx={{ color: 'black' }}>
             <Checkbox onClick={() => setChecked(!checked)} />
-
             post to{''}
             <img style={{ height: '15px' }} src="/logo-black.png" />
           </Button>
 
-          <Button onClick={onClose}>キャンセル</Button>
+          <Button onClick={onClose} sx={{ color: 'black' }}>
+            キャンセル
+          </Button>
           <Button
             variant="contained"
             onClick={handleSubmit}

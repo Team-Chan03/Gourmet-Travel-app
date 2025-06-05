@@ -36,19 +36,28 @@ const LoginForm = () => {
   return (
     <Container
       disableGutters
-      maxWidth='false'
+      maxWidth="false"
       sx={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '100vh',
         border: 1,
-        // borderColor: 'brown'
+        borderColor: 'white',
       }}
     >
-      <Container maxWidth='xs' >
+      <Container maxWidth="xs">
         <Box sx={{ mt: 8, mb: 4 }}>
-          <Typography variant='h4' align='center' gutterBottom>
+          <Typography
+            variant="h4"
+            align="center"
+            gutterBottom
+            sx={{
+              background:
+                'linear-gradient(to bottom, rgba(255,255,255,0.7) 0%, ' +
+                'rgba(0,0,0,0) 70%, rgba(0,0,0,0) 100%)',
+            }}
+          >
             ログイン
           </Typography>
           <form
@@ -58,42 +67,42 @@ const LoginForm = () => {
             }}
           >
             <TextField
-              sx={{ bgcolor: 'white', opacity: 0.7,color:'black' }}
-              label='ユーザー名'
-              variant='outlined'
+              sx={{ bgcolor: 'white', opacity: 0.7, color: 'black' }}
+              label="ユーザー名"
+              variant="outlined"
               fullWidth
-              margin='normal'
+              margin="normal"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              />
+            />
             <TextField
-              sx={{ bgcolor: 'white', opacity: 0.7,color:'black' }}
-              label='パスワード'
-              type='password'
-              variant='outlined'
+              sx={{ bgcolor: 'white', opacity: 0.7, color: 'black' }}
+              label="パスワード"
+              type="password"
+              variant="outlined"
               fullWidth
-              margin='normal'
+              margin="normal"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
             <Button
-              type='submit'
+              type="submit"
               fullWidth
-              variant='contained'
-              color='primary'
-              sx={{ mt: 2, mb: 2 ,bgcolor:"orange"}}
+              variant="contained"
+              color="primary"
+              sx={{ mt: 2, mb: 2, bgcolor: 'orange' }}
             >
               ログイン
             </Button>
           </form>
           <Button
-            type='submit'
+            type="submit"
             fullWidth
-            variant='contained'
-            color='primary'
-            sx={{ mt: 2, mb: 2 ,bgcolor:"orange"}}
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2, mb: 2, bgcolor: 'orange' }}
             // onClick={() => {
             //   window.location.href = `${backUrl}/api/auth/google`;
             // }}
@@ -101,8 +110,12 @@ const LoginForm = () => {
           >
             Googleでログイン
           </Button>
-          <Typography align='center' >
-            <MuiLink component={Link} to='/register' sx={{bgcolor:"white",opacity:0.4,color:'black'}}>
+          <Typography align="center">
+            <MuiLink
+              component={Link}
+              to="/register"
+              sx={{ bgcolor: 'white', color: 'black' }}
+            >
               ユーザ登録はこちら
             </MuiLink>
           </Typography>

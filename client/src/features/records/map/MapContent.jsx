@@ -69,14 +69,14 @@ const MapContent = () => {
     <>
       <Container
         disableGutters
-        maxWidth='false'
+        maxWidth="false"
         sx={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           minHeight: '100vh',
           border: 1,
-          // borderColor: 'brown'
+          borderColor: 'white',
         }}
       >
         {mapMode && centerPosition.length !== 0 ? (
@@ -92,8 +92,8 @@ const MapContent = () => {
             >
               {/* Map タイル */}
               <TileLayer
-                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-                attribution='© OpenStreetMap contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="© OpenStreetMap contributors"
               />
 
               {displayList.map((obj) => {
@@ -110,10 +110,10 @@ const MapContent = () => {
                         }}
                       >
                         <img
-                          className='mapImage'
+                          className="mapImage"
                           src={obj.image_url}
-                          alt='食べ物'
-                          loading='lazy'
+                          alt="食べ物"
+                          loading="lazy"
                           style={mapImage}
                         />
                         <br />
