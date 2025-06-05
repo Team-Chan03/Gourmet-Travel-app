@@ -1,0 +1,43 @@
+.gold {
+  background: linear-gradient(to bottom right, #d0a900, #fff9e6, #d0a900);
+  margin: 1;
+  margin-right: 5px;
+  width: 30%;
+box-shadow: 3px;
+border-radius: 6px;
+height:27px;
+}
+.silver {
+  background: linear-gradient(to bottom right, #757575, #E8E8E8, #757575);
+  margin: 1;
+  margin-right: 5px;
+  width: 30%;
+box-shadow: 3px;
+border-radius: 6px;
+height:27px;
+}
+.bronz {
+  background: linear-gradient(to bottom right, #a57e65, #f3cfb8, #a57e65);
+  margin: 1;
+  margin-right: 5px;
+  width: 30%;
+box-shadow: 3px;
+border-radius: 6px;
+height:27px;
+}
+.blue {
+  background-color: #2566CC;
+  margin: 1;
+  margin-right: 5px;
+  width: 30%;
+box-shadow: 3px;
+border-radius: 6px;
+height:27px;
+}
+
+/* m: 1,
+backgroundColor: '#e6b422',
+linearGradient:'45deg, #757575 0%, #9E9E9E 45%, #E8E8E8 70%, #9E9E9E 85%, #757575 90% 100%',
+borderRadius: 2,
+boxShadow: 1,
+width: '30%', */

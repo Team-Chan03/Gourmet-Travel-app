@@ -1,7 +1,8 @@
 import React, { useEffect, memo } from 'react';
 import * as d3 from 'd3';
 import geoJson from './../../../utils/japan.json';
-import { Box } from '@mui/material';
+import { Box, Card, Typography } from '@mui/material';
+import './JapanMap.css';
 
 const getTarget = ({ list, prefName }) => {
   let pref = prefName;
@@ -53,6 +54,8 @@ const JapanMap = ({ list }) => {
       .attr(`width`, `100%`)
       .attr(`height`, `100vh`);
 
+    const defs = svg.append('defs');
+
     // 都道府県の領域データをpathで描画
     svg
       .selectAll(`path`)
@@ -66,19 +69,65 @@ const JapanMap = ({ list }) => {
         // 透明度の設定
         let color;
         const t = getTarget({ list, prefName: item.properties.name_ja });
-        if (t >= 20) {
-          color = '#e6b422';
-        } else if (t >= 10) {
-          color = '#c0c0c0';
-        } else if (t >= 5) {
-          color = '#ff9f38';
-        } else if (t < 5 && t > 0) {
+        if (t < 5 && t > 0) {
           color = '#2566CC';
-        } else {
+        } else if (t === 0) {
           color = '#ffffff';
         }
         return color;
       })
+      .each(function (item) {
+        // 各path要素に対して処理
+        const prefName = item.properties.name_ja;
+        const t = getTarget({ list, prefName: prefName });
+
+        // グラデーションのIDを都道府県名に基づいて生成
+        const gradientId = `gradient-${prefName.replace(/\s/g, '')}`; // スペースは削除
+
+        // グラデーションの色をデータに基づいて決定
+        let stopColor1, stopColor2;
+        if (t >= 20) {
+          stopColor1 = '#d0a900'; // 濃い色
+          stopColor2 = '#fff9e6'; // 薄い色
+        } else if (t >= 10) {
+          stopColor1 = '#757575';
+          stopColor2 = '#E8E8E8';
+        } else if (t >= 5) {
+          stopColor1 = '#a57e65';
+          stopColor2 = '#f3cfb8';
+        }
+
+        if (t >= 5) {
+          // linearGradientをdefsに追加
+          defs
+            .append('linearGradient')
+            .attr('id', gradientId)
+            .attr('gradientUnits', 'objectBoundingBox') // objectBoundingBox を使用
+            .attr('x1', '0%') // グラデーションの開始点（左）
+            .attr('y1', '0%')
+            .attr('x2', '100%') // グラデーションの終了点（右）
+            .attr('y2', '100%') // 上から下へのグラデーションにする場合、y2を100%に
+            .append('stop')
+            .attr('offset', '0%')
+            .attr('stop-color', stopColor1);
+
+          defs
+            .select(`#${gradientId}`) // 既存のグラデーションを選択
+            .append('stop')
+            .attr('offset', '50%')
+            .attr('stop-color', stopColor2);
+
+          defs
+            .select(`#${gradientId}`)
+            .append('stop')
+            .attr('offset', '100%') // 終了の色 (stopColor2)
+            .attr('stop-color', stopColor1);
+
+          // 各path要素のfill属性にグラデーションのURLを設定
+          d3.select(this).attr('fill', `url('#${gradientId}')`);
+        }
+      })
+
       .attr(`cursor`, (item) => {
         // カーソルの設定
         const t = getTarget({ list, prefName: item.properties.name_ja });
@@ -188,9 +237,63 @@ const JapanMap = ({ list }) => {
           width: '100%',
           height: '100%',
           backgroundColor: 'rgba(0, 0, 0, 0.2)',
-
         }}
       >
+        <Card
+          sx={{
+            position: 'absolute',
+            top: '20%',
+            left: 50,
+            backgroundColor: '#fffaf0',
+            boxShadow: 1,
+            borderRadius: 2,
+            p: 3,
+            pl: 5,
+            width: 140,
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <div className='gold'></div>
+            <Typography sx={{ m: 1, fontWeight: 'bold' }}>
+              : 20回~
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <div className='silver'></div>
+
+            <Typography sx={{ m: 1, fontWeight: 'bold' }}>: 10~19回</Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <div className='bronz'></div>
+
+            <Typography sx={{ m: 1, fontWeight: 'bold' }}>: 5~9回</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <div className='blue'></div>
+            <Typography sx={{ m: 1, fontWeight: 'bold' }}>: 1~4回</Typography>
+          </Box>
+        </Card>
         <div id='map-container' className='w-[500px] h-[500px]' />
       </Box>
     </>
