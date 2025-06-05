@@ -16,9 +16,17 @@ function RecordForm({ open, onClose }) {
 
   const refImgPath = useRef();
 
-  const { rendering, setIsLoading } = useContext(context);
+  const {
+    rendering,
+    setIsLoading,
+    setMedal,
+    message,
+    setMessage,
+    setGetBadgeOpen,
+    setPrefecture,
+  } = useContext(context);
 
-  let region = '';
+  let region = 'somewehre';
 
   /**画像をURLにする関数*/
   const handleFileChange = async (e) => {
@@ -39,21 +47,6 @@ function RecordForm({ open, onClose }) {
   const handleSubmit = async () => {
     if (photoUrl) {
       setIsLoading(true);
-      const { latitude, longitude } = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => resolve(position.coords),
-          (error) => reject(error)
-        );
-      });
-
-      const resMap = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-      );
-      const data = await resMap.json();
-      region = data.address.province;
-      console.log(region);
-
-      console.log('🔥 photoUrl があるのでここまで来たよ');
       const userIdFromCookie = document.cookie
         .split('; ')
         .find((row) => row.startsWith('userId='))
@@ -63,8 +56,41 @@ function RecordForm({ open, onClose }) {
       setRating(5);
       setPhotoUrl('');
       onClose();
+      const { latitude, longitude } = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => resolve(position.coords),
+          async (error) => {
+            console.log('位置情報なし', error);
+            try {
+              const res = await axios.post('/api/records/submit', {
+                user_id: userIdFromCookie,
+                image_url: photoUrl,
+                comment,
+                dishname,
+                rating,
+                // latitude: '',
+                // longitude: '',
+                created_at: new Date(),
+              });
+              console.log('🚀 ~ handleSubmit ~ res:', res);
+            } catch (err) {
+              console.error('❌ POST エラー', err);
+            }
+
+            setIsLoading(false);
+            rendering();
+          }
+        );
+      });
+      if (!!latitude && !!longitude) {
+        const resMap = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+        );
+        const data = await resMap.json();
+        region = data.address.province;
+      }
       try {
-        const req = await axios.post('/api/records/submit', {
+        const res = await axios.post('/api/records/submit', {
           user_id: userIdFromCookie,
           image_url: photoUrl,
           comment,
@@ -74,7 +100,14 @@ function RecordForm({ open, onClose }) {
           longitude,
           created_at: new Date(),
         });
-        console.log('🚀 ~ handleSubmit ~ req:', req);
+
+        setMedal(res.data.medal);
+        setMessage(res.data.message);
+        setPrefecture(res.data.region);
+
+        console.log(res.data.message, res.data.medal);
+
+        console.log('🚀 ~ handleSubmit ~ res:', res);
       } catch (err) {
         console.error('❌ POST エラー', err);
       }
@@ -87,12 +120,22 @@ function RecordForm({ open, onClose }) {
         console.log(`postToXの関数が呼び出されました`);
       }
 
+      setChecked(false);
+
       setIsLoading(false);
       rendering();
     }
   };
 
+  if (message) {
+    setGetBadgeOpen(true);
+  }
+  console.log('チェックボックス', checked);
+
   async function postToX() {
+    const hash = region
+      ? '#グルメ #旅行 #都道府県 #gourmet #travel #prefecture ' + `#${region}`
+      : '#グルメ #旅行 #都道府県 #gourmet #travel #prefecture ';
     await axios
       .post('/api/post', {
         text:
@@ -102,14 +145,11 @@ function RecordForm({ open, onClose }) {
           '\n' +
           'posted by https://gourmet-travel-app-29ug.onrender.com/' +
           '\n' +
-          '#グルメ #旅行 #都道府県 #gourmet #travel #prefecture ' +
-          `#${region}`,
-        photoUrl,
+          hash,
+        url: photoUrl,
       })
       .then((res) => console.log(res));
   }
-
-  console.log(checked, refImgPath);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -129,7 +169,7 @@ function RecordForm({ open, onClose }) {
           gap: 2,
         }}
       >
-        <Typography variant="h6" component="h2">
+        <Typography variant="h6" component="h2" sx={{ color: 'black' }}>
           新規投稿
         </Typography>
 
@@ -193,11 +233,16 @@ function RecordForm({ open, onClose }) {
         <Box sx={{ gap: 1, display: 'flex', justifyContent: 'space-between' }}>
           <Button sx={{ color: 'black' }}>
             <Checkbox onClick={() => setChecked(!checked)} />
-            post to{''}
+            post to{'　'}
             <img style={{ height: '15px' }} src="/logo-black.png" />
           </Button>
 
-          <Button onClick={onClose} sx={{ color: 'black' }}>
+          <Button
+            onClick={() => {
+              onClose();
+              setChecked(false);
+            }}
+          >
             キャンセル
           </Button>
           <Button

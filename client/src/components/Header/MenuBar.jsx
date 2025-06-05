@@ -95,7 +95,7 @@ export default function Menubar() {
             path: 'ログアウト',
             icon: <LogoutIcon />,
           },
-        ].map((obj, index) => (
+        ].map((obj) => (
           <ListItem key={obj.text} disablePadding>
             <ListItemButton onClick={() => handleNavigate(obj.path)}>
               <ListItemIcon>{obj.icon}</ListItemIcon>

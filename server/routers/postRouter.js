@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 
     const client = twitterInstance.readWrite;
 
-    const response = await fetch(req.body.photoUrl);
+    const response = await fetch(req.body.url);
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
