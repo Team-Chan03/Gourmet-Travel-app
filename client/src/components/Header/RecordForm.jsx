@@ -3,8 +3,6 @@ import { useContext, useRef, useState } from 'react';
 import {Modal,Box,Button,TextField,Rating,Typography, Checkbox } from "@mui/material";
 import axios from 'axios';
 import { context } from '../../app/App';
-import backgroundImage from '../../assets/2023639.jpg';
-import { rgb } from 'd3';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 function RecordForm({ open, onClose }) {
@@ -105,8 +103,6 @@ function RecordForm({ open, onClose }) {
         setMessage(res.data.message);
         setPrefecture(res.data.region);
 
-        console.log(res.data.message, res.data.medal);
-
         console.log('🚀 ~ handleSubmit ~ res:', res);
       } catch (err) {
         console.error('❌ POST エラー', err);
@@ -130,7 +126,6 @@ function RecordForm({ open, onClose }) {
   if (message) {
     setGetBadgeOpen(true);
   }
-  console.log('チェックボックス', checked);
 
   async function postToX() {
     const hash = region

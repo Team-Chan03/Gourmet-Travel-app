@@ -22,9 +22,6 @@ import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import RedeemIcon from '@mui/icons-material/Redeem';
 import axios from 'axios';
 import RecordForm from './RecordForm';
-// import { ToggleButton, FormatAlignLeftIcon } from "@mui/material";
-
-// import Login from "../Login/Login";
 
 export default function Menubar() {
   const navigate = useNavigate();

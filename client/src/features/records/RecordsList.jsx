@@ -143,18 +143,6 @@ const RecordsList = () => {
           backgroundAttachment: 'fixed',
         }}
       >
-        {/* <Box
-          sx={{
-            mt: 10,
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: 'repeat(2,1fr)',
-              md: 'repeat(4,1fr)',
-            },
-            gap: 2,
-          }}
-        > */}
         <Container maxWidth="xl">
           <ImageList variant="woven" cols={3} gap={10}>
             {records.map((obj) => (
@@ -178,13 +166,11 @@ const RecordsList = () => {
                       'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, ' +
                       'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
                   }}
-                  // position="top"
                 />
               </ImageListItem>
             ))}
           </ImageList>
         </Container>
-        {/* </Box> */}
       </Box>
       <RecordForm open={formOpen} onClose={handleToggleForm} />
       <Container
@@ -203,14 +189,6 @@ const RecordsList = () => {
           opacity: 0.8,
         }}
       >
-        {/* <Fab
-          variant="extended"
-          onClick={handleToggleForm}
-          sx={{ bgcolor: 'orange', color: 'white' }}
-        >
-          <LocalPostOfficeIcon />
-          new post
-        </Fab> */}
       </Container>
     </Container>
   );
