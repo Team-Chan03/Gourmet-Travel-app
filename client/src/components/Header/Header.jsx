@@ -8,10 +8,6 @@ import { useState } from 'react';
 
 
 function Header() {
-  // const [formOpen, setFormOpen] = useState(false);
-  // const handleToggleForm = () => {
-  //   setFormOpen((val) => !val);
-  // };
   const [menuDisplay, setMenuDisplay] = useState('block');
   const [hello, setHello] =useState('Hello')
 
@@ -19,8 +15,6 @@ function Header() {
         .split('; ')
         .find((row) => row.startsWith('userId='))
         ?.split('=')[1];
-
-  console.log(userIdFromCookie);
 
   if(userIdFromCookie && menuDisplay === 'none') {
     setMenuDisplay('block');
@@ -35,7 +29,7 @@ function Header() {
       <div style={{ position: 'sticky', top: 0, zIndex: 1 }}>
         <header className="header">
           <div>
-            <span className="appTitle">Gourmet Travel</span>
+            <span className="appTitle" onClick={() => userIdFromCookie ? window.open('/records', '_self') : ''}>Gourmet Travel</span>
           </div>
           <div className="header-title">
             <img className="appicon" src={appIcon} />
@@ -57,11 +51,6 @@ function Header() {
             </Stack>
           </div>
         </header>
-
-        {/* <RecordForm
-        open={formOpen}
-        onClose={handleToggleForm}
-      /> */}
       </div>
       <GetBadge />
     </>
