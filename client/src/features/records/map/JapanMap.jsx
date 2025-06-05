@@ -166,7 +166,7 @@ const JapanMap = ({ list }) => {
         <Card
           sx={{
             position: 'absolute',
-            top: '20%',
+            top: 200,
             left: 50,
             backgroundColor: '#fffaf0',
             boxShadow: 1,
