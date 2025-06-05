@@ -55,7 +55,7 @@ const RatingList = (props) => {
                   ).length >= 5
                 ? '🥉'
                 : ''}
-              {unique_e.region}
+              {unique_e.region ? unique_e.region : '位置情報なし'}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>

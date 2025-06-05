@@ -15,3 +15,15 @@
   transition: 0.3s;
   transform: scale(1.1);
 }
+
+.gold {
+  background: linear-gradient(-225deg, #fff9e6 0%, #d0a900 70%, #fffdfd 100%);
+}
+
+.silver {
+  background: linear-gradient(-225deg, #e8e8e8 0%, #757575 70%, #f8f8f8 100%);
+}
+
+.bronze {
+  background: linear-gradient(-225deg, #f3cfb8 0%, #a57e65 70%, #f8f8f8 100%);
+}
