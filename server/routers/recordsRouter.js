@@ -73,20 +73,23 @@ router.post('/submit', async (req, res) => {
     });
 
     function messege(length) {
-      if ((length = 5)) {
+      if ((length === 5)) {
         return {
-          messege: `おめでとうございます！${region}のスタンプが５つ貯まりました！ブロンズバッジ獲得！`,
+        message: `おめでとうございます！\n${region}のスタンプが５個貯まりました！\nブロンズバッジ獲得！`,
           medal: 'bronze',
+          region,
         };
-      } else if ((length = 10)) {
+      } else if ((length === 10)) {
         return {
-          messege: `おめでとうございます！${region}のスタンプが５つ貯まりました！シルバーバッジ獲得！`,
+          message: `おめでとうございます！\n${region}のスタンプが10個貯まりました！\nシルバーバッジ獲得！`,
           medal: 'silver',
+          region,
         };
-      } else if ((length = 20)) {
+      } else if ((length === 20)) {
         return {
-          messege: `おめでとうございます！${region}のスタンプが５つ貯まりました！ゴールドバッジ獲得！`,
+          message: `おめでとうございます！\n${region}のスタンプが20個貯まりました！\nゴールドバッジ獲得！`,
           medal: 'gold',
+          region,
         };
       }
     }

@@ -12,21 +12,40 @@ const App = () => {
   const [postRendering, setPostRendering] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [medal, setMedal] = useState('');
+  const [message, setMessage] = useState('');
+  const [prefecture, setPrefecture] = useState('');
+
+  const [getBadgeOpen, setGetBadgeOpen] = useState(false);
+
   function rendering() {
     setPostRendering(!postRendering);
   }
   return (
     <context.Provider
-      value={{ rendering, postRendering, isLoading, setIsLoading }}
+      value={{
+        rendering,
+        postRendering,
+        isLoading,
+        setIsLoading,
+        medal,
+        setMedal,
+        message,
+        setMessage,
+        getBadgeOpen, 
+        setGetBadgeOpen,
+        prefecture,
+        setPrefecture
+      }}
     >
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Navigate to='/login' />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/register' element={<RegisterPage />} />
-          <Route path='/records' element={<RecordsPage />} />
-          <Route path='/map' element={<MapPage />} />
-          <Route path='/stamp' element={<StampPage />} />
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/records" element={<RecordsPage />} />
+          <Route path="/map" element={<MapPage />} />
+          <Route path="/stamp" element={<StampPage />} />
         </Routes>
       </BrowserRouter>
     </context.Provider>

@@ -13,7 +13,15 @@ function RecordForm({ open, onClose }) {
 
   const refImgPath = useRef();
 
-  const { rendering, setIsLoading } = useContext(context);
+  const {
+    rendering,
+    setIsLoading,
+    setMedal,
+    message,
+    setMessage,
+    setGetBadgeOpen,
+    setPrefecture,
+  } = useContext(context);
 
   let region = 'somewehre';
 
@@ -89,6 +97,13 @@ function RecordForm({ open, onClose }) {
           longitude,
           created_at: new Date(),
         });
+
+        setMedal(res.data.medal);
+        setMessage(res.data.message);
+        setPrefecture(res.data.region);
+
+        console.log(res.data.message, res.data.medal);
+
         console.log('🚀 ~ handleSubmit ~ res:', res);
       } catch (err) {
         console.error('❌ POST エラー', err);
@@ -102,12 +117,22 @@ function RecordForm({ open, onClose }) {
         console.log(`postToXの関数が呼び出されました`);
       }
 
+      setChecked(false);
+      
       setIsLoading(false);
       rendering();
     }
   };
 
+  if (message) {
+    setGetBadgeOpen(true);
+  }
+  console.log('チェックボックス', checked);
+
   async function postToX() {
+    const hash = region
+      ? '#グルメ #旅行 #都道府県 #gourmet #travel #prefecture ' + `#${region}`
+      : '#グルメ #旅行 #都道府県 #gourmet #travel #prefecture ';
     await axios
       .post('/api/post', {
         text:
@@ -117,14 +142,11 @@ function RecordForm({ open, onClose }) {
           '\n' +
           'posted by https://gourmet-travel-app-29ug.onrender.com/' +
           '\n' +
-          '#グルメ #旅行 #都道府県 #gourmet #travel #prefecture ' +
-          `#${region}`,
-        photoUrl,
+          hash,
+        url: photoUrl,
       })
       .then((res) => console.log(res));
   }
-
-  console.log(checked, refImgPath);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -144,15 +166,15 @@ function RecordForm({ open, onClose }) {
           gap: 2,
         }}
       >
-        <Typography variant='h6' component='h2'>
+        <Typography variant="h6" component="h2" sx={{ color: 'black' }}>
           新規投稿
         </Typography>
 
-        <Button variant='outlined' component='label'>
+        <Button variant="outlined" component="label">
           画像を選択
           <input
-            type='file'
-            accept='image/*'
+            type="file"
+            accept="image/*"
             hidden
             onChange={handleFileChange}
           />
@@ -160,9 +182,9 @@ function RecordForm({ open, onClose }) {
         {photoUrl && (
           <Box
             ref={refImgPath}
-            component='img'
+            component="img"
             src={photoUrl}
-            alt='選択画像'
+            alt="選択画像"
             sx={{
               height: '30%',
               width: '30%',
@@ -170,12 +192,12 @@ function RecordForm({ open, onClose }) {
               display: 'flex',
               margin: 'auto',
             }}
-            textAlign='center'
+            textAlign="center"
           />
         )}
 
         <TextField
-          label='料理名'
+          label="料理名"
           multiline
           minRows={1}
           value={dishname}
@@ -184,7 +206,7 @@ function RecordForm({ open, onClose }) {
         />
 
         <TextField
-          label='コメント'
+          label="コメント"
           multiline
           minRows={3}
           value={comment}
@@ -203,13 +225,20 @@ function RecordForm({ open, onClose }) {
         <Box sx={{ gap: 1, display: 'flex', justifyContent: 'space-between' }}>
           <Button>
             <Checkbox onClick={() => setChecked(!checked)} />
-            post to{''}
-            <img style={{ height: '15px' }} src='/logo-black.png' />
+            post to{'　'}
+            <img style={{ height: '15px' }} src="/logo-black.png" />
           </Button>
 
-          <Button onClick={onClose}>キャンセル</Button>
           <Button
-            variant='contained'
+            onClick={() => {
+              onClose();
+              setChecked(false);
+            }}
+          >
+            キャンセル
+          </Button>
+          <Button
+            variant="contained"
             onClick={handleSubmit}
             disabled={!photoUrl}
           >
