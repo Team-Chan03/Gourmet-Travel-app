@@ -8,9 +8,6 @@ import {
   Tooltip,
 } from '@mui/material';
 import './../Records.css';
-import goldImage from '../../../assets/435950.png';
-import silverImage from '../../../assets/24985480.png';
-import bronzeImage from '../../../assets/435853.png';
 
 const StampCard = (props) => {
   const [selectData, setSelectData] = useState();
@@ -30,26 +27,16 @@ const StampCard = (props) => {
           <Typography>{`${selectCountry}: ${selectData.length} stamps`}</Typography>
         </Container>
         <ImageList
+          className={
+            selectData.length >= 20
+              ? 'gold'
+              : selectData.length >= 10
+              ? 'silver'
+              : selectData.length >= 5
+              ? 'bronze'
+              : ''
+          }
           cols={5}
-          sx={{
-            backgroundImage:
-              selectData.length >= 20
-                ? `url(${goldImage})`
-                : selectData.length >= 10
-                ? `url(${silverImage})`
-                : selectData.length >= 5
-                ? `url(${bronzeImage})`
-                : '',
-
-            bgcolor:
-              selectData.length >= 20
-                ? 'rgba(255, 159, 56, 0.32)'
-                : selectData.length >= 10
-                ? 'rgba(192, 192, 192, 0.3)'
-                : selectData.length >= 5
-                ? 'rgba(230, 180, 34, 0.3)'
-                : 'rgba(255, 255, 255, 1)',
-          }}
         >
           {selectData.map((e, i) => (
             <Tooltip title={e.comment} key={i}>
