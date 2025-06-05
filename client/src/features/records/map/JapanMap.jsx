@@ -1,20 +1,20 @@
-import React, { useEffect, memo } from "react";
-import * as d3 from "d3";
-import geoJson from "./../../../utils/japan.json";
+import React, { useEffect, memo } from 'react';
+import * as d3 from 'd3';
+import geoJson from './../../../utils/japan.json';
+import { Box } from '@mui/material';
 
 const getTarget = ({ list, prefName }) => {
   let pref = prefName;
   let count = 0;
   list.map((e) => {
-    if (e.region === pref){
-       count ++;
-      }
-  })
+    if (e.region === pref) {
+      count++;
+    }
+  });
   return count;
 };
 
 export function useMounted() {
-  
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -28,10 +28,10 @@ const JapanMap = ({ list }) => {
   const mounted = useMounted();
 
   async function main() {
-    const width = 500; // 描画サイズ: 幅
-    const height = 500; // 描画サイズ: 高さ
+    const width = 1000; // 描画サイズ: 幅
+    const height = 1000; // 描画サイズ: 高さ
     const centerPos = [137.0, 38.2]; // 地図のセンター位置
-    const scale = 1000; // 地図のスケール
+    const scale = 2500; // 地図のスケール
     // const color = "#2566CC"; // 地図の色
     // const colorActive = "#ebfd2a"; // ホバーした時の色
 
@@ -51,7 +51,7 @@ const JapanMap = ({ list }) => {
       .append(`svg`)
       .attr(`viewBox`, `0 0 ${width} ${height}`)
       .attr(`width`, `100%`)
-      .attr(`height`, `100%`);
+      .attr(`height`, `100vh`);
 
     // 都道府県の領域データをpathで描画
     svg
@@ -61,30 +61,29 @@ const JapanMap = ({ list }) => {
       .append(`path`)
       .attr(`d`, path)
       .attr(`stroke`, `#666`)
-      .attr(`stroke-width`, 0.50)
+      .attr(`stroke-width`, 1.5)
       .attr(`fill`, (item) => {
         // 透明度の設定
-        let color ;
+        let color;
         const t = getTarget({ list, prefName: item.properties.name_ja });
         if (t >= 20) {
-          color = '#e6b422'
-        } else if(t >= 10){
-          color = '#c0c0c0'
-        }else if (t >= 5){
-          color = '#ff9f38'
-        }else if (t < 5 && t > 0){
-          color = '#2566CC'
+          color = '#e6b422';
+        } else if (t >= 10) {
+          color = '#c0c0c0';
+        } else if (t >= 5) {
+          color = '#ff9f38';
+        } else if (t < 5 && t > 0) {
+          color = '#2566CC';
+        } else {
+          color = '#ffffff';
         }
-        else {
-          color = '#ffffff'
-        }
-        ;
-        return color;})
+        return color;
+      })
       .attr(`cursor`, (item) => {
         // カーソルの設定
         const t = getTarget({ list, prefName: item.properties.name_ja });
-        if (!t || t.count === 0) return ;
-        return "pointer";
+        if (!t || t.count === 0) return;
+        return 'pointer';
       })
 
       /**
@@ -178,11 +177,24 @@ const JapanMap = ({ list }) => {
     })();
     return () => {
       const target = document.getElementById(`map-container`);
-      if (target) target.innerHTML = "";
+      if (target) target.innerHTML = '';
     };
   }, [mounted]);
 
-  return <div id="map-container" className="w-[500px] h-[500px]" />;
+  return (
+    <>
+      <Box
+        sx={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+
+        }}
+      >
+        <div id='map-container' className='w-[500px] h-[500px]' />
+      </Box>
+    </>
+  );
 };
 
 export default memo(JapanMap);
