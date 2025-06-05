@@ -74,7 +74,7 @@ NODE_ENV=development
 DB_NAME=travel_app
 DB_USER=//データベースのユーザー名
 
-//以下は**から取得
+//以下は(https://developer.x.com/en/portal/dashboard)から取得
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 GOOGLE_CALLBACK_URL=
